@@ -16,7 +16,7 @@ IntegralImageBuilder::~IntegralImageBuilder() {
 	// TODO Auto-generated destructor stub
 }
 
-void IntegralImageBuilder::buildForImage(unsigned char** inputBuffer, unsigned char** outputBuffer, int rows, int cols){
+void IntegralImageBuilder::buildForImage(unsigned char** inputBuffer, unsigned long long int** outputBuffer, int rows, int cols){
 	int sum = 0;
 	for (int j = 0; j < cols; ++j) {
 		sum += inputBuffer[0][j];
@@ -32,12 +32,13 @@ void IntegralImageBuilder::buildForImage(unsigned char** inputBuffer, unsigned c
 	}
 }
 
-double IntegralImageBuilder::mean(unsigned char** integral, int i, int j, int k){
-	int a = integral[i-k][j-k];
-	int b = integral[i-k][j+k];
-	int c = integral[i+k][j-k];
-	int d = integral[i+k][j+k];
-	int n = (2*k+1)*(2*k+1);
+double IntegralImageBuilder::mean(unsigned long long int** integral, int i, int j, int k){
+	//uwaga! nie uzględniono wartości brzegowych.
+	unsigned long long int a = integral[i-k-1][j-k-1];
+	unsigned long long int b = integral[i-k-1][j+k];
+	unsigned long long int d = integral[i+k][j-k-1];
+	unsigned long long int c = integral[i+k][j+k];
+	unsigned long long int n = (2*k+1)*(2*k+1);
 	return (c+a-b-d)*1.0/n;
 }
 

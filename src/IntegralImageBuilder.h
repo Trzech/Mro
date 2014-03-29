@@ -13,8 +13,8 @@ public:
 	IntegralImageBuilder();
 	virtual ~IntegralImageBuilder();
 	void buildForImage(unsigned char** inputBuffer,
-			unsigned char** outputBuffer, int rows, int cols);
-	double mean(unsigned char** integral, int i, int j, int k);
+			unsigned long long int** outputBuffer, int rows, int cols);
+	double mean(unsigned long long int** integral, int i, int j, int k);
 };
 
 #endif /* INTEGRALIMAGEBUILDER_H_ */
