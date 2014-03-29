@@ -102,20 +102,13 @@ void NiblackBinarizator::binarizeBorderPart(unsigned char** source,
 			surroundings, k_factor);
 }
 
-unsigned char** NiblackBinarizator::prepareTableForOperations(
-		unsigned char* inputBuffer, int rows, int cols) {
-	unsigned char** source = new unsigned char*[rows];
-	for (int i = 0; i < rows; ++i) {
-		source[i] = inputBuffer + i * cols;
-	}
-	return source;
-}
+
 
 void NiblackBinarizator::binarize(unsigned char* inputBuffer,
 		unsigned char* outputBuffer, int rows, int cols, int surroundings,
 		double k_factor) {
-	unsigned char** source = prepareTableForOperations(inputBuffer, rows, cols);
-	unsigned char** target = prepareTableForOperations(outputBuffer, rows,
+	unsigned char** source = Binarizator::prepareTableForOperations(inputBuffer, rows, cols);
+	unsigned char** target = Binarizator::prepareTableForOperations(outputBuffer, rows,
 			cols);
 
 	binarizeInnerPart(source, target, rows, cols, surroundings, k_factor);

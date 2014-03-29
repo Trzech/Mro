@@ -7,8 +7,9 @@
 
 #ifndef IMAGEBINARIZATOR_H_
 #define IMAGEBINARIZATOR_H_
+#include "Binarizator.h"
 
-class NiblackBinarizator {
+class NiblackBinarizator: protected Binarizator {
 public:
 	NiblackBinarizator();
 	virtual ~NiblackBinarizator();

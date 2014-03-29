@@ -7,8 +7,9 @@
 
 #ifndef INTEGRALBRODLEYBINARIZATOR_H_
 #define INTEGRALBRODLEYBINARIZATOR_H_
+#include "Binarizator.h"
 
-class BrodleyBinarizator {
+class BrodleyBinarizator: protected Binarizator {
 private:
 	unsigned char** prepareTableForOperations(unsigned char* inputBuffer,
 			int rows, int cols);
