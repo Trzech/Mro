@@ -5,7 +5,7 @@
 #include "GrayscaleImageReader.h"
 #include "Timer.h"
 
-int surrounding = 15;
+int surrounding = 35;
 double brodleyParameter = 0.9;
 
 class NonUnitTests: public ::testing::Test {
