@@ -5,7 +5,7 @@
 #include "Timer.h"
 #include "TPGM.h"
 #include "BrodleyBinarizator.h"
-
+#include "GrayscaleImageReader.h"
 Timer timer;
 
 
@@ -14,6 +14,7 @@ int main(int argc, char **argv) {
 	int max_color;
 	int hpos;
 
+	GrayscaleImageReader reader;
 
 
 	timer.begin();		//start to measure the time
@@ -21,7 +22,7 @@ int main(int argc, char **argv) {
 	char incolorfname[] = "images/lena_grayscale.pgm";
 	char outputFile[] = "images/lena_binaryzacja.pgm";
 
-	if ((hpos = readPGMB_header(incolorfname, &rows, &cols, &max_color)) <= 0)
+	if ((hpos = reader.readHeader(incolorfname, &rows, &cols, &max_color)) <= 0)
 		exit(1);
 	unsigned char *inBuf;
 	if ((inBuf = new unsigned char[rows * cols]) == NULL)
@@ -29,7 +30,7 @@ int main(int argc, char **argv) {
 	unsigned char *outBuf;
 	if ((outBuf = new unsigned char[rows * cols]) == NULL)
 		exit(1);
-	if (readPGMB_data(inBuf, incolorfname, hpos, rows, cols, max_color) == 0)
+	if (reader.readData(inBuf, incolorfname, hpos, rows, cols, max_color) == 0)
 		exit(1);
 
 	BrodleyBinarizator binarizator;
@@ -38,7 +39,7 @@ int main(int argc, char **argv) {
 	binarizator.binarizeWithIntegral(inBuf, outBuf, rows, cols, 15, 0.8);
 	char outfname[256];
 	sprintf(outfname, outputFile, incolorfname);
-	if (writePGMB_image(outfname, outBuf, rows, cols, 255) == 0)
+	if (reader.writeImage(outfname, outBuf, rows, cols, 255) == 0)
 		exit(1);
 
 
