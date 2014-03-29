@@ -5,12 +5,12 @@
  *      Author: mj
  */
 
-#include "ImageBinarizator.h"
+#include "NiblackBinarizator.h"
 #include <math.h>
 
 const double R = 128.0;
 
-void ImageBinarizator::binarize(unsigned char* inputBuffer,
+void NiblackBinarizator::binarize(unsigned char* inputBuffer,
 		unsigned char* outputBuffer, int rows, int cols) {
 	int defaultSurroundings = 10;
 	double defaultKFactor = 0.2;
@@ -18,7 +18,7 @@ void ImageBinarizator::binarize(unsigned char* inputBuffer,
 			defaultKFactor);
 }
 
-void ImageBinarizator::binarizeInnerPart(unsigned char** source,
+void NiblackBinarizator::binarizeInnerPart(unsigned char** source,
 		unsigned char** target, int rows, int cols, int surroundings,
 		double k_factor) {
 	for (int i = 0 + surroundings; i < rows - surroundings; ++i) {
@@ -44,7 +44,7 @@ void ImageBinarizator::binarizeInnerPart(unsigned char** source,
 	}
 }
 
-int ImageBinarizator::controlled(int x, int xMax){
+int NiblackBinarizator::controlled(int x, int xMax){
 	if (x < 0) {
 		return -x;
 	} else {
@@ -56,7 +56,7 @@ int ImageBinarizator::controlled(int x, int xMax){
 	}
 }
 
-void ImageBinarizator::binarizeWithMirroring(unsigned char** source,
+void NiblackBinarizator::binarizeWithMirroring(unsigned char** source,
 		unsigned char** target, int iMin, int iMax, int jMin, int jMax,
 		int surroundings, double k_factor) {
 	for (int i = iMin; i < iMax; ++i) {
@@ -84,7 +84,7 @@ void ImageBinarizator::binarizeWithMirroring(unsigned char** source,
 	}
 }
 
-void ImageBinarizator::binarizeBorderPart(unsigned char** source,
+void NiblackBinarizator::binarizeBorderPart(unsigned char** source,
 		unsigned char** target, int rows, int cols, int surroundings,
 		double k_factor) {
 	//top
@@ -102,7 +102,7 @@ void ImageBinarizator::binarizeBorderPart(unsigned char** source,
 			surroundings, k_factor);
 }
 
-unsigned char** ImageBinarizator::prepareTableForOperations(
+unsigned char** NiblackBinarizator::prepareTableForOperations(
 		unsigned char* inputBuffer, int rows, int cols) {
 	unsigned char** source = new unsigned char*[rows];
 	for (int i = 0; i < rows; ++i) {
@@ -111,7 +111,7 @@ unsigned char** ImageBinarizator::prepareTableForOperations(
 	return source;
 }
 
-void ImageBinarizator::binarize(unsigned char* inputBuffer,
+void NiblackBinarizator::binarize(unsigned char* inputBuffer,
 		unsigned char* outputBuffer, int rows, int cols, int surroundings,
 		double k_factor) {
 	unsigned char** source = prepareTableForOperations(inputBuffer, rows, cols);
@@ -125,12 +125,12 @@ void ImageBinarizator::binarize(unsigned char* inputBuffer,
 	delete[] target;
 }
 
-ImageBinarizator::ImageBinarizator() {
+NiblackBinarizator::NiblackBinarizator() {
 	// TODO Auto-generated constructor stub
 
 }
 
-ImageBinarizator::~ImageBinarizator() {
+NiblackBinarizator::~NiblackBinarizator() {
 	// TODO Auto-generated destructor stub
 }
 

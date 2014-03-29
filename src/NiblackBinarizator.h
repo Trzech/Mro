@@ -8,10 +8,10 @@
 #ifndef IMAGEBINARIZATOR_H_
 #define IMAGEBINARIZATOR_H_
 
-class ImageBinarizator {
+class NiblackBinarizator {
 public:
-	ImageBinarizator();
-	virtual ~ImageBinarizator();
+	NiblackBinarizator();
+	virtual ~NiblackBinarizator();
 	void binarize(unsigned char* inputBuffer, unsigned char* outputBuffer,
 			int rows, int cols);
 	void binarize(unsigned char* inputBuffer, unsigned char* outputBuffer,

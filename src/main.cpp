@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "Ttiming.h"
+#include "Timer.h"
 #include "TPGM.h"
 #include "BrodleyBinarizator.h"
 
-TTiming tt;
+Timer timer;
 
 
 int main(int argc, char **argv) {
@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
 
 
 
-	tt.Begin();		//start to measure the time
+	timer.begin();		//start to measure the time
 
 	char incolorfname[] = "images/lena_grayscale.pgm";
 	char outputFile[] = "images/lena_binaryzacja.pgm";
@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
 	delete inBuf;
 	delete outBuf;
 
-	tt.End();	//stop and read elapsed time in ms (miliseconds)
+	timer.end();	//stop and read elapsed time in ms (miliseconds)
 
 	return 0;
 }
