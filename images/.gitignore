@@ -1,1 +1,4 @@
 /lena_binaryzacja.pgm
+/lena_BrodleyBinarizator.pgm
+/lena_BrodleyBinarizatorWithIntegral.pgm
+/lena_BrodleyBinarizatorWithoutIntegral.pgm

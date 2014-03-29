@@ -18,19 +18,26 @@ BrodleyBinarizator::~BrodleyBinarizator() {
 	// TODO Auto-generated destructor stub
 }
 
-void BrodleyBinarizator::binarizeWithoutIntegral(unsigned char* inputBuffer,
-		unsigned char* outputBuffer, int rows, int cols, int surroundings,
+unsigned char* BrodleyBinarizator::binarizeWithoutIntegral(unsigned char* inputBuffer,
+		 int rows, int cols, int surroundings,
 		double r) {
+	unsigned char *resultBuffer;
+
+		if ((resultBuffer = new unsigned char[rows * cols]) == NULL) {
+			throw -1;
+		}
+
+
 	unsigned char** source = Binarizator::prepareTableForOperations(inputBuffer,
 			rows, cols);
 	unsigned char** target = Binarizator::prepareTableForOperations(
-			outputBuffer, rows, cols);
+			resultBuffer, rows, cols);
 
 	for (int i = 0 + surroundings; i < rows - surroundings; ++i) {
 		for (int j = 0 + surroundings; j < cols - surroundings; ++j) {
 			int suma = 0;
-			for (int k = i - surroundings; k < i + surroundings; ++k) {
-				for (int l = j - surroundings; l < j + surroundings; ++l) {
+			for (int k = i - surroundings; k <= i + surroundings; ++k) {
+				for (int l = j - surroundings; l <= j + surroundings; ++l) {
 					suma += source[k][l];
 
 				}
@@ -48,6 +55,8 @@ void BrodleyBinarizator::binarizeWithoutIntegral(unsigned char* inputBuffer,
 
 	delete[] source;
 	delete[] target;
+
+	return resultBuffer;
 }
 
 unsigned char* BrodleyBinarizator::binarizeWithIntegral(

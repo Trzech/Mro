@@ -5,10 +5,10 @@
 #include "Timer.h"
 #include "BrodleyBinarizator.h"
 #include "GrayscaleImageReader.h"
-Timer timer;
 
 int main(int argc, char **argv) {
 	int rows, cols;
+	Timer timer;
 
 	GrayscaleImageReader reader;
 
@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
 
 	BrodleyBinarizator binarizator;
 
-	outBuf = binarizator.binarizeWithIntegral(inBuf, rows, cols, 15, 0.8);
+	outBuf = binarizator.binarizeWithIntegral(inBuf, rows, cols, 15, 0.9);
 	reader.writeImage(outputFileName, outBuf, rows, cols);
 
 	delete inBuf;
