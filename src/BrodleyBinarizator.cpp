@@ -21,9 +21,10 @@ BrodleyBinarizator::~BrodleyBinarizator() {
 void BrodleyBinarizator::binarizeWithoutIntegral(unsigned char* inputBuffer,
 		unsigned char* outputBuffer, int rows, int cols, int surroundings,
 		double r) {
-	unsigned char** source = Binarizator::prepareTableForOperations(inputBuffer, rows, cols);
-	unsigned char** target = Binarizator::prepareTableForOperations(outputBuffer, rows,
-			cols);
+	unsigned char** source = Binarizator::prepareTableForOperations(inputBuffer,
+			rows, cols);
+	unsigned char** target = Binarizator::prepareTableForOperations(
+			outputBuffer, rows, cols);
 
 	for (int i = 0 + surroundings; i < rows - surroundings; ++i) {
 		for (int j = 0 + surroundings; j < cols - surroundings; ++j) {
@@ -49,18 +50,25 @@ void BrodleyBinarizator::binarizeWithoutIntegral(unsigned char* inputBuffer,
 	delete[] target;
 }
 
-void BrodleyBinarizator::binarizeWithIntegral(unsigned char* inputBuffer,
-		unsigned char* outputBuffer, int rows, int cols, int surroundings,
+unsigned char* BrodleyBinarizator::binarizeWithIntegral(
+		unsigned char* inputBuffer, int rows, int cols, int surroundings,
 		double r) {
+	unsigned char *resultBuffer;
+
+	if ((resultBuffer = new unsigned char[rows * cols]) == NULL) {
+		throw -1;
+	}
+
 	unsigned char *integralBuffer;
 	if ((integralBuffer = new unsigned char[rows * cols]) == NULL)
 		exit(1);
 
-	unsigned char** source = Binarizator::prepareTableForOperations(inputBuffer, rows, cols);
-	unsigned char** target = Binarizator::prepareTableForOperations(outputBuffer, rows,
-			cols);
-	unsigned char** integral = Binarizator::prepareTableForOperations(outputBuffer, rows,
-			cols);
+	unsigned char** source = Binarizator::prepareTableForOperations(inputBuffer,
+			rows, cols);
+	unsigned char** target = Binarizator::prepareTableForOperations(
+			resultBuffer, rows, cols);
+	unsigned char** integral = Binarizator::prepareTableForOperations(
+			resultBuffer, rows, cols);
 
 	IntegralImageBuilder integralImageBuilder;
 	integralImageBuilder.buildForImage(source, integral, rows, cols);
@@ -83,7 +91,7 @@ void BrodleyBinarizator::binarizeWithIntegral(unsigned char* inputBuffer,
 	delete[] target;
 	delete[] integral;
 
+	return resultBuffer;
+
 }
-
-
 

@@ -16,22 +16,25 @@ GrayscaleImageReader::~GrayscaleImageReader() {
 	// TODO Auto-generated destructor stub
 }
 
-int GrayscaleImageReader::readHeader(char *fname, int *rows, int *cols, int *max_color){
+int GrayscaleImageReader::readHeader(char *fname, int *rows, int *cols,
+		int *max_color) {
 
 	FILE *fp;
 	size_t flen, hlen;
 	char signature[3];
 
-	if((fp=fopen(fname, "rb")) == NULL)
+	if ((fp = fopen(fname, "rb")) == NULL)
 		return 0;
 
 	fseek(fp, 0, SEEK_END);
-    flen = ftell(fp);	//file lenght
+	flen = ftell(fp);	//file lenght
 	fseek(fp, 0, SEEK_SET);
 
 	fgets(signature, sizeof(signature), fp);
-	if (signature[0] != 'P' || signature[1] != '5')
-		{ fclose(fp); return 0; }	//probably not pgm binary file...
+	if (signature[0] != 'P' || signature[1] != '5') {
+		fclose(fp);
+		return 0;
+	}	//probably not pgm binary file...
 
 	ImageReader::skipComments(fp);
 	fscanf(fp, "%d", cols);
@@ -43,41 +46,62 @@ int GrayscaleImageReader::readHeader(char *fname, int *rows, int *cols, int *max
 
 	hlen = ftell(fp); //header lenght
 	fclose(fp);
-	if ( (*rows) * (*cols) != (flen-hlen) )	//we assume only one picture in the file
+	if ((*rows) * (*cols) != (flen - hlen))	//we assume only one picture in the file
 		return 0;
 
 	return hlen;
 }
 
-int GrayscaleImageReader::readData(unsigned char *image, char *fname, int hlen, int rows, int cols, int max_color){
+void GrayscaleImageReader::readData(unsigned char *image, char *fname, int hlen,
+		int rows, int cols, int max_color) {
 
 	FILE *fp;
-	if((fp=fopen(fname, "rb")) == NULL)
-		return 0;
+	if ((fp = fopen(fname, "rb")) == NULL) {
+		throw -1;
+	}
 
 	fseek(fp, hlen, SEEK_SET);
 	int readedrows = fread(image, cols, rows, fp);
 	fclose(fp);
 
-	if(rows != readedrows)
-		return 0;
+	if (rows != readedrows) {
+		throw -1;
+	}
 
-	return 1;
 }
 
-int GrayscaleImageReader::writeImage(char *fname, unsigned char *image, int rows,  int cols, int max_color){
+void GrayscaleImageReader::writeImage(char *fname, unsigned char *image,
+		unsigned int rows, unsigned int cols, unsigned int max_color) {
 	FILE *fp;
 
-	if((fp = fopen(fname, "wb")) == NULL)
-		return(0);
+	if ((fp = fopen(fname, "wb")) == NULL) {
+		throw -1;
+	}
 
 	fprintf(fp, "P5\n%d %d\n# eyetom.com\n%d\n", cols, rows, max_color);
 
-	if(rows != fwrite(image, cols, rows, fp)){
+	if (rows != fwrite(image, cols, rows, fp)) {
 		fclose(fp);
-		return(0);
+		throw -1;
 	}
 
 	fclose(fp);
-	return(1);
+}
+
+unsigned char* GrayscaleImageReader::readDataFromFile(char *fileName, int* rows,
+		int* cols) {
+	int headerPossition;
+	int maxColor;
+
+	if ((headerPossition = readHeader(fileName, rows, cols, &maxColor)) <= 0) {
+		throw -1;
+	}
+
+	unsigned char *result;
+	if ((result = new unsigned char[(*rows) * (*cols)]) == NULL) {
+		throw -1;
+	}
+
+	readData(result, fileName, headerPossition, *rows, *cols, maxColor);
+	return result;
 }
