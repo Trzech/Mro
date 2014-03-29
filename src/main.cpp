@@ -3,7 +3,6 @@
 #include <math.h>
 
 #include "Timer.h"
-#include "TPGM.h"
 #include "BrodleyBinarizator.h"
 #include "GrayscaleImageReader.h"
 Timer timer;
