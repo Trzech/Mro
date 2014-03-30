@@ -5,3 +5,6 @@
 /book.pgm
 /book_BrodleyBinarizatorWithIntegral.pgm
 /book_BrodleyBinarizatorWithoutIntegral.pgm
+/book_NiblackBinarizatorWithIntegral.pgm
+/lena_NiblackBinarizatorWithIntegral.pgm
+/lena_NiblackBinarizatorWithoutIntegral.pgm

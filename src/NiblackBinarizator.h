@@ -13,10 +13,10 @@ class NiblackBinarizator: protected Binarizator {
 public:
 	NiblackBinarizator();
 	virtual ~NiblackBinarizator();
-	void binarize(unsigned char* inputBuffer, unsigned char* outputBuffer,
-			int rows, int cols);
-	void binarize(unsigned char* inputBuffer, unsigned char* outputBuffer,
-			int rows, int cols, int surroundings, double k_factor);
+	unsigned char* binarizeWithoutIntegral(unsigned char* inputBuffer,
+			int rows, int cols, int surroundings = 10, double k_factor = 0.2);
+	unsigned char* binarizeWithIntegral(unsigned char* inputBuffer,
+			int rows, int cols, int surroundings = 10, double k_factor = 0.2);
 
 private:
 	void binarizeInnerPart(unsigned char** source, unsigned char** target,

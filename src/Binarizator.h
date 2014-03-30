@@ -7,6 +7,7 @@
 
 #ifndef ABSTRACTBINARIZATOR_H_
 #define ABSTRACTBINARIZATOR_H_
+#include "IntegralImageBuilder.h"
 
 class Binarizator {
 public:
@@ -15,6 +16,11 @@ public:
 	static unsigned char** prepareTableForOperations(
 			unsigned char* inputBuffer, int rows, int cols);
 	static unsigned long long int** prepareTableForOperations(unsigned long long int* inputBuffer, int rows, int cols);
+protected:
+	void manageBorders(unsigned char** source,
+			unsigned char** target, int rows, int cols, int surroundings);
+	void convertThresholdIntoTarget(unsigned char** source,
+			unsigned char** target, int rows, int cols);
 };
 
 #endif /* ABSTRACTBINARIZATOR_H_ */

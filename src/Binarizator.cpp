@@ -33,3 +33,41 @@ unsigned long long int** Binarizator::prepareTableForOperations(
 	return source;
 }
 
+void Binarizator::manageBorders(unsigned char** source,
+		unsigned char** target, int rows, int cols, int surroundings) {
+	for (int i = surroundings + 1; i <= rows - surroundings; ++i) {
+		for (int j = 0; j <= surroundings; ++j) {
+			target[i][j] = target[i][surroundings + 1];
+		}
+	}
+	for (int i = surroundings + 1; i <= rows - surroundings; ++i) {
+		for (int j = cols - surroundings; j < cols; ++j) {
+			target[i][j] = target[i][cols - surroundings - 1];
+		}
+	}
+	for (int i = 0; i <= surroundings; ++i) {
+		for (int j = 0; j < cols; ++j) {
+			target[i][j] = target[surroundings + 1][j];
+		}
+	}
+	for (int i = rows - surroundings; i < rows; ++i) {
+		for (int j = 0; j < cols; ++j) {
+			target[i][j] = target[rows - surroundings - 1][j];
+		}
+	}
+
+}
+
+void Binarizator::convertThresholdIntoTarget(unsigned char** source,
+		unsigned char** target, int rows, int cols) {
+	for (int i = 0; i < rows; ++i) {
+		for (int j = 0; j < cols; ++j) {
+			if (source[i][j] > target[i][j]) {
+				target[i][j] = 255;
+			} else {
+				target[i][j] = 0;
+			}
+		}
+	}
+}
+

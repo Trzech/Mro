@@ -13,10 +13,8 @@ class BrodleyBinarizator: protected Binarizator {
 private:
 	unsigned char** prepareTableForOperations(unsigned char* inputBuffer,
 			int rows, int cols);
-	void manageBorders(unsigned char** source, unsigned char** target, int rows,
-			int cols, int surroundings);
-	void convertThresholdIntoTarget(unsigned char** source,
-			unsigned char** target, int rows, int cols);
+
+
 
 public:
 	BrodleyBinarizator();

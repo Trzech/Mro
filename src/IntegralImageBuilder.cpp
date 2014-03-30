@@ -32,6 +32,34 @@ void IntegralImageBuilder::buildForImage(unsigned char** inputBuffer, unsigned l
 	}
 }
 
+void IntegralImageBuilder::buildForImageWithSquares(unsigned char** inputBuffer,
+		unsigned long long int** outputBuffer,
+		unsigned long long int** outputSquareBuffer, int rows, int cols){
+	int sum = 0;
+	int sumSquare = 0;
+	for (int j = 0; j < cols; ++j) {
+		sum += inputBuffer[0][j];
+		outputBuffer[0][j] =  sum;
+
+		sumSquare += inputBuffer[0][j]*inputBuffer[0][j];
+		outputSquareBuffer[0][j] =  sumSquare;
+	}
+
+	for (int i = 1; i < rows; ++i) {
+		sum = 0;
+		sumSquare = 0;
+		for (int j = 0; j < cols; ++j) {
+			sum += inputBuffer[i][j];
+			outputBuffer[i][j] =  sum + outputBuffer[i-1][j];
+
+			sumSquare += inputBuffer[i][j]*inputBuffer[i][j];
+			outputSquareBuffer[i][j] =  sumSquare + outputSquareBuffer[i-1][j];
+		}
+	}
+}
+
+
+
 double IntegralImageBuilder::mean(unsigned long long int** integral, int i, int j, int k){
 	//uwaga! nie uzględniono wartości brzegowych.
 	unsigned long long int a = integral[i-k-1][j-k-1];
