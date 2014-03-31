@@ -24,7 +24,7 @@ unsigned char * NiblackBinarizator::binarizeWithoutIntegral(
 			rows, cols);
 	unsigned char** threshold = Binarizator::prepareTableForOperations(
 			resultBuffer, rows, cols);
-
+	timer.begin();
 	for (int i = 0 + surroundings; i < rows - surroundings; ++i) {
 		for (int j = 0 + surroundings; j < cols - surroundings; ++j) {
 			int suma = 0;
@@ -46,6 +46,7 @@ unsigned char * NiblackBinarizator::binarizeWithoutIntegral(
 
 	manageBorders(source, threshold, rows, cols, surroundings);
 	convertThresholdIntoTarget(source, threshold, rows, cols);
+	timer.end();
 	delete[] source;
 
 	return resultBuffer;
@@ -80,6 +81,8 @@ unsigned char * NiblackBinarizator::binarizeWithIntegral(
 			Binarizator::prepareTableForOperations(integralSquareBuffer, rows,
 					cols);
 
+	timer.begin();
+
 	IntegralImageBuilder integralImageBuilder;
 	integralImageBuilder.buildForImageWithSquares(source, integral,
 			integralSquare, rows, cols);
@@ -99,6 +102,8 @@ unsigned char * NiblackBinarizator::binarizeWithIntegral(
 
 	manageBorders(source, threshold, rows, cols, surroundings);
 	convertThresholdIntoTarget(source, threshold, rows, cols);
+
+	timer.end();
 	delete[] source;
 	delete integralBuffer;
 	delete[] integral;

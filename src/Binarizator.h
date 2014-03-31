@@ -8,6 +8,7 @@
 #ifndef ABSTRACTBINARIZATOR_H_
 #define ABSTRACTBINARIZATOR_H_
 #include "IntegralImageBuilder.h"
+#include "Timer.h"
 
 class Binarizator {
 public:
@@ -17,6 +18,7 @@ public:
 			unsigned char* inputBuffer, int rows, int cols);
 	static unsigned long long int** prepareTableForOperations(unsigned long long int* inputBuffer, int rows, int cols);
 protected:
+	Timer timer;
 	void manageBorders(unsigned char** source,
 			unsigned char** target, int rows, int cols, int surroundings);
 	void convertThresholdIntoTarget(unsigned char** source,

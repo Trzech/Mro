@@ -31,6 +31,8 @@ unsigned char* BrodleyBinarizator::binarizeWithoutIntegral(
 	unsigned char** threshold = Binarizator::prepareTableForOperations(
 			resultBuffer, rows, cols);
 
+	timer.begin();
+
 	for (int i = 0 + surroundings; i < rows - surroundings; ++i) {
 		for (int j = 0 + surroundings; j < cols - surroundings; ++j) {
 			int suma = 0;
@@ -48,6 +50,7 @@ unsigned char* BrodleyBinarizator::binarizeWithoutIntegral(
 
 	manageBorders(source, threshold, rows, cols, surroundings);
 	convertThresholdIntoTarget(source, threshold, rows, cols);
+	timer.end();
 	delete[] source;
 	delete[] threshold;
 
@@ -80,6 +83,7 @@ unsigned char* BrodleyBinarizator::binarizeWithIntegral(
 			integralBuffer, rows, cols);
 
 	IntegralImageBuilder integralImageBuilder;
+	timer.begin();
 	integralImageBuilder.buildForImage(source, integral, rows, cols);
 
 	for (int i = 0 + surroundings + 1; i < rows - surroundings; ++i) {
@@ -93,7 +97,7 @@ unsigned char* BrodleyBinarizator::binarizeWithIntegral(
 	manageBorders(source, threshold, rows, cols, surroundings);
 
 	convertThresholdIntoTarget(source, threshold, rows, cols);
-
+	timer.end();
 	delete integralBuffer;
 	delete[] source;
 	delete[] threshold;
