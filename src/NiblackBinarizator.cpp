@@ -70,7 +70,7 @@ unsigned char * NiblackBinarizator::binarizeWithIntegral(
 	if ((integralBuffer = new unsigned long long int[rows * cols]) == NULL) {
 		throw -1;
 	}
-	unsigned long long int** integral = Binarizator::prepareTableForOperations(
+	unsigned  long long int** integral = Binarizator::prepareTableForOperations(
 			integralBuffer, rows, cols);
 
 	unsigned long long int *integralSquareBuffer;

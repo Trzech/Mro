@@ -17,6 +17,8 @@ public:
 	static unsigned char** prepareTableForOperations(
 			unsigned char* inputBuffer, int rows, int cols);
 	static unsigned long long int** prepareTableForOperations(unsigned long long int* inputBuffer, int rows, int cols);
+	static unsigned int** prepareTableForOperations(
+			unsigned int* inputBuffer, int rows, int cols);
 protected:
 	Timer timer;
 	void manageBorders(unsigned char** source,
