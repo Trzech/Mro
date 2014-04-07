@@ -62,8 +62,8 @@ unsigned char* BrodleyBinarizator::binarizeWithoutIntegral(
 
 unsigned char* BrodleyBinarizator::binarizeWithIntegral(
 		unsigned char* inputBuffer, int rows, int cols, int k, double r) {
-	unsigned char *resultBuffer;
 
+	unsigned char *resultBuffer;
 	if ((resultBuffer = new unsigned char[rows * cols]) == NULL) {
 		throw -1;
 	}
@@ -73,12 +73,17 @@ unsigned char* BrodleyBinarizator::binarizeWithIntegral(
 		throw -1;
 	}
 
+	unsigned char *thresholdBuffer;
+	if ((thresholdBuffer = new unsigned char[rows * cols]) == NULL) {
+		throw -1;
+	}
+
 	unsigned char** source = Binarizator::prepareTableForOperations(inputBuffer,
 			rows, cols);
 	unsigned char** target = Binarizator::prepareTableForOperations(
 			resultBuffer, rows, cols);
 	unsigned char** threshold= Binarizator::prepareTableForOperations(
-			resultBuffer, rows, cols);
+			thresholdBuffer, rows, cols);
 	unsigned int** I = Binarizator::prepareTableForOperations(integralBuffer,
 			rows, cols);
 
@@ -104,6 +109,7 @@ unsigned char* BrodleyBinarizator::binarizeWithIntegral(
 	convertThresholdIntoTarget(source, target, threshold, rows, cols);
 	timer.end();
 	delete integralBuffer;
+	delete thresholdBuffer;
 	delete[] source;
 	delete[] target;
 	delete[] threshold;

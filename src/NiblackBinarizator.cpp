@@ -132,6 +132,8 @@ unsigned char * NiblackBinarizator::binarizeWithIntegral(
 	delete integralSquareBuffer;
 	delete[] IS;
 	return resultBuffer;
+	delete[] threshold;
+	return thresholdBuffer;
 }
 
 NiblackBinarizator::NiblackBinarizator() {
