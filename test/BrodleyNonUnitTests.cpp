@@ -73,7 +73,7 @@ TEST_F(BrodleyNonUnitTests, DISABLED_lenaBrodleyBinarizatorWithoutIntegral) {
 
 }
 
-TEST_F(BrodleyNonUnitTests,  DISABLED_bookBrodleyBinarizatorWithIntegral) {
+TEST_F(BrodleyNonUnitTests, bookBrodleyBinarizatorWithIntegral) {
 	Timer timer;
 	int rows, cols;
 
