@@ -53,7 +53,7 @@ unsigned char * NiblackBinarizator::binarizeWithoutIntegral(
 }
 
 unsigned char * NiblackBinarizator::binarizeWithIntegral(
-		unsigned char* inputBuffer, int rows, int cols, int surroundings,
+		unsigned char* inputBuffer, int rows, int cols, int k,
 		double k_factor) {
 	unsigned char *resultBuffer;
 
@@ -70,45 +70,48 @@ unsigned char * NiblackBinarizator::binarizeWithIntegral(
 	if ((integralBuffer = new unsigned long long int[rows * cols]) == NULL) {
 		throw -1;
 	}
-	unsigned  long long int** integral = Binarizator::prepareTableForOperations(
+	unsigned long long int** I = Binarizator::prepareTableForOperations(
 			integralBuffer, rows, cols);
 
 	unsigned long long int *integralSquareBuffer;
 	if ((integralSquareBuffer = new unsigned long long int[rows * cols]) == NULL) {
 		throw -1;
 	}
-	unsigned long long int** integralSquare =
+	unsigned long long int** IS =
 			Binarizator::prepareTableForOperations(integralSquareBuffer, rows,
 					cols);
 
 	timer.begin();
 
 	IntegralImageBuilder integralImageBuilder;
-	integralImageBuilder.buildForImageWithSquares(source, integral,
-			integralSquare, rows, cols);
+	integralImageBuilder.buildForImageWithSquares(source, I, IS,
+			rows, cols);
 
-	for (int i = 0 + surroundings + 1; i < rows - surroundings; ++i) {
-		for (int j = 0 + surroundings + 1; j < cols - surroundings; ++j) {
+	unsigned long long int n = (2 * k + 1) * (2 * k + 1);
+	for (int i = 0 + k + 1; i < rows - k; ++i) {
+		for (int j = 0 + k + 1; j < cols - k; ++j) {
 
-			double m = integralImageBuilder.mean(integral, i, j, surroundings);
-			double s = sqrt(
-					integralImageBuilder.mean(integralSquare, i, j,
-							surroundings) - m * m);
+			double m = (I[i + k][j + k] + I[i - k - 1][j - k - 1]
+					- I[i - k - 1][j + k] - I[i + k][j - k - 1]) * 1.0 / n;
+			double ms = (IS[i + k][j + k] + IS[i - k - 1][j - k - 1]
+					- IS[i - k - 1][j + k] - IS[i + k][j - k - 1]) * 1.0 / n;
 
-			threshold[i][j] = m * (1.0 + k_factor * (s / R - 1.0));
+			double s = sqrt(ms - m * m);
+			//double s = 1.0;
+			//threshold[i][j] = m * (1.0 + k_factor * (s / R - 1.0));
 
 		}
 	}
 
-	manageBorders(source, threshold, rows, cols, surroundings);
+	manageBorders(source, threshold, rows, cols, k);
 	convertThresholdIntoTarget(source, threshold, rows, cols);
 
 	timer.end();
 	delete[] source;
 	delete integralBuffer;
-	delete[] integral;
+	delete[] I;
 	delete integralSquareBuffer;
-	delete[] integralSquare;
+	delete[] IS;
 	return resultBuffer;
 }
 
