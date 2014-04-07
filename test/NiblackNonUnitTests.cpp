@@ -7,12 +7,12 @@
 
 class NiblackNonUnitTests: public ::testing::Test {
 public:
-	static const int surrounding = 10;
-	static const double k_factor = 0.2;
+	int surrounding = 10;
+	double k_factor = 0.2;
 };
 
 
-TEST_F(NiblackNonUnitTests, lenaNiblackBinarizatorWithoutIntegral) {
+TEST_F(NiblackNonUnitTests, DISABLED_lenaNiblackBinarizatorWithoutIntegral) {
 	Timer timer;
 	int rows, cols;
 
@@ -39,7 +39,7 @@ TEST_F(NiblackNonUnitTests, lenaNiblackBinarizatorWithoutIntegral) {
 	ASSERT_LT(time, 1000);
 
 }
-TEST_F(NiblackNonUnitTests, lenaNiblackBinarizatorWithIntegral) {
+TEST_F(NiblackNonUnitTests, DISABLED_lenaNiblackBinarizatorWithIntegral) {
 	Timer timer;
 	int rows, cols;
 
@@ -120,4 +120,8 @@ TEST_F(NiblackNonUnitTests, bookNiblackBinarizatorWithIntegral) {
 	ASSERT_LT(time, 1000);
 
 }
+
+
+
+
 

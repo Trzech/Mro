@@ -25,8 +25,18 @@ unsigned char** Binarizator::prepareTableForOperations(
 	return source;
 }
 
-unsigned int** Binarizator::prepareTableForOperations(
-		unsigned int* inputBuffer, int rows, int cols) {
+double** Binarizator::prepareTableForOperations(
+		double* inputBuffer, int rows, int cols) {
+	double** source = new double*[rows];
+	for (int i = 0; i < rows; ++i) {
+		source[i] = inputBuffer + i * cols;
+	}
+	return source;
+}
+
+
+unsigned int** Binarizator::prepareTableForOperations(unsigned int* inputBuffer,
+		int rows, int cols) {
 	unsigned int** source = new unsigned int*[rows];
 	for (int i = 0; i < rows; ++i) {
 		source[i] = inputBuffer + i * cols;
@@ -43,8 +53,8 @@ unsigned long long int** Binarizator::prepareTableForOperations(
 	return source;
 }
 
-void Binarizator::manageBorders(unsigned char** source,
-		unsigned char** target, int rows, int cols, int surroundings) {
+void Binarizator::manageBorders(unsigned char** target,
+		int rows, int cols, int surroundings) {
 	for (int i = surroundings + 1; i <= rows - surroundings; ++i) {
 		for (int j = 0; j <= surroundings; ++j) {
 			target[i][j] = target[i][surroundings + 1];
@@ -69,10 +79,10 @@ void Binarizator::manageBorders(unsigned char** source,
 }
 
 void Binarizator::convertThresholdIntoTarget(unsigned char** source,
-		unsigned char** target, int rows, int cols) {
+		unsigned char** target, unsigned char** treshold, int rows, int cols) {
 	for (int i = 0; i < rows; ++i) {
 		for (int j = 0; j < cols; ++j) {
-			if (source[i][j] > target[i][j]) {
+			if (source[i][j] > treshold[i][j]) {
 				target[i][j] = 255;
 			} else {
 				target[i][j] = 0;

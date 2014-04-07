@@ -9,11 +9,16 @@
 
 class BrodleyNonUnitTests: public ::testing::Test {
 public:
-	static const int surrounding = 10;
-	static const double brodleyParameter = 0.9;
+	BrodleyNonUnitTests(){
+		surrounding = 10;
+	brodleyParameter = 0.9;
+
+	}
+	int surrounding;
+	double brodleyParameter;
 };
 
-TEST_F(BrodleyNonUnitTests, lenaBrodleyBinarizatorWithIntegral) {
+TEST_F(BrodleyNonUnitTests, DISABLED_lenaBrodleyBinarizatorWithIntegral) {
 	Timer timer;
 	int rows, cols;
 
@@ -40,7 +45,7 @@ TEST_F(BrodleyNonUnitTests, lenaBrodleyBinarizatorWithIntegral) {
 	ASSERT_LT(time, 500);
 }
 
-TEST_F(BrodleyNonUnitTests, lenaBrodleyBinarizatorWithoutIntegral) {
+TEST_F(BrodleyNonUnitTests, DISABLED_lenaBrodleyBinarizatorWithoutIntegral) {
 	Timer timer;
 	int rows, cols;
 
@@ -68,7 +73,7 @@ TEST_F(BrodleyNonUnitTests, lenaBrodleyBinarizatorWithoutIntegral) {
 
 }
 
-TEST_F(BrodleyNonUnitTests, bookBrodleyBinarizatorWithIntegral) {
+TEST_F(BrodleyNonUnitTests,  DISABLED_bookBrodleyBinarizatorWithIntegral) {
 	Timer timer;
 	int rows, cols;
 

@@ -28,7 +28,9 @@ unsigned char* BrodleyBinarizator::binarizeWithoutIntegral(
 
 	unsigned char** source = Binarizator::prepareTableForOperations(inputBuffer,
 			rows, cols);
-	unsigned char** threshold = Binarizator::prepareTableForOperations(
+	unsigned char** target = Binarizator::prepareTableForOperations(
+			resultBuffer, rows, cols);
+	unsigned char** treshold = Binarizator::prepareTableForOperations(
 			resultBuffer, rows, cols);
 
 	timer.begin();
@@ -44,15 +46,16 @@ unsigned char* BrodleyBinarizator::binarizeWithoutIntegral(
 			}
 			int n = (2 * surroundings + 1) * (2 * surroundings + 1);
 			double m = suma * 1.0 / n;
-			threshold[i][j] = r * m;
+			treshold[i][j] = r * m;
 		}
 	}
 
-	manageBorders(source, threshold, rows, cols, surroundings);
-	convertThresholdIntoTarget(source, threshold, rows, cols);
+	manageBorders(treshold, rows, cols, surroundings);
+	convertThresholdIntoTarget(source, target, treshold, rows, cols);
 	timer.end();
 	delete[] source;
-	delete[] threshold;
+	delete[] target;
+	delete[] treshold;
 
 	return resultBuffer;
 }
@@ -72,7 +75,9 @@ unsigned char* BrodleyBinarizator::binarizeWithIntegral(
 
 	unsigned char** source = Binarizator::prepareTableForOperations(inputBuffer,
 			rows, cols);
-	unsigned char** threshold = Binarizator::prepareTableForOperations(
+	unsigned char** target = Binarizator::prepareTableForOperations(
+			resultBuffer, rows, cols);
+	unsigned char** threshold= Binarizator::prepareTableForOperations(
 			resultBuffer, rows, cols);
 	unsigned int** I = Binarizator::prepareTableForOperations(integralBuffer,
 			rows, cols);
@@ -81,8 +86,7 @@ unsigned char* BrodleyBinarizator::binarizeWithIntegral(
 	timer.begin();
 	integralImageBuilder.buildForImage(source, I, rows, cols);
 
-	double rPrzezN = r
-			/ ((2 * k + 1) * (2 * k + 1) );
+	double rPrzezN = r / ((2 * k + 1) * (2 * k + 1));
 
 	for (int i = 0 + k + 1; i < rows - k; ++i) {
 		for (int j = 0 + k + 1; j < cols - k; ++j) {
@@ -96,11 +100,12 @@ unsigned char* BrodleyBinarizator::binarizeWithIntegral(
 		}
 	}
 
-	manageBorders(source, threshold, rows, cols, k);
-	convertThresholdIntoTarget(source, threshold, rows, cols);
+	manageBorders(threshold, rows, cols, k);
+	convertThresholdIntoTarget(source, target, threshold, rows, cols);
 	timer.end();
 	delete integralBuffer;
 	delete[] source;
+	delete[] target;
 	delete[] threshold;
 	delete[] I;
 

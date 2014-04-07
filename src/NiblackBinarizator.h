@@ -18,6 +18,7 @@ public:
 	unsigned char* binarizeWithIntegral(unsigned char* inputBuffer,
 			int rows, int cols, int surroundings = 10, double k_factor = 0.2);
 
+
 private:
 	void binarizeInnerPart(unsigned char** source, unsigned char** target,
 			int rows, int cols, int surroundings, double k_factor);
