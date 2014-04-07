@@ -89,20 +89,8 @@ unsigned char * NiblackBinarizator::binarizeWithIntegral(
 			integralSquareBuffer, rows, cols);
 	//
 
-	double *meanBuffer;
-	if ((meanBuffer = new double[rows * cols]) == NULL) {
-		throw -1;
-	}
-	double** m = Binarizator::prepareTableForOperations(
-			meanBuffer, rows, cols);
-	//
-	double *meanSquareBuffer;
-	if ((meanSquareBuffer = new double[rows * cols]) == NULL) {
-		throw -1;
-	}
-	double** ms = Binarizator::prepareTableForOperations(
-			meanSquareBuffer, rows, cols);
-	//
+
+
 	timer.begin();
 
 	IntegralImageBuilder integralImageBuilder;
@@ -110,30 +98,26 @@ unsigned char * NiblackBinarizator::binarizeWithIntegral(
 	integralImageBuilder.buildForImageWithSquares(source, I, IS, rows, cols);
 
 	unsigned long long int n = (2 * k + 1) * (2 * k + 1);
+
 	for (int i = 0 + k + 1; i < rows - k; ++i) {
 		for (int j = 0 + k + 1; j < cols - k; ++j) {
 
-			m[i][j] = (I[i + k][j + k] + I[i - k - 1][j - k - 1]
+			double m = (I[i + k][j + k] + I[i - k - 1][j - k - 1]
 					- I[i - k - 1][j + k] - I[i + k][j - k - 1]) * 1.0 / n;
-			ms[i][j] = (IS[i + k][j + k] + IS[i - k - 1][j - k - 1]
+			double ms = (IS[i + k][j + k] + IS[i - k - 1][j - k - 1]
 					- IS[i - k - 1][j + k] - IS[i + k][j - k - 1]) * 1.0 / n;
-		}
-	}
-	for (int i = 0 + k + 1; i < rows - k; ++i) {
-		for (int j = 0 + k + 1; j < cols - k; ++j) {
 
 
 
-//			double s = sqrt(ms[i][j] - m[i][j] * m[i][j]);
-
-//			int s = (ms - m * m);
-//			int result = s;
+//			to była próba własnego pierwiastka
+//			double s = (ms - m * m);
+//			double result = s;
 //			do {
 //				result = (result + s/result)/2;
-//			}while(fabs(result*result-s)>1);
+//			}while(fabs(result*result-s)>0.1);
 //			s =  result;
 
-			threshold[i][j] = m[i][j] * (1.0 + k_factor * (sqrt(ms[i][j] - m[i][j] * m[i][j]) / R - 1.0));
+			threshold[i][j] = m * (1.0 + k_factor * (sqrt(ms - m * m) / R - 1.0));
 
 		}
 	}
