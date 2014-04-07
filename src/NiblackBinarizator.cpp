@@ -105,9 +105,6 @@ unsigned char * NiblackBinarizator::binarizeWithIntegral(
 	//
 	timer.begin();
 
-	pthread_t thread1;
-	pthread_create(&thread1, NULL, NULL, NULL);
-
 	IntegralImageBuilder integralImageBuilder;
 
 	integralImageBuilder.buildForImageWithSquares(source, I, IS, rows, cols);
