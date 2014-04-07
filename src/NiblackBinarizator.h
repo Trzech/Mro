@@ -33,7 +33,7 @@ private:
 
 	struct threadArgs preapreStructForThread(int cols, int k, double k_factor,
 			int rows, unsigned long long int** I, unsigned long long int** IS,
-			double** m, double** ms, unsigned char** threshold);
+			 unsigned char** threshold);
 };
 
 #endif /* IMAGEBINARIZATOR_H_ */
