@@ -11,6 +11,21 @@
 #include <pthread.h>
 const double R = 128.0;
 
+struct threadArgs {
+	unsigned long long int** I;
+	unsigned long long int** IS;
+	unsigned char** threshold;
+	double** m;
+	double** ms;
+	double k_factor;
+	int R;
+	int rowsMin;
+	int rowsMax;
+	int colsMin;
+	int colsMax;
+	int k;
+};
+
 unsigned char * NiblackBinarizator::binarizeWithoutIntegral(
 		unsigned char* inputBuffer, int rows, int cols, int surroundings,
 		double k_factor) {
@@ -50,6 +65,62 @@ unsigned char * NiblackBinarizator::binarizeWithoutIntegral(
 	delete[] source;
 
 	return resultBuffer;
+}
+
+void *calculateThreshold(void * args) {
+	struct threadArgs *a = (struct threadArgs *)args;
+
+	unsigned long long int n = (2 * a->k + 1) * (2 * a->k + 1);
+	for (int i = a->rowsMin + a->k + 1; i < a->rowsMax - a->k; ++i) {
+		for (int j = a->colsMin + a->k + 1; j < a->colsMax - a->k; ++j) {
+			a->m[i][j] = (a->I[i + a->k][j + a->k]
+					+ a->I[i - a->k - 1][j - a->k - 1]
+					- a->I[i - a->k - 1][j + a->k]
+					- a->I[i + a->k][j - a->k - 1]) * 1.0 / n;
+			a->ms[i][j] = (a->IS[i + a->k][j + a->k]
+					+ a->IS[i - a->k - 1][j - a->k - 1]
+					- a->IS[i - a->k - 1][j + a->k]
+					- a->IS[i + a->k][j - a->k - 1]) * 1.0 / n;
+		}
+	}
+	for (int i = a->rowsMin + a->k + 1; i < a->rowsMax - a->k; ++i) {
+		for (int j = a->colsMin + a->k + 1; j < a->colsMax - a->k; ++j) {
+			//			double s = sqrt(ms[i][j] - m[i][j] * m[i][j]);
+			//			int s = (ms - m * m);
+			//			int result = s;
+			//			do {
+			//				result = (result + s/result)/2;
+			//			}while(fabs(result*result-s)>1);
+			//			s =  result;
+			a->threshold[i][j] = a->m[i][j]
+					* (1.0
+							+ a->k_factor
+									* (sqrt(
+											a->ms[i][j]
+													- a->m[i][j] * a->m[i][j])
+											/ R - 1.0));
+		}
+	}
+}
+
+struct threadArgs NiblackBinarizator::preapreStructForThread(int cols, int k,
+		double k_factor, int rows, unsigned long long int** I,
+		unsigned long long int** IS, double** m, double** ms,
+		unsigned char** threshold) {
+	struct threadArgs a;
+	a.I = I;
+	a.IS = IS;
+	a.R = R;
+	a.colsMax = cols;
+	a.colsMin = 0;
+	a.k = k;
+	a.k_factor = k_factor;
+	a.m = m;
+	a.ms = ms;
+	a.rowsMax = rows;
+	a.rowsMin = 0;
+	a.threshold = threshold;
+	return a;
 }
 
 unsigned char * NiblackBinarizator::binarizeWithIntegral(
@@ -93,55 +164,45 @@ unsigned char * NiblackBinarizator::binarizeWithIntegral(
 	if ((meanBuffer = new double[rows * cols]) == NULL) {
 		throw -1;
 	}
-	double** m = Binarizator::prepareTableForOperations(
-			meanBuffer, rows, cols);
+	double** m = Binarizator::prepareTableForOperations(meanBuffer, rows, cols);
 	//
 	double *meanSquareBuffer;
 	if ((meanSquareBuffer = new double[rows * cols]) == NULL) {
 		throw -1;
 	}
-	double** ms = Binarizator::prepareTableForOperations(
-			meanSquareBuffer, rows, cols);
+	double** ms = Binarizator::prepareTableForOperations(meanSquareBuffer, rows,
+			cols);
 	//
 	timer.begin();
 
-//	pthread_t thread1;
-//	pthread_create(&thread1, NULL, NULL, NULL);
 
 	IntegralImageBuilder integralImageBuilder;
 
 	integralImageBuilder.buildForImageWithSquares(source, I, IS, rows, cols);
+	struct threadArgs a1 = preapreStructForThread(cols, k, k_factor, rows, I, IS,
+			m, ms, threshold);
+	struct threadArgs a2 = preapreStructForThread(cols, k, k_factor, rows, I, IS,
+			m, ms, threshold);
+	struct threadArgs a3 = preapreStructForThread(cols, k, k_factor, rows, I, IS,
+			m, ms, threshold);
 
-	unsigned long long int n = (2 * k + 1) * (2 * k + 1);
-	for (int i = 0 + k + 1; i < rows - k; ++i) {
-		for (int j = 0 + k + 1; j < cols - k; ++j) {
+	a1.rowsMin = 0;
+	a1.rowsMax = rows/3;
+	a2.rowsMin = rows/3;
+	a2.rowsMax = (2.0/3.0) *rows;
+	a3.rowsMin = (2.0/3.0) *rows;
+	a3.rowsMax = rows;
 
-			m[i][j] = (I[i + k][j + k] + I[i - k - 1][j - k - 1]
-					- I[i - k - 1][j + k] - I[i + k][j - k - 1]) * 1.0 / n;
-			ms[i][j] = (IS[i + k][j + k] + IS[i - k - 1][j - k - 1]
-					- IS[i - k - 1][j + k] - IS[i + k][j - k - 1]) * 1.0 / n;
-		}
-	}
-	for (int i = 0 + k + 1; i < rows - k; ++i) {
-		for (int j = 0 + k + 1; j < cols - k; ++j) {
-
-
-
-//			double s = sqrt(ms[i][j] - m[i][j] * m[i][j]);
-
-//			int s = (ms - m * m);
-//			int result = s;
-//			do {
-//				result = (result + s/result)/2;
-//			}while(fabs(result*result-s)>1);
-//			s =  result;
-
-			threshold[i][j] = m[i][j] * (1.0 + k_factor * (sqrt(ms[i][j] - m[i][j] * m[i][j]) / R - 1.0));
-
-		}
-	}
-
- 	manageBorders(threshold, rows, cols, k);
+	pthread_t thread1;
+	pthread_t thread2;
+	pthread_t thread3;
+	pthread_create(&thread1, NULL, calculateThreshold, &a1);
+	pthread_create(&thread2, NULL, calculateThreshold, &a2);
+	pthread_create(&thread3, NULL, calculateThreshold, &a3);
+	pthread_join(thread1, NULL);
+	pthread_join(thread2, NULL);
+	pthread_join(thread3, NULL);
+	manageBorders(threshold, rows, cols, k);
 	convertThresholdIntoTarget(source, target, threshold, rows, cols);
 
 	timer.end();

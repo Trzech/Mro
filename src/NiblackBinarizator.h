@@ -30,6 +30,10 @@ private:
 			int xmin, int xmax, int ymin, int ymax, int surroundings,
 			double k_factor);
 	int controlled(int x, int xMax);
+
+	struct threadArgs preapreStructForThread(int cols, int k, double k_factor,
+			int rows, unsigned long long int** I, unsigned long long int** IS,
+			double** m, double** ms, unsigned char** threshold);
 };
 
 #endif /* IMAGEBINARIZATOR_H_ */
