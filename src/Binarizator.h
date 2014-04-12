@@ -14,16 +14,25 @@ class Binarizator {
 public:
 	Binarizator();
 	virtual ~Binarizator();
-	static unsigned char** prepareTableForOperations(
-			unsigned char* inputBuffer, int rows, int cols);
-	static unsigned long long int** prepareTableForOperations(unsigned long long int* inputBuffer, int rows, int cols);
-	static double** prepareTableForOperations(double* inputBuffer, int rows, int cols);
+
+	template<class T>
+	static T** prepareTableForOperations(T* inputBuffer, int rows, int cols);
 protected:
 	Timer timer;
-	void manageBorders(
-			unsigned char** target, int rows, int cols, int surroundings);
+	void manageBorders(unsigned char** target, int rows, int cols,
+			int surroundings);
 	void convertThresholdIntoTarget(unsigned char** source,
-			unsigned char** target,unsigned char** threshold, int rows, int cols);
+			unsigned char** target, unsigned char** threshold, int rows,
+			int cols);
 };
+
+template<class T>
+T** Binarizator::prepareTableForOperations(T* inputBuffer, int rows, int cols) {
+	T** source = new T*[rows];
+	for (int i = 0; i < rows; ++i) {
+		source[i] = inputBuffer + i * cols;
+	}
+	return source;
+}
 
 #endif /* ABSTRACTBINARIZATOR_H_ */

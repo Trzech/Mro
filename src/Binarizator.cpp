@@ -16,35 +16,6 @@ Binarizator::~Binarizator() {
 	// TODO Auto-generated destructor stub
 }
 
-unsigned char** Binarizator::prepareTableForOperations(
-		unsigned char* inputBuffer, int rows, int cols) {
-	unsigned char** source = new unsigned char*[rows];
-	for (int i = 0; i < rows; ++i) {
-		source[i] = inputBuffer + i * cols;
-	}
-	return source;
-}
-
-double** Binarizator::prepareTableForOperations(
-		double* inputBuffer, int rows, int cols) {
-	double** source = new double*[rows];
-	for (int i = 0; i < rows; ++i) {
-		source[i] = inputBuffer + i * cols;
-	}
-	return source;
-}
-
-
-
-
-unsigned long long int** Binarizator::prepareTableForOperations(
-		unsigned long long int* inputBuffer, int rows, int cols) {
-	unsigned long long int** source = new unsigned long long int*[rows];
-	for (int i = 0; i < rows; ++i) {
-		source[i] = inputBuffer + i * cols;
-	}
-	return source;
-}
 
 void Binarizator::manageBorders(unsigned char** target,
 		int rows, int cols, int surroundings) {
