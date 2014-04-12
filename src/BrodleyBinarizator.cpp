@@ -68,8 +68,8 @@ unsigned char* BrodleyBinarizator::binarizeWithIntegral(
 		throw -1;
 	}
 
-	unsigned int *integralBuffer;
-	if ((integralBuffer = new unsigned int[rows * cols]) == NULL) {
+	unsigned long long int *integralBuffer;
+	if ((integralBuffer = new unsigned long long int[rows * cols]) == NULL) {
 		throw -1;
 	}
 
@@ -82,9 +82,9 @@ unsigned char* BrodleyBinarizator::binarizeWithIntegral(
 			rows, cols);
 	unsigned char** target = Binarizator::prepareTableForOperations(
 			resultBuffer, rows, cols);
-	unsigned char** threshold= Binarizator::prepareTableForOperations(
+	unsigned char** threshold = Binarizator::prepareTableForOperations(
 			thresholdBuffer, rows, cols);
-	unsigned int** I = Binarizator::prepareTableForOperations(integralBuffer,
+	unsigned long long int** I = Binarizator::prepareTableForOperations(integralBuffer,
 			rows, cols);
 
 	IntegralImageBuilder integralImageBuilder;
@@ -95,13 +95,8 @@ unsigned char* BrodleyBinarizator::binarizeWithIntegral(
 
 	for (int i = 0 + k + 1; i < rows - k; ++i) {
 		for (int j = 0 + k + 1; j < cols - k; ++j) {
-			//double m = integralImageBuilder.mean(integral, i, j, surroundings);
-
-			int m = (I[i + k][j + k] + I[i - k - 1][j - k - 1]
-					- I[i - k - 1][j + k] - I[i + k][j - k - 1]);
-
+			int m = integralImageBuilder.sumInArea(I,i,j,k);
 			threshold[i][j] = rPrzezN * m;
-
 		}
 	}
 

@@ -14,16 +14,11 @@ public:
 	virtual ~IntegralImageBuilder();
 	void buildForImage(unsigned char** inputBuffer,
 			unsigned long long int** outputBuffer, int rows, int cols);
-	void buildForImage(unsigned char** inputBuffer, unsigned int** outputBuffer,
-			int rows, int cols);
 	void buildForImageWithSquares(unsigned char** inputBuffer,
 			unsigned long long int** outputBuffer,
 			unsigned long long int** outputSquareBuffer, int rows, int cols);
-	void buildForImageWithSquares(unsigned char** inputBuffer,
-			unsigned int** outputBuffer, unsigned int** outputSquareBuffer,
-			int rows, int cols);
-	double mean(unsigned long long int** integral, int i, int j, int k);
-	double mean(unsigned int** integral, int i, int j, int k);
+	int sumInArea(unsigned long long int** integral, int rowOfpixel, int colOfPixel, int surrounding);
+
 };
 
 #endif /* INTEGRALIMAGEBUILDER_H_ */

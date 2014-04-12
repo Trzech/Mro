@@ -35,14 +35,7 @@ double** Binarizator::prepareTableForOperations(
 }
 
 
-unsigned int** Binarizator::prepareTableForOperations(unsigned int* inputBuffer,
-		int rows, int cols) {
-	unsigned int** source = new unsigned int*[rows];
-	for (int i = 0; i < rows; ++i) {
-		source[i] = inputBuffer + i * cols;
-	}
-	return source;
-}
+
 
 unsigned long long int** Binarizator::prepareTableForOperations(
 		unsigned long long int* inputBuffer, int rows, int cols) {

@@ -101,22 +101,8 @@ unsigned char * NiblackBinarizator::binarizeWithIntegral(
 
 	for (int i = 0 + k + 1; i < rows - k; ++i) {
 		for (int j = 0 + k + 1; j < cols - k; ++j) {
-
-			double m = (I[i + k][j + k] + I[i - k - 1][j - k - 1]
-					- I[i - k - 1][j + k] - I[i + k][j - k - 1]) * 1.0 / n;
-			double ms = (IS[i + k][j + k] + IS[i - k - 1][j - k - 1]
-					- IS[i - k - 1][j + k] - IS[i + k][j - k - 1]) * 1.0 / n;
-
-
-
-//			to była próba własnego pierwiastka
-//			double s = (ms - m * m);
-//			double result = s;
-//			do {
-//				result = (result + s/result)/2;
-//			}while(fabs(result*result-s)>0.1);
-//			s =  result;
-
+			double m = integralImageBuilder.sumInArea(I,i,j,k) * 1.0 / n;
+			double ms = integralImageBuilder.sumInArea(IS,i,j,k) * 1.0 / n;
 			threshold[i][j] = m * (1.0 + k_factor * (sqrt(ms - m * m) / R - 1.0));
 
 		}

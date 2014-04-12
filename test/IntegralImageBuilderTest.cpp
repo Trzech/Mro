@@ -61,7 +61,7 @@ TEST_F(IntegralImageBuilderTest, meanExampleFromBook) {
 
 	//when
 	IntegralImageBuilder integralImageBuilder;
-	double mean = integralImageBuilder.mean(source, 2, 2, 1);
+	double mean = (integralImageBuilder.sumInArea(source, 2, 2, 1)*1.0)/9;
 
 	//then
 	ASSERT_EQ(5, mean);
@@ -87,7 +87,7 @@ TEST_F(IntegralImageBuilderTest, meanOfOne) {
 	//when
 	IntegralImageBuilder integralImageBuilder;
 	integralImageBuilder.buildForImage(source, integral, rows, cols);
-	double mean = integralImageBuilder.mean(integral, 2, 2, 1);
+	double mean = (integralImageBuilder.sumInArea(integral, 2, 2, 1)*1.0)/9;
 
 	//then
 	ASSERT_EQ(1, mean);
