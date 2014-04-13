@@ -17,6 +17,8 @@ public:
 
 	template<class T>
 	static T** prepareTableForOperations(T* inputBuffer, int rows, int cols);
+	template<class T>
+	static T* allocMemory(int rows, int cols);
 protected:
 	Timer timer;
 	void manageBorders(unsigned char** target, int rows, int cols,
@@ -24,6 +26,7 @@ protected:
 	void convertThresholdIntoTarget(unsigned char** source,
 			unsigned char** target, unsigned char** threshold, int rows,
 			int cols);
+
 };
 
 template<class T>
@@ -35,4 +38,12 @@ T** Binarizator::prepareTableForOperations(T* inputBuffer, int rows, int cols) {
 	return source;
 }
 
+template<class T>
+T* Binarizator::allocMemory(int rows, int cols) {
+	T*resultBuffer;
+	if ((resultBuffer = new T[rows * cols]) == NULL) {
+		throw -1;
+	}
+	return resultBuffer;
+}
 #endif /* ABSTRACTBINARIZATOR_H_ */

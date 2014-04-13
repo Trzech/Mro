@@ -5,13 +5,17 @@
  *      Author: mj
  */
 
-#ifndef HAARLIKEFEATURES_H_
-#define HAARLIKEFEATURES_H_
+#ifndef HaarLikeBinarizator_H_
+#define HaarLikeBinarizator_H_
+#include <stdlib.h>
+#include "Binarizator.h"
 
-class HaarLikeFeatures {
+class HaarLikeBinarizator: protected Binarizator {
 public:
-	HaarLikeFeatures();
-	~HaarLikeFeatures();
+	HaarLikeBinarizator();
+	~HaarLikeBinarizator();
+	unsigned char * binarizeVertical2(unsigned char* inputBuffer, int rows,
+				int cols, int surroundings, double t = 0.95);
 	/*
 	 * rozbić takie metody
 	 *
@@ -43,4 +47,4 @@ public:
 	 */
 };
 
-#endif /* HAARLIKEFEATURES_H_ */
+#endif /* HaarLikeBinarizator_H_ */
