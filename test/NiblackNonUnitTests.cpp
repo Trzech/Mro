@@ -12,7 +12,7 @@ public:
 };
 
 
-TEST_F(NiblackNonUnitTests, DISABLED_lenaNiblackBinarizatorWithIntegral) {
+TEST_F(NiblackNonUnitTests, lenaNiblackBinarizatorWithIntegral) {
 	Timer timer;
 	int rows, cols;
 
@@ -40,7 +40,7 @@ TEST_F(NiblackNonUnitTests, DISABLED_lenaNiblackBinarizatorWithIntegral) {
 }
 
 
-TEST_F(NiblackNonUnitTests, bookNiblackBinarizatorWithIntegral) {
+TEST_F(NiblackNonUnitTests, DISABLED_bookNiblackBinarizatorWithIntegral) {
 	Timer timer;
 	int rows, cols;
 

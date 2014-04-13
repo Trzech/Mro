@@ -20,6 +20,7 @@ Binarizator::Binarizator(unsigned char* inputBuffer, int rows,
 }
 
 Binarizator::~Binarizator() {
+	inputBuffer = NULL;
 	delete[] thresholdArray;
 	delete thresholdBuffer;
 	delete[] inputArray;

@@ -13,7 +13,7 @@ class SudokuReaderNonUnitTests: public ::testing::Test {
 };
 
 
-TEST_F(SudokuReaderNonUnitTests, prosteSudoku) {
+TEST_F(SudokuReaderNonUnitTests, DISABLED_prosteSudoku) {
 
 	SudokuReader reader;
 	reader.process("images/sudokuProste.pgm", "images/sudokuProsteWynik.pgm");

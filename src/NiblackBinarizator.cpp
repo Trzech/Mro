@@ -45,7 +45,6 @@ unsigned char * NiblackBinarizator::binarizeWithIntegral(int k,
 	convertThresholdIntoTarget(inputArray, resultArray, thresholdArray, rows, cols);
 
 
-	delete integralBuffer;
 	delete integralSquareBuffer;
 	delete[] IS;
 	return resultBuffer;
