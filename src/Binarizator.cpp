@@ -7,8 +7,8 @@
 
 #include "Binarizator.h"
 
-Binarizator::Binarizator(unsigned char* inputBuffer, int rows,
-		int cols) {
+void Binarizator::changeImage(unsigned char* inputBuffer, int rows, int cols) {
+	freeMemory();
 	this->inputBuffer = inputBuffer;
 	this->rows = rows;
 	this->cols = cols;
@@ -19,18 +19,34 @@ Binarizator::Binarizator(unsigned char* inputBuffer, int rows,
 	integralArray = prepareTableForOperations(integralBuffer, rows, cols);
 }
 
-Binarizator::~Binarizator() {
-	inputBuffer = NULL;
-	delete[] thresholdArray;
-	delete thresholdBuffer;
-	delete[] inputArray;
-	delete integralBuffer;
-	delete[] integralArray;
+Binarizator::Binarizator(unsigned char* inputBuffer, int rows, int cols) {
+	changeImage(inputBuffer, rows, cols);
 }
 
+void Binarizator::freeMemory() {
+	if (thresholdArray != NULL) {
+		delete[] thresholdArray;
+	}
+	if (thresholdBuffer != NULL) {
+		delete thresholdBuffer;
+	}
+	if (inputArray != NULL) {
+		delete[] inputArray;
+	}
+	if (integralBuffer != NULL) {
+		delete integralBuffer;
+	}
+	if (integralArray != NULL) {
+		delete[] integralArray;
+	}
+}
 
-void Binarizator::manageBorders(unsigned char** target,
-		int rows, int cols, int surroundings) {
+Binarizator::~Binarizator() {
+	freeMemory();
+}
+
+void Binarizator::manageBorders(unsigned char** target, int rows, int cols,
+		int surroundings) {
 	for (int i = surroundings + 1; i <= rows - surroundings; ++i) {
 		for (int j = 0; j <= surroundings; ++j) {
 			target[i][j] = target[i][surroundings + 1];
@@ -58,7 +74,7 @@ void Binarizator::convertThresholdIntoTarget(unsigned char** source,
 		unsigned char** target, unsigned char** treshold, int rows, int cols) {
 	for (int i = 0; i < rows; ++i) {
 		for (int j = 0; j < cols; ++j) {
-			if (source[i][j] > treshold[i][j]) {
+			if (source[i][j] >= treshold[i][j]) {
 				target[i][j] = 255;
 			} else {
 				target[i][j] = 0;

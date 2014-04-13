@@ -18,6 +18,13 @@ public:
 			unsigned long long int** outputArray,
 			unsigned long long int** outputSquareArray, int rows, int cols);
 	static int sumInArea(unsigned long long int** integral, int rowOfpixel, int colOfPixel, int surrounding);
+	/**
+	 * a-----b
+	 * |     |
+	 * d-----c
+	 *
+	 */
+	static int sumInArea(unsigned long long int** integral, int aRow, int aCol, int cRow, int cCol);
 
 };
 

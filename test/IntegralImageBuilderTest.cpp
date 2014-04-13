@@ -97,4 +97,22 @@ TEST_F(IntegralImageBuilderTest, meanOfOne) {
 	delete integralBuffer;
 
 }
+TEST_F(IntegralImageBuilderTest, meanExampleFromBookUsingCoordinates) {
+	//given
+	int rows = 5;
+	int cols = 5;
 
+	unsigned long long int inputBuffer[] = { 0, 0, 0, 0, 0, 0, 1, 3, 6, 0, 0, 5, 12, 21,
+			0, 0, 12, 27, 45, 0, 0, 0, 0, 0, 0 };
+	unsigned long long int** source = Binarizator::prepareTableForOperations(inputBuffer,
+			rows, cols);
+
+	//when
+	IntegralImageBuilder integralImageBuilder;
+	double mean = (integralImageBuilder.sumInArea(source, 1,1,3,3)*1.0)/9;
+
+	//then
+	ASSERT_EQ(5, mean);
+
+	delete[] source;
+}

@@ -15,20 +15,20 @@ public:
 	Binarizator(unsigned char* inputBuffer, int rows,
 			int cols);
 	virtual ~Binarizator();
-
+	void changeImage(unsigned char* inputBuffer, int rows, int cols);
 	template<class T>
 	static T** prepareTableForOperations(T* inputBuffer, int rows, int cols);
 	template<class T>
 	static T* allocMemory(int rows, int cols);
 protected:
-	unsigned char* inputBuffer;
-	unsigned char** inputArray;
+	unsigned char* inputBuffer = NULL;
+	unsigned char** inputArray = NULL;
 	int rows;
 	int cols;
-	unsigned char *thresholdBuffer;
-	unsigned char** thresholdArray;
-	unsigned long long int *integralBuffer;
-	unsigned long long int **integralArray;
+	unsigned char *thresholdBuffer = NULL;
+	unsigned char** thresholdArray = NULL;
+	unsigned long long int *integralBuffer = NULL;
+	unsigned long long int **integralArray = NULL;
 
 
 	void manageBorders(unsigned char** target, int rows, int cols,
@@ -37,6 +37,8 @@ protected:
 			unsigned char** target, unsigned char** threshold, int rows,
 			int cols);
 
+private:
+	void freeMemory();
 };
 
 template<class T>

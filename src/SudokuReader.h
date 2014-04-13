@@ -7,16 +7,15 @@
 
 #ifndef SUDOKUREADER_H_
 #define SUDOKUREADER_H_
-#include "GrayscaleImageReader.h"
+#include "HaarLikeBinarizator.h"
 #include "Binarizator.h"
 
 class SudokuReader {
 public:
 	SudokuReader();
 	~SudokuReader();
-	void process(char * inputFile, char * outputFile);
+	void process(char * inputFile, char * outputFile, int t);
 private:
-	GrayscaleImageReader imageReader;
 	void extractImportantElements(unsigned char ** source, unsigned char ** target, int rows, int cols);
 };
 

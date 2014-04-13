@@ -8,14 +8,26 @@
 #ifndef HaarLikeBinarizator_H_
 #define HaarLikeBinarizator_H_
 #include <stdlib.h>
+#include <string.h>
 #include "Binarizator.h"
 
-class HaarLikeBinarizator {
+class HaarLikeBinarizator: protected Binarizator {
 public:
-	HaarLikeBinarizator();
+	HaarLikeBinarizator(unsigned char* inputBuffer, int rows,
+			int cols);
 	~HaarLikeBinarizator();
-	unsigned char * binarizeVertical2(unsigned char* inputBuffer, int rows,
-				int cols, int surroundings, double t = 0.95);
+	unsigned char * getResult();
+	/**
+	 * Ramka kwadratowa tego typu
+	 * ######_____
+	 * ######_____
+	 * ######_____
+	 * ######_____
+	 * ######_____
+	 *
+	 */
+	void applyVertical2Filter(int surroundings, int t = 50);
+	void applyHorizontal2Filter(int surroundings, int t = 50);
 	/*
 	 * rozbić takie metody
 	 *

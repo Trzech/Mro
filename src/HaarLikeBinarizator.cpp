@@ -7,31 +7,63 @@
 
 #include "HaarLikeBinarizator.h"
 
-HaarLikeBinarizator::HaarLikeBinarizator() {
-	// TODO Auto-generated constructor stub
+HaarLikeBinarizator::HaarLikeBinarizator(unsigned char* inputBuffer, int rows,
+		int cols) :
+		Binarizator(inputBuffer, rows, cols) {
+	for (int i = 0 ; i < rows ; ++i) {
+		for (int j = 0; j < cols ; ++j) {
+			thresholdArray[i][j] = 0;
+		}
+	}
 
 }
 
 HaarLikeBinarizator::~HaarLikeBinarizator() {
-	// TODO Auto-generated destructor stub
+// TODO Auto-generated destructor stub
 }
 
-unsigned char* HaarLikeBinarizator::binarizeVertical2(
-		unsigned char* inputBuffer, int rows, int cols, int surroundings,
-		double t) {
-////	unsigned char *resultBuffer = allocMemory<unsigned char>(rows, cols);
-////	unsigned long long int *integralBuffer = allocMemory<unsigned long long int>(rows, cols);
-////	unsigned char *thresholdBuffer = allocMemory<unsigned char>(rows, cols);
-////	unsigned char** inputArray = prepareTableForOperations(inputBuffer, rows, cols);
-////	unsigned long long int** integralArray = prepareTableForOperations(integralBuffer, rows, cols);
-//	IntegralImageBuilder::buildForImage(inputArray, integralArray, rows, cols);
-//
-//
-//	delete integralBuffer;
-//	delete thresholdBuffer;
-//	delete[] inputArray;
-//	delete[] integralArray;
-//
-//	return resultBuffer;
+unsigned char* HaarLikeBinarizator::getResult() {
+	unsigned char * returnBuffer = allocMemory<unsigned char>(rows, cols);
+
+	memcpy(returnBuffer, thresholdBuffer, rows*cols);
+
+	return returnBuffer;
+}
+
+void HaarLikeBinarizator::applyVertical2Filter(int k, int t) {
+
+	IntegralImageBuilder::buildForImage(inputArray, integralArray, rows, cols);
+	for (int i = 0 + k + 1; i < rows - k; ++i) {
+		for (int j = 0 + k + 1; j < cols - k; ++j) {
+			int black = IntegralImageBuilder::sumInArea(integralArray, i - k,
+					j - k, i + k, j);
+			int white = IntegralImageBuilder::sumInArea(integralArray, i - k, j,
+					i + k, j + k);
+
+			if (abs(black - white) > t) {
+				thresholdArray[i][j] = 255;
+			}
+
+		}
+	}
+
+}
+
+void HaarLikeBinarizator::applyHorizontal2Filter(int k, int t) {
+
+	IntegralImageBuilder::buildForImage(inputArray, integralArray, rows, cols);
+		for (int i = 0 + k + 1; i < rows - k; ++i) {
+			for (int j = 0 + k + 1; j < cols - k; ++j) {
+				int black = IntegralImageBuilder::sumInArea(integralArray, i - k,
+						j - k, i, j+k);
+				int white = IntegralImageBuilder::sumInArea(integralArray, i, j -k ,
+						i + k, j + k);
+
+				if (abs(black - white) > t) {
+					thresholdArray[i][j] = 255;
+				}
+
+			}
+		}
 
 }

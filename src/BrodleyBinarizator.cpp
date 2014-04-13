@@ -40,6 +40,7 @@ unsigned char* BrodleyBinarizator::binarizeWithIntegral(int k, double r) {
 	convertThresholdIntoTarget(inputArray, resultArray, thresholdArray, rows,
 			cols);
 
+	delete[] resultArray;
 	return resultBuffer;
 
 }

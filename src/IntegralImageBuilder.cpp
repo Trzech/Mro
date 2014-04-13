@@ -70,5 +70,8 @@ int IntegralImageBuilder::sumInArea(unsigned long long int** I, int i, int j, in
 						- I[i - k - 1][j + k] - I[i + k][j - k - 1]);
 }
 
-
-
+int IntegralImageBuilder::sumInArea(unsigned long long int** I, int aRow,
+		int aCol, int cRow, int cCol) {
+	return (I[cRow][cCol] + I[aRow - 1][aCol - 1]
+							- I[aRow - 1][cCol] - I[cRow][aCol - 1]);
+}
