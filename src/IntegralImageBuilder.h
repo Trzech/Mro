@@ -12,12 +12,12 @@ class IntegralImageBuilder {
 public:
 	IntegralImageBuilder();
 	virtual ~IntegralImageBuilder();
-	void buildForImage(unsigned char** inputBuffer,
-			unsigned long long int** outputBuffer, int rows, int cols);
-	void buildForImageWithSquares(unsigned char** inputBuffer,
-			unsigned long long int** outputBuffer,
-			unsigned long long int** outputSquareBuffer, int rows, int cols);
-	int sumInArea(unsigned long long int** integral, int rowOfpixel, int colOfPixel, int surrounding);
+	static void buildForImage(unsigned char** inputArray,
+			unsigned long long int** outputArray, int rows, int cols);
+	static void buildForImageWithSquares(unsigned char** inputArray,
+			unsigned long long int** outputArray,
+			unsigned long long int** outputSquareArray, int rows, int cols);
+	static int sumInArea(unsigned long long int** integral, int rowOfpixel, int colOfPixel, int surrounding);
 
 };
 
