@@ -17,9 +17,9 @@ public:
 	virtual ~Binarizator();
 
 	template<class T>
-	static T** prepareTableForOperations(T* inputBuffer);
+	static T** prepareTableForOperations(T* inputBuffer, int rows, int cols);
 	template<class T>
-	static T* allocMemory();
+	static T* allocMemory(int rows, int cols);
 protected:
 	unsigned char* inputBuffer;
 	unsigned char** inputArray;
@@ -40,7 +40,7 @@ protected:
 };
 
 template<class T>
-T** Binarizator::prepareTableForOperations(T* inputBuffer) {
+T** Binarizator::prepareTableForOperations(T* inputBuffer, int rows, int cols) {
 	T** source = new T*[rows];
 	for (int i = 0; i < rows; ++i) {
 		source[i] = inputBuffer + i * cols;
@@ -49,7 +49,7 @@ T** Binarizator::prepareTableForOperations(T* inputBuffer) {
 }
 
 template<class T>
-T* Binarizator::allocMemory() {
+T* Binarizator::allocMemory(int rows, int cols) {
 	T*resultBuffer;
 	if ((resultBuffer = new T[rows * cols]) == NULL) {
 		throw -1;

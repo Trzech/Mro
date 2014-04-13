@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include "Binarizator.h"
 
-class HaarLikeBinarizator: protected Binarizator {
+class HaarLikeBinarizator {
 public:
 	HaarLikeBinarizator();
 	~HaarLikeBinarizator();

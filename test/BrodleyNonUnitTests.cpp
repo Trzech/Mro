@@ -32,10 +32,10 @@ TEST_F(BrodleyNonUnitTests, DISABLED_lenaBrodleyBinarizatorWithIntegral) {
 
 	inBuf = reader.readDataFromFile(inputFileName, &rows, &cols);
 
-	BrodleyBinarizator binarizator;
+	BrodleyBinarizator binarizator(inBuf, rows, cols);
 
 	timer.begin();
-	outBuf = binarizator.binarizeWithIntegral(inBuf, rows, cols, surrounding, brodleyParameter);
+	outBuf = binarizator.binarizeWithIntegral(surrounding, brodleyParameter);
 	double time = timer.end();
 	reader.writeImage(outputFileName, outBuf, rows, cols);
 
@@ -45,33 +45,7 @@ TEST_F(BrodleyNonUnitTests, DISABLED_lenaBrodleyBinarizatorWithIntegral) {
 	ASSERT_LT(time, 500);
 }
 
-TEST_F(BrodleyNonUnitTests, DISABLED_lenaBrodleyBinarizatorWithoutIntegral) {
-	Timer timer;
-	int rows, cols;
 
-	GrayscaleImageReader reader;
-
-
-	char inputFileName[] = "images/lena_grayscale.pgm";
-	char outputFileName[] = "images/lena_BrodleyBinarizatorWithoutIntegral.pgm";
-	unsigned char *inBuf;
-	unsigned char *outBuf;
-
-	inBuf = reader.readDataFromFile(inputFileName, &rows, &cols);
-
-	BrodleyBinarizator binarizator;
-
-	timer.begin();
-	outBuf = binarizator.binarizeWithoutIntegral(inBuf, rows, cols, surrounding, brodleyParameter);
-	double time = timer.end();
-	reader.writeImage(outputFileName, outBuf, rows, cols);
-
-	delete inBuf;
-	delete outBuf;
-
-	ASSERT_LT(time, 500);
-
-}
 
 TEST_F(BrodleyNonUnitTests,  bookBrodleyBinarizatorWithIntegral) {
 	Timer timer;
@@ -87,37 +61,10 @@ TEST_F(BrodleyNonUnitTests,  bookBrodleyBinarizatorWithIntegral) {
 
 	inBuf = reader.readDataFromFile(inputFileName, &rows, &cols);
 
-	BrodleyBinarizator binarizator;
+	BrodleyBinarizator binarizator(inBuf, rows, cols);
 
 	timer.begin();
-	outBuf = binarizator.binarizeWithIntegral(inBuf, rows, cols, surrounding, brodleyParameter);
-	double time = timer.end();
-	reader.writeImage(outputFileName, outBuf, rows, cols);
-
-	delete inBuf;
-	delete outBuf;
-
-	ASSERT_LT(time, 500);
-
-}
-TEST_F(BrodleyNonUnitTests, DISABLED_bookBrodleyBinarizatorWithoutIntegral) {
-	Timer timer;
-	int rows, cols;
-
-	GrayscaleImageReader reader;
-
-
-	char inputFileName[] = "images/book.pgm";
-	char outputFileName[] = "images/book_BrodleyBinarizatorWithoutIntegral.pgm";
-	unsigned char *inBuf;
-	unsigned char *outBuf;
-
-	inBuf = reader.readDataFromFile(inputFileName, &rows, &cols);
-
-	BrodleyBinarizator binarizator;
-
-	timer.begin();
-	outBuf = binarizator.binarizeWithoutIntegral(inBuf, rows, cols, surrounding, brodleyParameter);
+	outBuf = binarizator.binarizeWithIntegral(surrounding, brodleyParameter);
 	double time = timer.end();
 	reader.writeImage(outputFileName, outBuf, rows, cols);
 

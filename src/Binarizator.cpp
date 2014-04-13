@@ -12,11 +12,11 @@ Binarizator::Binarizator(unsigned char* inputBuffer, int rows,
 	this->inputBuffer = inputBuffer;
 	this->rows = rows;
 	this->cols = cols;
-	inputArray = prepareTableForOperations(inputBuffer);
-	thresholdBuffer = allocMemory<unsigned char>();
-	thresholdArray = prepareTableForOperations(thresholdBuffer);
-	integralBuffer = allocMemory<unsigned char>();
-	integralArray = prepareTableForOperations(integralBuffer);
+	inputArray = prepareTableForOperations(inputBuffer, rows, cols);
+	thresholdBuffer = allocMemory<unsigned char>(rows, cols);
+	thresholdArray = prepareTableForOperations(thresholdBuffer, rows, cols);
+	integralBuffer = allocMemory<unsigned long long int>(rows, cols);
+	integralArray = prepareTableForOperations(integralBuffer, rows, cols);
 }
 
 Binarizator::~Binarizator() {

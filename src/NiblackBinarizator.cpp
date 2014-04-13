@@ -11,14 +11,13 @@
 #include <pthread.h>
 const double R = 128.0;
 
-unsigned char * NiblackBinarizator::binarizeWithIntegral(
-		unsigned char* inputBuffer, int rows, int cols, int k,
+unsigned char * NiblackBinarizator::binarizeWithIntegral(int k,
 		double k_factor) {
 
 
-	unsigned char *resultBuffer = allocMemory<unsigned char>();
+	unsigned char *resultBuffer = allocMemory<unsigned char>(rows, cols);
 	unsigned char** resultArray = Binarizator::prepareTableForOperations(
-			resultBuffer);
+			resultBuffer, rows, cols);
 
 
 
@@ -27,7 +26,7 @@ unsigned char * NiblackBinarizator::binarizeWithIntegral(
 	if ((integralSquareBuffer = new unsigned long long int[rows * cols]) == NULL) {
 		throw -1;
 	}
-	unsigned long long int** IS = Binarizator::prepareTableForOperations(integralSquareBuffer);
+	unsigned long long int** IS = Binarizator::prepareTableForOperations(integralSquareBuffer, rows, cols);
 	//
 	IntegralImageBuilder::buildForImageWithSquares(inputArray, integralArray, IS, rows, cols);
 
@@ -46,15 +45,15 @@ unsigned char * NiblackBinarizator::binarizeWithIntegral(
 	convertThresholdIntoTarget(inputArray, resultArray, thresholdArray, rows, cols);
 
 
-	delete[] inputArray;
 	delete integralBuffer;
 	delete integralSquareBuffer;
 	delete[] IS;
 	return resultBuffer;
-	return thresholdBuffer;
 }
 
-NiblackBinarizator::NiblackBinarizator() {
+NiblackBinarizator::NiblackBinarizator(unsigned char* inputBuffer, int rows,
+		int cols) :
+		Binarizator(inputBuffer, rows, cols) {
 	// TODO Auto-generated constructor stub
 
 }

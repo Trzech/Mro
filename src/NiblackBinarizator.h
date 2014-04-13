@@ -11,14 +11,10 @@
 
 class NiblackBinarizator: protected Binarizator {
 public:
-	NiblackBinarizator();
+	NiblackBinarizator(unsigned char* inputBuffer, int rows, int cols);
 	virtual ~NiblackBinarizator();
-	unsigned char* binarizeWithIntegral(unsigned char* inputBuffer,
-			int rows, int cols, int surroundings = 10, double k_factor = 0.2);
-
-
-
-
+	unsigned char* binarizeWithIntegral(int surroundings = 10, double k_factor =
+			0.2);
 
 };
 

@@ -12,33 +12,6 @@ public:
 };
 
 
-TEST_F(NiblackNonUnitTests, DISABLED_lenaNiblackBinarizatorWithoutIntegral) {
-	Timer timer;
-	int rows, cols;
-
-	GrayscaleImageReader reader;
-
-	char inputFileName[] = "images/lena_grayscale.pgm";
-	char outputFileName[] = "images/lena_NiblackBinarizatorWithoutIntegral.pgm";
-	unsigned char *inBuf;
-	unsigned char *outBuf;
-
-	inBuf = reader.readDataFromFile(inputFileName, &rows, &cols);
-
-	NiblackBinarizator binarizator;
-
-	timer.begin();
-	outBuf = binarizator.binarizeWithoutIntegral(inBuf, rows, cols, NiblackNonUnitTests::surrounding,
-			NiblackNonUnitTests::k_factor);
-	double time = timer.end();
-	reader.writeImage(outputFileName, outBuf, rows, cols);
-
-	delete inBuf;
-	delete outBuf;
-
-	ASSERT_LT(time, 1000);
-
-}
 TEST_F(NiblackNonUnitTests, DISABLED_lenaNiblackBinarizatorWithIntegral) {
 	Timer timer;
 	int rows, cols;
@@ -52,10 +25,10 @@ TEST_F(NiblackNonUnitTests, DISABLED_lenaNiblackBinarizatorWithIntegral) {
 
 	inBuf = reader.readDataFromFile(inputFileName, &rows, &cols);
 
-	NiblackBinarizator binarizator;
+	NiblackBinarizator binarizator(inBuf, rows, cols);
 
 	timer.begin();
-	outBuf = binarizator.binarizeWithIntegral(inBuf, rows, cols, NiblackNonUnitTests::surrounding,
+	outBuf = binarizator.binarizeWithIntegral(NiblackNonUnitTests::surrounding,
 			NiblackNonUnitTests::k_factor);
 	double time = timer.end();
 	reader.writeImage(outputFileName, outBuf, rows, cols);
@@ -65,33 +38,7 @@ TEST_F(NiblackNonUnitTests, DISABLED_lenaNiblackBinarizatorWithIntegral) {
 
 	ASSERT_LT(time, 1000);
 }
-TEST_F(NiblackNonUnitTests, DISABLED_bookNiblackBinarizatorWithoutIntegral) {
-	Timer timer;
-	int rows, cols;
 
-	GrayscaleImageReader reader;
-
-	char inputFileName[] = "images/book.pgm";
-	char outputFileName[] = "images/book_NiblackBinarizatorWithoutIntegral.pgm";
-	unsigned char *inBuf;
-	unsigned char *outBuf;
-
-	inBuf = reader.readDataFromFile(inputFileName, &rows, &cols);
-
-	NiblackBinarizator binarizator;
-
-	timer.begin();
-	outBuf = binarizator.binarizeWithoutIntegral(inBuf, rows, cols, NiblackNonUnitTests::surrounding,
-			NiblackNonUnitTests::k_factor);
-	double time = timer.end();
-	reader.writeImage(outputFileName, outBuf, rows, cols);
-
-	delete inBuf;
-	delete outBuf;
-
-	ASSERT_LT(time, 1000);
-
-}
 
 TEST_F(NiblackNonUnitTests, bookNiblackBinarizatorWithIntegral) {
 	Timer timer;
@@ -106,10 +53,10 @@ TEST_F(NiblackNonUnitTests, bookNiblackBinarizatorWithIntegral) {
 
 	inBuf = reader.readDataFromFile(inputFileName, &rows, &cols);
 
-	NiblackBinarizator binarizator;
+	NiblackBinarizator binarizator(inBuf, rows, cols);
 
 	timer.begin();
-	outBuf = binarizator.binarizeWithIntegral(inBuf, rows, cols, NiblackNonUnitTests::surrounding,
+	outBuf = binarizator.binarizeWithIntegral(NiblackNonUnitTests::surrounding,
 			NiblackNonUnitTests::k_factor);
 	double time = timer.end();
 	reader.writeImage(outputFileName, outBuf, rows, cols);

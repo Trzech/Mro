@@ -14,13 +14,10 @@ private:
 	unsigned char** prepareTableForOperations(unsigned char* inputBuffer,
 			int rows, int cols);
 
-
-
 public:
-	BrodleyBinarizator();
+	BrodleyBinarizator(unsigned char* inputBuffer, int rows, int cols);
 	virtual ~BrodleyBinarizator();
-	unsigned char * binarizeWithIntegral(unsigned char* inputBuffer, int rows,
-			int cols, int surroundings, double r = 0.95);
+	unsigned char * binarizeWithIntegral(int surroundings, double r = 0.95);
 };
 
 #endif /* INTEGRALBRODLEYBINARIZATOR_H_ */
