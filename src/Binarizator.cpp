@@ -7,13 +7,24 @@
 
 #include "Binarizator.h"
 
-Binarizator::Binarizator() {
-	// TODO Auto-generated constructor stub
-
+Binarizator::Binarizator(unsigned char* inputBuffer, int rows,
+		int cols) {
+	this->inputBuffer = inputBuffer;
+	this->rows = rows;
+	this->cols = cols;
+	inputArray = prepareTableForOperations(inputBuffer);
+	thresholdBuffer = allocMemory<unsigned char>();
+	thresholdArray = prepareTableForOperations(thresholdBuffer);
+	integralBuffer = allocMemory<unsigned char>();
+	integralArray = prepareTableForOperations(integralBuffer);
 }
 
 Binarizator::~Binarizator() {
-	// TODO Auto-generated destructor stub
+	delete[] thresholdArray;
+	delete thresholdBuffer;
+	delete[] inputArray;
+	delete integralBuffer;
+	delete[] integralArray;
 }
 
 

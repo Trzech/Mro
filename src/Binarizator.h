@@ -12,15 +12,25 @@
 
 class Binarizator {
 public:
-	Binarizator();
+	Binarizator(unsigned char* inputBuffer, int rows,
+			int cols);
 	virtual ~Binarizator();
 
 	template<class T>
-	static T** prepareTableForOperations(T* inputBuffer, int rows, int cols);
+	static T** prepareTableForOperations(T* inputBuffer);
 	template<class T>
-	static T* allocMemory(int rows, int cols);
+	static T* allocMemory();
 protected:
-	Timer timer;
+	unsigned char* inputBuffer;
+	unsigned char** inputArray;
+	int rows;
+	int cols;
+	unsigned char *thresholdBuffer;
+	unsigned char** thresholdArray;
+	unsigned long long int *integralBuffer;
+	unsigned long long int **integralArray;
+
+
 	void manageBorders(unsigned char** target, int rows, int cols,
 			int surroundings);
 	void convertThresholdIntoTarget(unsigned char** source,
@@ -30,7 +40,7 @@ protected:
 };
 
 template<class T>
-T** Binarizator::prepareTableForOperations(T* inputBuffer, int rows, int cols) {
+T** Binarizator::prepareTableForOperations(T* inputBuffer) {
 	T** source = new T*[rows];
 	for (int i = 0; i < rows; ++i) {
 		source[i] = inputBuffer + i * cols;
@@ -39,7 +49,7 @@ T** Binarizator::prepareTableForOperations(T* inputBuffer, int rows, int cols) {
 }
 
 template<class T>
-T* Binarizator::allocMemory(int rows, int cols) {
+T* Binarizator::allocMemory() {
 	T*resultBuffer;
 	if ((resultBuffer = new T[rows * cols]) == NULL) {
 		throw -1;

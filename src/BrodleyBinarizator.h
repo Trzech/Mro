@@ -19,8 +19,6 @@ private:
 public:
 	BrodleyBinarizator();
 	virtual ~BrodleyBinarizator();
-	unsigned char* binarizeWithoutIntegral(unsigned char* inputBuffer, int rows,
-			int cols, int surroundings, double r = 0.95);
 	unsigned char * binarizeWithIntegral(unsigned char* inputBuffer, int rows,
 			int cols, int surroundings, double r = 0.95);
 };
