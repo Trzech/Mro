@@ -26,23 +26,22 @@ public:
 	 * ######_____
 	 *
 	 */
-	void applyVertical2Filter(int surroundings, int t = 50);
-	void applyHorizontal2Filter(int surroundings, int t = 50);
+	void applyVertical2Filter(int rowsSurroundings, int colsSurroundings, double t);
+	/**
+	 *
+	 * ###########
+	 * ###########
+	 * ###########
+	 * ___________
+	 * ___________
+	 * ___________
+	 *
+	 */
+	void applyHorizontal2Filter(int rowsSurroundings, int colsSurroundings, double t);
+
+
 	/*
-	 * rozbić takie metody
-	 *
-	 * ######_____
-	 * ######_____
-	 * ######_____
-	 * ######_____
-	 * ######_____
-	 *
-	 * ###########
-	 * ###########
-	 * ###########
-	 * ___________
-	 * ___________
-	 * ___________
+	 * zrobić jeszcze takie metody
 	 *
 	 * __#####__
 	 * __#####__
