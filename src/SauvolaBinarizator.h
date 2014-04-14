@@ -9,10 +9,10 @@
 #define IMAGEBINARIZATOR_H_
 #include "Binarizator.h"
 
-class NiblackBinarizator: protected Binarizator {
+class SauvolaBinarizator: protected Binarizator {
 public:
-	NiblackBinarizator(unsigned char* inputBuffer, int rows, int cols);
-	virtual ~NiblackBinarizator();
+	SauvolaBinarizator(unsigned char* inputBuffer, int rows, int cols);
+	virtual ~SauvolaBinarizator();
 	unsigned char* binarizeWithIntegral(int surroundings = 10, double k_factor =
 			0.2);
 

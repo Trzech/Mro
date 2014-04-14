@@ -5,13 +5,13 @@
  *      Author: mj
  */
 
-#include "NiblackBinarizator.h"
+#include "SauvolaBinarizator.h"
 #include <math.h>
 #include <stdlib.h>
 #include <pthread.h>
 const double R = 128.0;
 
-unsigned char * NiblackBinarizator::binarizeWithIntegral(int k,
+unsigned char * SauvolaBinarizator::binarizeWithIntegral(int k,
 		double k_factor) {
 
 	unsigned char *resultBuffer = allocMemory<unsigned char>(rows, cols);
@@ -51,14 +51,14 @@ unsigned char * NiblackBinarizator::binarizeWithIntegral(int k,
 	return resultBuffer;
 }
 
-NiblackBinarizator::NiblackBinarizator(unsigned char* inputBuffer, int rows,
+SauvolaBinarizator::SauvolaBinarizator(unsigned char* inputBuffer, int rows,
 		int cols) :
 		Binarizator(inputBuffer, rows, cols) {
 	// TODO Auto-generated constructor stub
 
 }
 
-NiblackBinarizator::~NiblackBinarizator() {
+SauvolaBinarizator::~SauvolaBinarizator() {
 	// TODO Auto-generated destructor stub
 }
 
