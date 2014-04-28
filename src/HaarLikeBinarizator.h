@@ -13,8 +13,7 @@
 
 class HaarLikeBinarizator: protected Binarizator {
 public:
-	HaarLikeBinarizator(unsigned char* inputBuffer, int rows,
-			int cols);
+	HaarLikeBinarizator(unsigned char* inputBuffer, int rows, int cols);
 	~HaarLikeBinarizator();
 	unsigned char * getResult();
 	/**
@@ -26,7 +25,9 @@ public:
 	 * ######_____
 	 *
 	 */
-	void applyVertical2Filter(int rowsSurroundings, int colsSurroundings, double t);
+	void applyVertical2Filter(int rowsSurroundings, int colsSurroundings,
+			double t);
+
 	/**
 	 *
 	 * ###########
@@ -37,8 +38,22 @@ public:
 	 * ___________
 	 *
 	 */
-	void applyHorizontal2Filter(int rowsSurroundings, int colsSurroundings, double t);
+	void applyHorizontal2Filter(int rowsSurroundings, int colsSurroundings,
+			double t);
 
+	/**
+	 * ___###___
+	 * ___###___
+	 * ___###___
+	 * #########
+	 * #########
+	 * #########
+	 * ___###___
+	 * ___###___
+	 * ___###___
+	 */
+	void applyCrossFilter(int rowsSurroundings, int colsSurroundings,
+			double t);
 
 	/*
 	 * zrobić jeszcze takie metody

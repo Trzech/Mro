@@ -51,3 +51,40 @@ TEST_F(HaarLikeBinarizatorTest, sudokuZdjecie) {
 	ASSERT_TRUE(1);
 
 }
+TEST_F(HaarLikeBinarizatorTest, sudokuGazeta) {
+	GrayscaleImageReader imageReader;
+
+	int rows;
+	int cols;
+	unsigned char* imageBuffer;
+	imageBuffer = imageReader.readDataFromFile("images/sudokuGazeta.pgm", &rows, &cols);
+	HaarLikeBinarizator binarizator(imageBuffer, rows, cols);
+	binarizator.applyVertical2Filter(20, 4, 1.25);
+	binarizator.applyHorizontal2Filter(4, 20, 1.25);
+	unsigned char* resultBuffer = binarizator.getResult();
+
+	imageReader.writeImage("images/sudokuGazetaWynik.pgm", resultBuffer, rows, cols);
+	delete imageBuffer;
+	delete resultBuffer;
+	ASSERT_TRUE(1);
+
+}
+
+TEST_F(HaarLikeBinarizatorTest, sudokuPole) {
+	GrayscaleImageReader imageReader;
+
+	int rows;
+	int cols;
+	unsigned char* imageBuffer;
+	imageBuffer = imageReader.readDataFromFile("images/sudokuPole.pgm", &rows, &cols);
+	HaarLikeBinarizator binarizator(imageBuffer, rows, cols);
+	binarizator.applyVertical2Filter(20, 4, 1.25);
+	binarizator.applyHorizontal2Filter(4, 20, 1.25);
+	unsigned char* resultBuffer = binarizator.getResult();
+
+	imageReader.writeImage("images/sudokuPoleWynik.pgm", resultBuffer, rows, cols);
+	delete imageBuffer;
+	delete resultBuffer;
+	ASSERT_TRUE(1);
+
+}
