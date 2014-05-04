@@ -5,3 +5,8 @@
 /DebugProfiling
 /Rlease c++11
 /html
+/.cproject
+/.project
+/gmon.out
+/perf.data
+/perf.data.old
