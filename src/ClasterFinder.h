@@ -18,8 +18,8 @@ private:
 	void addBorder(unsigned char* array, int row, int cols);
 	inline void detectNeighbours(int i, unsigned char* a);
 	Cluster result;
-	 int read;
-	 int write;
+	int read;
+	int write;
 	int stack[10000];
 
 };
