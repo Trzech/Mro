@@ -15,7 +15,7 @@ public:
 	~ClasterFinder();
 	Cluster findClusters(unsigned char* array, int row, int cols);
 private:
-	void addBorder(unsigned char** array, int row, int cols);
+	void addBorder(unsigned char* array, int row, int cols);
 	inline void detectNeighbours(int i, unsigned char* a);
 	Cluster result;
 	 int read;

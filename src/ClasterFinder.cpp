@@ -22,6 +22,7 @@ void ClasterFinder::detectNeighbours(int i, unsigned char* a) {
 
 Cluster ClasterFinder::findClusters(unsigned char* a, int rows, int cols) {
 
+	addBorder(a, rows, cols);
 
 	int pixel;
 
@@ -62,14 +63,14 @@ Cluster ClasterFinder::findClusters(unsigned char* a, int rows, int cols) {
 	return result;
 }
 
-void ClasterFinder::addBorder(unsigned char** array, int rows, int cols) {
+void ClasterFinder::addBorder(unsigned char* a, int rows, int cols) {
 
 	for (int i = 0; i < cols; ++i) {
-		array[0][i] = 0;
-		array[rows - 1][i] = 0;
+		a[i] = 0;
+		a[(rows - 1)*cols + i] = 0;
 	}
 	for (int i = 0; i < rows; ++i) {
-		array[i][0] = 0;
-		array[i][cols - 1] = 0;
+		a[i*cols] = 0;
+		a[i*cols+cols - 1] = 0;
 	}
 }

@@ -28,7 +28,7 @@ TEST_F(ClasterFinderNonUnitTest, zGimpa) {
 	int rows;
 	int cols;
 	unsigned char* imageBuffer;
-	imageBuffer = imageReader.readDataFromFile("images/twoClusters.pgm", &rows, &cols);
+	imageBuffer = imageReader.readDataFromFile("images/clusterPico.pgm", &rows, &cols);
 	finder.findClusters(imageBuffer, rows, cols);
 	imageReader.writeImage("images/twoClustersWynik.pgm", imageBuffer, rows, cols);
 	delete imageBuffer;
