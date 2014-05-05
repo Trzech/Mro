@@ -17,20 +17,23 @@ ClasterFinder::~ClasterFinder() {
 void ClasterFinder::drawBordersOfClusters(unsigned char* a, int rows, int cols,
 		int minClusterSize, int maxClusterSize) {
 	unsigned char color = 100;
-	Cluster cluster = findClusters(a, rows, cols, minClusterSize,
+	std::vector<Cluster> clusters = findClusters(a, rows, cols, minClusterSize,
 			maxClusterSize);
-	for (int i = cluster.minX; i <= cluster.maxX; ++i) {
-		a[cluster.minY * cols + i] = color;
-		a[cluster.maxY * cols + i] = color;
-	}
-	for (int i = cluster.minY; i <= cluster.maxY; ++i) {
-		a[i * cols + cluster.minX] = color;
-		a[i * cols + cluster.maxX] = color;
+	for (int i = 0; i < clusters.size(); ++i) {
+
+		for (int j = clusters[i].minX; j <= clusters[i].maxX; ++j) {
+			a[clusters[i].minY * cols + j] = color;
+			a[clusters[i].maxY * cols + j] = color;
+		}
+		for (int j = clusters[i].minY; j <= clusters[i].maxY; ++j) {
+			a[j * cols + clusters[i].minX] = color;
+			a[j * cols + clusters[i].maxX] = color;
+		}
 	}
 }
 
-void ClasterFinder::detectNeighbours(int i, unsigned char* a, Cluster &result,
-		int rows, int cols) {
+void ClasterFinder::detectNeighbours(unsigned long int i, unsigned char* a,
+		Cluster &result, int rows, int cols) {
 	if (a[i] != 0) {
 		stack[write++] = i;
 		a[i] = 0;
@@ -38,58 +41,68 @@ void ClasterFinder::detectNeighbours(int i, unsigned char* a, Cluster &result,
 	}
 }
 
-Cluster ClasterFinder::findClusters(unsigned char* originalA, int rows,
-		int cols, int minClusterSize, int maxClusterSize) {
-	Cluster result;
-	stack = new int[1000];
+std::vector<Cluster> ClasterFinder::findClusters(unsigned char* originalA,
+		int rows, int cols, int minClusterSize, int maxClusterSize) {
+
+	std::vector<Cluster> result;
+	stack = new int[2000];
 	unsigned char* a = new unsigned char[rows * cols];
 	memcpy(a, originalA, rows * cols);
 	addBorder(a, rows, cols);
 
-	int pixel = -1;
+	while (true) {
 
-	for (int i = 0; i < rows * cols; ++i) {
+		unsigned long int pixel = 0;
+		for (unsigned long int i = 0; i < rows * cols; ++i) {
 
-		if (a[i] != 0) {
-			pixel = i;
-			break;
+			if (a[i] != 0) {
+				pixel = i;
+				break;
+			}
+
+		}
+
+		if (pixel == 0) {
+			delete[] a;
+			delete[] stack;
+			return result;
+		}
+
+		a[pixel] = 0;
+		read = 0;
+		write = 0;
+		stack[write++] = pixel;
+		Cluster cluster;
+		cluster.addPoint(pixel % cols, pixel / cols);
+
+		while (read < write && cluster.size < maxClusterSize) {
+			pixel = stack[read++];
+
+			unsigned long int i = pixel + 1;
+			detectNeighbours(i, a, cluster, rows, cols);
+			i = pixel - 1;
+			detectNeighbours(i, a, cluster, rows, cols);
+			i = pixel + cols;
+			detectNeighbours(i, a, cluster, rows, cols);
+			i = pixel - cols;
+			detectNeighbours(i, a, cluster, rows, cols);
+			i = pixel + cols + 1;
+			detectNeighbours(i, a, cluster, rows, cols);
+			i = pixel - cols + 1;
+			detectNeighbours(i, a, cluster, rows, cols);
+			i = pixel + cols - 1;
+			detectNeighbours(i, a, cluster, rows, cols);
+			i = pixel - cols - 1;
+			detectNeighbours(i, a, cluster, rows, cols);
+
+
+		}
+
+		if (cluster.size > minClusterSize) {
+			result.push_back(cluster);
 		}
 
 	}
-
-	if (pixel == -1) {
-		return result;
-	}
-
-	a[pixel] = 0;
-	read = 0;
-	write = 0;
-	stack[write++] = pixel;
-	result.addPoint(pixel % cols, pixel / cols);
-
-	while (read < write) {
-		pixel = stack[read++];
-
-		int i = pixel + 1;
-		detectNeighbours(i, a, result, rows, cols);
-		i = pixel - 1;
-		detectNeighbours(i, a, result, rows, cols);
-		i = pixel + cols;
-		detectNeighbours(i, a, result, rows, cols);
-		i = pixel - cols;
-		detectNeighbours(i, a, result, rows, cols);
-		i = pixel + cols + 1;
-		detectNeighbours(i, a, result, rows, cols);
-		i = pixel - cols + 1;
-		detectNeighbours(i, a, result, rows, cols);
-		i = pixel + cols - 1;
-		detectNeighbours(i, a, result, rows, cols);
-		i = pixel - cols - 1;
-		detectNeighbours(i, a, result, rows, cols);
-	}
-	delete[] stack;
-	delete[] a;
-	return result;
 }
 
 void ClasterFinder::addBorder(unsigned char* a, int rows, int cols) {

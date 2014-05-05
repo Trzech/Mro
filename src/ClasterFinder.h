@@ -9,18 +9,20 @@
 #define CLASTERFINDER_H_
 #include "Cluster.h"
 #include <string.h>
+#include <vector>
+
 
 class ClasterFinder {
 public:
 	ClasterFinder();
 	~ClasterFinder();
-	Cluster findClusters(unsigned char* a, int rows, int cols,
+	std::vector<Cluster> findClusters(unsigned char* a, int rows, int cols,
 			int minClusterSize, int maxClusterSize);
 	void drawBordersOfClusters(unsigned char* a, int rows, int cols,
 			int minClusterSize, int maxClusterSize);
 private:
 	void addBorder(unsigned char* array, int row, int cols);
-	inline void detectNeighbours(int i, unsigned char* a, Cluster &result,
+	inline void detectNeighbours(unsigned long int i, unsigned char* a, Cluster &result,
 			int rows, int cols);
 
 	int read;
