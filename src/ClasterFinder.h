@@ -13,14 +13,15 @@ class ClasterFinder {
 public:
 	ClasterFinder();
 	~ClasterFinder();
-	Cluster findClusters(unsigned char* array, int row, int cols);
+	Cluster findClusters(unsigned char* a, int rows, int cols,
+			int minClusterSize, int maxClusterSize);
 private:
 	void addBorder(unsigned char* array, int row, int cols);
-	inline void detectNeighbours(int i, unsigned char* a);
-	Cluster result;
+	inline void detectNeighbours(int i, unsigned char* a, Cluster &result, int rows, int cols);
+
 	int read;
 	int write;
-	int stack[10000];
+	int * stack ;
 
 };
 

@@ -29,7 +29,7 @@ TEST_F(ClasterFinderNonUnitTest, DISABLED_clusters_20x20) {
 	int cols;
 	unsigned char* imageBuffer;
 	imageBuffer = imageReader.readDataFromFile("images/clusters_20x20.pgm", &rows, &cols);
-	finder.findClusters(imageBuffer, rows, cols);
+	finder.findClusters(imageBuffer, rows, cols, 1, 100);
 	imageReader.writeImage("images/clusters_20x20_result.pgm", imageBuffer, rows, cols);
 	delete imageBuffer;
 
@@ -44,10 +44,14 @@ TEST_F(ClasterFinderNonUnitTest, 2_clusters) {
 	int cols;
 	unsigned char* imageBuffer;
 	imageBuffer = imageReader.readDataFromFile("images/twoClusters.pgm", &rows, &cols);
-	finder.findClusters(imageBuffer, rows, cols);
+	Cluster cluster = finder.findClusters(imageBuffer, rows, cols, 1, 100);
 	imageReader.writeImage("images/twoClusters_result.pgm", imageBuffer, rows, cols);
 	delete imageBuffer;
+	ASSERT_EQ(7, cluster.minY);
+	ASSERT_EQ(11, cluster.minX);
+	ASSERT_EQ(78, cluster.maxY);
+	ASSERT_EQ(32, cluster.maxX);
 
-	ASSERT_TRUE(1);
+
 
 }

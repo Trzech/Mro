@@ -7,15 +7,18 @@
 
 #ifndef CLUSTER_H_
 #define CLUSTER_H_
+#include <limits.h>
 
 class Cluster {
 public:
 	Cluster();
 	~Cluster();
-	int minX;
-	int minY;
-	int maxX;
-	int maxY;
+	void addPoint(unsigned int x,unsigned  int y);
+	unsigned int minX;
+	unsigned int minY;
+	unsigned int maxX;
+	unsigned int maxY;
+	unsigned int size;
 };
 
 #endif /* CLUSTER_H_ */
