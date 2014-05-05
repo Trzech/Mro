@@ -21,6 +21,7 @@ Cluster::~Cluster() {
 }
 
 void Cluster::addPoint(unsigned int x,unsigned  int y) {
+	this->size++;
 	if(x > this->maxX){
 		this->maxX = x;
 	}

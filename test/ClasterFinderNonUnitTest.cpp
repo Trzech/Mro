@@ -28,30 +28,55 @@ TEST_F(ClasterFinderNonUnitTest, DISABLED_clusters_20x20) {
 	int rows;
 	int cols;
 	unsigned char* imageBuffer;
-	imageBuffer = imageReader.readDataFromFile("images/clusters_20x20.pgm", &rows, &cols);
+	imageBuffer = imageReader.readDataFromFile("images/clusters_20x20.pgm",
+			&rows, &cols);
 	finder.findClusters(imageBuffer, rows, cols, 1, 100);
-	imageReader.writeImage("images/clusters_20x20_result.pgm", imageBuffer, rows, cols);
+	imageReader.writeImage("images/clusters_20x20_result.pgm", imageBuffer,
+			rows, cols);
 	delete imageBuffer;
 
 	ASSERT_TRUE(1);
 
 }
 
-TEST_F(ClasterFinderNonUnitTest, 2_clusters) {
+TEST_F(ClasterFinderNonUnitTest, cluster_5x5) {
 	GrayscaleImageReader imageReader;
 	ClasterFinder finder;
 	int rows;
 	int cols;
 	unsigned char* imageBuffer;
-	imageBuffer = imageReader.readDataFromFile("images/twoClusters.pgm", &rows, &cols);
+	imageBuffer = imageReader.readDataFromFile("images/cluster_5x5.pgm", &rows,
+			&cols);
 	Cluster cluster = finder.findClusters(imageBuffer, rows, cols, 1, 100);
-	imageReader.writeImage("images/twoClusters_result.pgm", imageBuffer, rows, cols);
+	imageReader.writeImage("images/cluster_5x5_result.pgm", imageBuffer, rows,
+			cols);
 	delete imageBuffer;
-	ASSERT_EQ(7, cluster.minY);
-	ASSERT_EQ(11, cluster.minX);
-	ASSERT_EQ(78, cluster.maxY);
-	ASSERT_EQ(32, cluster.maxX);
 
-
+	ASSERT_EQ(2, cluster.minX);
+	ASSERT_EQ(2, cluster.maxX);
+	ASSERT_EQ(1, cluster.minY);
+	ASSERT_EQ(3, cluster.maxY);
+	ASSERT_EQ(3, cluster.size);
 
 }
+
+TEST_F(ClasterFinderNonUnitTest, clusters_20x20) {
+	GrayscaleImageReader imageReader;
+	ClasterFinder finder;
+	int rows;
+	int cols;
+	unsigned char* imageBuffer;
+	imageBuffer = imageReader.readDataFromFile("images/clusters_20x20.pgm", &rows,
+			&cols);
+	Cluster cluster = finder.findClusters(imageBuffer, rows, cols, 1, 100);
+	imageReader.writeImage("images/clusters_20x20_result.pgm", imageBuffer, rows,
+			cols);
+	delete imageBuffer;
+	ASSERT_EQ(1, cluster.minX);
+	ASSERT_EQ(3, cluster.maxX);
+	ASSERT_EQ(4, cluster.minY);
+	ASSERT_EQ(15, cluster.maxY);
+	ASSERT_EQ(14, cluster.size);
+
+}
+

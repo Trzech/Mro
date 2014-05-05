@@ -47,6 +47,7 @@ Cluster ClasterFinder::findClusters(unsigned char* a, int rows, int cols,
 	read = 0;
 	write = 0;
 	stack[write++] = pixel;
+	result.addPoint(pixel%cols, pixel/cols);
 
 	while (read < write) {
 		pixel = stack[read++];
