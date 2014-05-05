@@ -16,29 +16,34 @@ ClasterFinder::~ClasterFinder() {
 
 void ClasterFinder::drawBordersOfClusters(unsigned char* a, int rows, int cols,
 		int minClusterSize, int maxClusterSize) {
-	Cluster cluster = findClusters(a, rows, cols, minClusterSize, maxClusterSize);
+	unsigned char color = 100;
+	Cluster cluster = findClusters(a, rows, cols, minClusterSize,
+			maxClusterSize);
 	for (int i = cluster.minX; i <= cluster.maxX; ++i) {
-		a[cluster.minY*cols + i] = 100;
-		a[cluster.maxY*cols + i] = 100;
+		a[cluster.minY * cols + i] = color;
+		a[cluster.maxY * cols + i] = color;
 	}
 	for (int i = cluster.minY; i <= cluster.maxY; ++i) {
-		a[i*cols + cluster.minX] = 100;
-		a[i*cols + cluster.maxX] = 100;
+		a[i * cols + cluster.minX] = color;
+		a[i * cols + cluster.maxX] = color;
 	}
 }
 
-void ClasterFinder::detectNeighbours(int i, unsigned char* a, Cluster &result, int rows, int cols) {
+void ClasterFinder::detectNeighbours(int i, unsigned char* a, Cluster &result,
+		int rows, int cols) {
 	if (a[i] != 0) {
 		stack[write++] = i;
 		a[i] = 0;
-		result.addPoint(i%cols, i/cols);
+		result.addPoint(i % cols, i / cols);
 	}
 }
 
-Cluster ClasterFinder::findClusters(unsigned char* a, int rows, int cols,
-		int minClusterSize, int maxClusterSize) {
+Cluster ClasterFinder::findClusters(unsigned char* originalA, int rows,
+		int cols, int minClusterSize, int maxClusterSize) {
 	Cluster result;
 	stack = new int[1000];
+	unsigned char* a = new unsigned char[rows * cols];
+	memcpy(a, originalA, rows * cols);
 	addBorder(a, rows, cols);
 
 	int pixel = -1;
@@ -60,7 +65,7 @@ Cluster ClasterFinder::findClusters(unsigned char* a, int rows, int cols,
 	read = 0;
 	write = 0;
 	stack[write++] = pixel;
-	result.addPoint(pixel%cols, pixel/cols);
+	result.addPoint(pixel % cols, pixel / cols);
 
 	while (read < write) {
 		pixel = stack[read++];
@@ -83,6 +88,7 @@ Cluster ClasterFinder::findClusters(unsigned char* a, int rows, int cols,
 		detectNeighbours(i, a, result, rows, cols);
 	}
 	delete[] stack;
+	delete[] a;
 	return result;
 }
 

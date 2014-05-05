@@ -8,6 +8,7 @@
 #ifndef CLASTERFINDER_H_
 #define CLASTERFINDER_H_
 #include "Cluster.h"
+#include <string.h>
 
 class ClasterFinder {
 public:
@@ -19,11 +20,12 @@ public:
 			int minClusterSize, int maxClusterSize);
 private:
 	void addBorder(unsigned char* array, int row, int cols);
-	inline void detectNeighbours(int i, unsigned char* a, Cluster &result, int rows, int cols);
+	inline void detectNeighbours(int i, unsigned char* a, Cluster &result,
+			int rows, int cols);
 
 	int read;
 	int write;
-	int * stack ;
+	int * stack;
 
 };
 

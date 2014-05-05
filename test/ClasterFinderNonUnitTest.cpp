@@ -22,22 +22,6 @@ class ClasterFinderNonUnitTest: public ::testing::Test {
 
 };
 
-TEST_F(ClasterFinderNonUnitTest, DISABLED_clusters_20x20) {
-	GrayscaleImageReader imageReader;
-	ClasterFinder finder;
-	int rows;
-	int cols;
-	unsigned char* imageBuffer;
-	imageBuffer = imageReader.readDataFromFile("images/clusters_20x20.pgm",
-			&rows, &cols);
-	finder.findClusters(imageBuffer, rows, cols, 1, 100);
-	imageReader.writeImage("images/clusters_20x20_result.pgm", imageBuffer,
-			rows, cols);
-	delete imageBuffer;
-
-	ASSERT_TRUE(1);
-
-}
 
 TEST_F(ClasterFinderNonUnitTest, cluster_5x5) {
 	GrayscaleImageReader imageReader;
