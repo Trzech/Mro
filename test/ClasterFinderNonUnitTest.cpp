@@ -80,3 +80,18 @@ TEST_F(ClasterFinderNonUnitTest, clusters_20x20) {
 
 }
 
+TEST_F(ClasterFinderNonUnitTest, lettersClusters_draw_border) {
+	GrayscaleImageReader imageReader;
+	ClasterFinder finder;
+	int rows;
+	int cols;
+	unsigned char* imageBuffer;
+	imageBuffer = imageReader.readDataFromFile("images/lettersClusters.pgm", &rows,
+			&cols);
+	finder.drawBordersOfClusters(imageBuffer, rows, cols, 1, 100);
+	imageReader.writeImage("images/lettersClusters_result.pgm", imageBuffer, rows,
+			cols);
+	delete imageBuffer;
+	ASSERT_TRUE(1);
+
+}

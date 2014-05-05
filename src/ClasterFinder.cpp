@@ -14,6 +14,19 @@ ClasterFinder::ClasterFinder() {
 ClasterFinder::~ClasterFinder() {
 }
 
+void ClasterFinder::drawBordersOfClusters(unsigned char* a, int rows, int cols,
+		int minClusterSize, int maxClusterSize) {
+	Cluster cluster = findClusters(a, rows, cols, minClusterSize, maxClusterSize);
+	for (int i = cluster.minX; i <= cluster.maxX; ++i) {
+		a[cluster.minY*cols + i] = 100;
+		a[cluster.maxY*cols + i] = 100;
+	}
+	for (int i = cluster.minY; i <= cluster.maxY; ++i) {
+		a[i*cols + cluster.minX] = 100;
+		a[i*cols + cluster.maxX] = 100;
+	}
+}
+
 void ClasterFinder::detectNeighbours(int i, unsigned char* a, Cluster &result, int rows, int cols) {
 	if (a[i] != 0) {
 		stack[write++] = i;
