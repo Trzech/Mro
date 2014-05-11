@@ -12,6 +12,7 @@
 #include "Pixel.h"
 #include <string.h>
 #include <vector>
+#include <stack>
 
 class ClasterFinder {
 public:
@@ -28,7 +29,7 @@ private:
 
 	int read;
 	int write;
-	Pixel * stack;
+	std::stack<Pixel> stack;
 
 };
 

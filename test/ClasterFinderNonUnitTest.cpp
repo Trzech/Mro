@@ -121,7 +121,7 @@ TEST_F(ClasterFinderNonUnitTest, sudokuZdjecieWynik_kawrat_draw_border) {
 	unsigned char* imageBuffer;
 	imageBuffer = imageReader.readDataFromFile(
 			"images/sudokuZdjecieWynik_kawrat.pgm", &rows, &cols);
-	finder.drawBordersOfClusters(imageBuffer, rows, cols, 1000, 10000);
+	finder.drawBordersOfClusters(imageBuffer, rows, cols, 1000, 15000);
 	imageReader.writeImage("images/sudokuZdjecieWynik_kawrat_border_result.pgm",
 			imageBuffer, rows, cols);
 	delete imageBuffer;

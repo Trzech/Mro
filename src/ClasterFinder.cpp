@@ -16,7 +16,7 @@ ClasterFinder::~ClasterFinder() {
 
 void ClasterFinder::drawBordersOfClusters(unsigned char* a, int rows, int cols,
 		int minClusterSize, int maxClusterSize) {
-	unsigned char color = 100;
+	unsigned char color = 255;
 	std::vector<Cluster> clusters = findClusters(a, rows, cols, minClusterSize,
 			maxClusterSize);
 	int baseMin, baseMax;
@@ -40,7 +40,6 @@ std::vector<Cluster> ClasterFinder::findClusters(unsigned char* originalA,
 		 int maxClusterSize) {
 
 	std::vector<Cluster> result;
-	stack = new Pixel[10000000];
 	unsigned char* aBuff = new unsigned char[rows * cols];
 	memcpy(aBuff, originalA, rows * cols);
 	unsigned char ** a = Binarizator::prepareTableForOperations(aBuff, rows,
@@ -66,18 +65,19 @@ std::vector<Cluster> ClasterFinder::findClusters(unsigned char* originalA,
 
 		if (pixel.x == 0 && pixel.y == 0) {
 			delete[] a;
-			delete[] stack;
+
 			return result;
 		}
 
 		a[pixel.y][pixel.x] = 0;
 		read = 0;
 		write = 0;
-		stack[write++] = pixel;
+		stack.push(pixel);
 		Cluster cluster;
 		cluster.addPoint(pixel.x, pixel.y);
-		while (read < write) {
-			pixel = stack[read++];
+		while (!stack.empty()) {
+			pixel = stack.top();
+			stack.pop();
 			detectNeighbours(a, pixel.x - 1, pixel.y - 1, cluster, rows, cols);
 			detectNeighbours(a, pixel.x - 1, pixel.y, cluster, rows, cols);
 			detectNeighbours(a, pixel.x - 1, pixel.y + 1, cluster, rows, cols);
@@ -112,7 +112,7 @@ inline void ClasterFinder::detectNeighbours(unsigned char** a,
 		unsigned long int x, unsigned long int y, Cluster& result, int rows,
 		int cols) {
 	if (a[y][x] != 0) {
-		stack[write++] = Pixel(x, y);
+		stack.push(Pixel(x, y));
 		a[y][x] = 0;
 		result.addPoint(x, y);
 	}
