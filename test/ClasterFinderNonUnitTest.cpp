@@ -44,7 +44,7 @@ TEST_F(ClasterFinderNonUnitTest, cluster_5x5) {
 
 }
 
-TEST_F(ClasterFinderNonUnitTest, clusters_20x20) {
+TEST_F(ClasterFinderNonUnitTest, DISABLED_clusters_20x20) {
 	GrayscaleImageReader imageReader;
 	ClasterFinder finder;
 	int rows;
@@ -65,7 +65,7 @@ TEST_F(ClasterFinderNonUnitTest, clusters_20x20) {
 
 }
 
-TEST_F(ClasterFinderNonUnitTest, lettersClusters_draw_border) {
+TEST_F(ClasterFinderNonUnitTest, DISABLED_lettersClusters_draw_border) {
 	GrayscaleImageReader imageReader;
 	ClasterFinder finder;
 	int rows;
@@ -81,7 +81,7 @@ TEST_F(ClasterFinderNonUnitTest, lettersClusters_draw_border) {
 
 }
 
-TEST_F(ClasterFinderNonUnitTest, smileWithBigCluster_draw_border) {
+TEST_F(ClasterFinderNonUnitTest, DISABLED_smileWithBigCluster_draw_border) {
 	GrayscaleImageReader imageReader;
 	ClasterFinder finder;
 	int rows;
@@ -96,3 +96,25 @@ TEST_F(ClasterFinderNonUnitTest, smileWithBigCluster_draw_border) {
 	ASSERT_TRUE(1);
 
 }
+
+
+
+TEST_F(ClasterFinderNonUnitTest, book_inversed_1000_draw_border) {
+	GrayscaleImageReader imageReader;
+	ClasterFinder finder;
+	int rows;
+	int cols;
+	unsigned char* imageBuffer;
+	imageBuffer = imageReader.readDataFromFile("images/book_inversed_1000.pgm",
+			&rows, &cols);
+	finder.drawBordersOfClusters(imageBuffer, rows, cols, 50, 100);
+	imageReader.writeImage("images/book_inversed_1000_result.pgm", imageBuffer,
+			rows, cols);
+	delete imageBuffer;
+	ASSERT_TRUE(1);
+
+}
+
+
+
+

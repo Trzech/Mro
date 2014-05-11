@@ -19,12 +19,15 @@ void ClasterFinder::drawBordersOfClusters(unsigned char* a, int rows, int cols,
 	unsigned char color = 100;
 	std::vector<Cluster> clusters = findClusters(a, rows, cols, minClusterSize,
 			maxClusterSize);
+	int baseMin, baseMax;
 	for (int i = 0; i < clusters.size(); ++i) {
-
+		baseMin = clusters[i].minY * cols;
+		baseMax = clusters[i].maxY * cols;
 		for (int j = clusters[i].minX; j <= clusters[i].maxX; ++j) {
-			a[clusters[i].minY * cols + j] = color;
-			a[clusters[i].maxY * cols + j] = color;
+			a[baseMin + j] = color;
+			a[baseMax + j] = color;
 		}
+
 		for (int j = clusters[i].minY; j <= clusters[i].maxY; ++j) {
 			a[j * cols + clusters[i].minX] = color;
 			a[j * cols + clusters[i].maxX] = color;
@@ -74,26 +77,18 @@ std::vector<Cluster> ClasterFinder::findClusters(unsigned char* originalA,
 		stack[write++] = pixel;
 		Cluster cluster;
 		cluster.addPoint(pixel % cols, pixel / cols);
-
 		while (read < write && cluster.size < maxClusterSize) {
 			pixel = stack[read++];
 
-			unsigned long int i = pixel + 1;
-			detectNeighbours(i, a, cluster, rows, cols);
-			i = pixel - 1;
-			detectNeighbours(i, a, cluster, rows, cols);
-			i = pixel + cols;
-			detectNeighbours(i, a, cluster, rows, cols);
-			i = pixel - cols;
-			detectNeighbours(i, a, cluster, rows, cols);
-			i = pixel + cols + 1;
-			detectNeighbours(i, a, cluster, rows, cols);
-			i = pixel - cols + 1;
-			detectNeighbours(i, a, cluster, rows, cols);
-			i = pixel + cols - 1;
-			detectNeighbours(i, a, cluster, rows, cols);
-			i = pixel - cols - 1;
-			detectNeighbours(i, a, cluster, rows, cols);
+			if (a[pixel + 1] != 0) {stack[write++] = pixel + 1;	a[pixel + 1] = 0;cluster.addPoint((pixel + 1) % cols, (pixel + 1) / cols);	}
+			if (a[pixel - 1] != 0) {stack[write++] = pixel - 1;	a[pixel - 1] = 0;cluster.addPoint((pixel - 1) % cols, (pixel - 1) / cols);	}
+			if (a[pixel + cols] != 0) {stack[write++] = pixel + cols;	a[pixel + cols] = 0;cluster.addPoint((pixel + cols) % cols, (pixel + cols) / cols);	}
+			if (a[pixel - cols] != 0) {stack[write++] = pixel - cols;	a[pixel - cols] = 0;cluster.addPoint((pixel - cols) % cols, (pixel - cols) / cols);	}
+			if (a[pixel + cols + 1] != 0) {stack[write++] = pixel + cols + 1;	a[pixel + cols + 1] = 0;cluster.addPoint((pixel + cols + 1) % cols, (pixel + cols + 1) / cols);	}
+			if (a[pixel - cols + 1] != 0) {stack[write++] = pixel - cols + 1;	a[pixel - cols + 1] = 0;cluster.addPoint((pixel - cols + 1) % cols, (pixel - cols + 1) / cols);	}
+			if (a[pixel + cols - 1] != 0) {stack[write++] = pixel + cols - 1;	a[pixel + cols - 1] = 0;cluster.addPoint((pixel + cols - 1) % cols, (pixel + cols - 1) / cols);	}
+			if (a[pixel - cols - 1] != 0) {stack[write++] = pixel - cols - 1;	a[pixel - cols - 1] = 0;cluster.addPoint((pixel - cols - 1) % cols, (pixel - cols - 1) / cols);	}
+
 
 
 		}
