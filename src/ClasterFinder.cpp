@@ -44,54 +44,52 @@ std::vector<Cluster> ClasterFinder::findClusters(unsigned char* originalA,
 	unsigned char ** a = Binarizator::prepareTableForOperations(aBuff, rows,
 			cols);
 	addBorder(a, rows, cols);
-	unsigned long int iStartIndex = 0;
+
 	while (true) {
 		Pixel pixel(0, 0);
-		for (unsigned long int i = iStartIndex; i < rows; ++i) {
+		for (unsigned long int i = 0; i < rows; ++i) {
 			for (unsigned long int j = 0; j < cols; ++j) {
 				if (a[i][j] != 0) {
+					a[i][j] = 0;
 					pixel.y = i;
 					pixel.x = j;
-					iStartIndex = i + 1;
+					stack.push(pixel);
+					Cluster cluster;
+					cluster.addPoint(pixel.x, pixel.y);
+					while (!stack.empty()) {
+						pixel = stack.top();
+						stack.pop();
+						detectNeighbours(a, pixel.x - 1, pixel.y - 1, cluster,
+								rows, cols);
+						detectNeighbours(a, pixel.x + 1, pixel.y - 1, cluster,
+								rows, cols);
+						detectNeighbours(a, pixel.x, pixel.y - 1, cluster, rows,
+								cols);
+						detectNeighbours(a, pixel.x - 1, pixel.y, cluster, rows,
+								cols);
+						detectNeighbours(a, pixel.x + 1, pixel.y, cluster, rows,
+								cols);
+						detectNeighbours(a, pixel.x - 1, pixel.y + 1, cluster,
+								rows, cols);
+						detectNeighbours(a, pixel.x, pixel.y + 1, cluster, rows,
+								cols);
+						detectNeighbours(a, pixel.x + 1, pixel.y + 1, cluster,
+								rows, cols);
 
-					break;
+					}
+
+					if (cluster.size > minClusterSize
+							&& cluster.size < maxClusterSize) {
+						result.push_back(cluster);
+					}
+
 				}
 
 			}
-			if (pixel.x != 0 || pixel.y != 0) {
-				break;
-			}
-		}
-
-		if (pixel.x == 0 && pixel.y == 0) {
-			delete[] a;
-
-			return result;
-		}
-
-		a[pixel.y][pixel.x] = 0;
-		read = 0;
-		write = 0;
-		stack.push(pixel);
-		Cluster cluster;
-		cluster.addPoint(pixel.x, pixel.y);
-		while (!stack.empty()) {
-			pixel = stack.top();
-			stack.pop();
-			detectNeighbours(a, pixel.x - 1, pixel.y - 1, cluster, rows, cols);
-			detectNeighbours(a, pixel.x + 1, pixel.y - 1, cluster, rows, cols);
-			detectNeighbours(a, pixel.x, pixel.y - 1, cluster, rows, cols);
-			detectNeighbours(a, pixel.x - 1, pixel.y, cluster, rows, cols);
-			detectNeighbours(a, pixel.x + 1, pixel.y, cluster, rows, cols);
-			detectNeighbours(a, pixel.x - 1, pixel.y + 1, cluster, rows, cols);
-			detectNeighbours(a, pixel.x, pixel.y + 1, cluster, rows, cols);
-			detectNeighbours(a, pixel.x + 1, pixel.y + 1, cluster, rows, cols);
 
 		}
-
-		if (cluster.size > minClusterSize && cluster.size < maxClusterSize) {
-			result.push_back(cluster);
-		}
+		delete[] a;
+		return result;
 
 	}
 }
