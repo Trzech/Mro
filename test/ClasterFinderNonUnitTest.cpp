@@ -97,8 +97,6 @@ TEST_F(ClasterFinderNonUnitTest, DISABLED_smileWithBigCluster_draw_border) {
 
 }
 
-
-
 TEST_F(ClasterFinderNonUnitTest, book_inversed_1000_draw_border) {
 	GrayscaleImageReader imageReader;
 	ClasterFinder finder;
@@ -115,6 +113,19 @@ TEST_F(ClasterFinderNonUnitTest, book_inversed_1000_draw_border) {
 
 }
 
+TEST_F(ClasterFinderNonUnitTest, sudokuZdjecieWynik_kawrat_draw_border) {
+	GrayscaleImageReader imageReader;
+	ClasterFinder finder;
+	int rows;
+	int cols;
+	unsigned char* imageBuffer;
+	imageBuffer = imageReader.readDataFromFile(
+			"images/sudokuZdjecieWynik_kawrat.pgm", &rows, &cols);
+	finder.drawBordersOfClusters(imageBuffer, rows, cols, 1000, 10000);
+	imageReader.writeImage("images/sudokuZdjecieWynik_kawrat_border_result.pgm",
+			imageBuffer, rows, cols);
+	delete imageBuffer;
+	ASSERT_TRUE(1);
 
-
+}
 

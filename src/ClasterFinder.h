@@ -8,9 +8,10 @@
 #ifndef CLASTERFINDER_H_
 #define CLASTERFINDER_H_
 #include "Cluster.h"
+#include "Binarizator.h"
+#include "Pixel.h"
 #include <string.h>
 #include <vector>
-
 
 class ClasterFinder {
 public:
@@ -21,13 +22,13 @@ public:
 	void drawBordersOfClusters(unsigned char* a, int rows, int cols,
 			int minClusterSize, int maxClusterSize);
 private:
-	void addBorder(unsigned char* array, int row, int cols);
-	inline void detectNeighbours(unsigned long int i, unsigned char* a, Cluster &result,
-			int rows, int cols);
+	void addBorder(unsigned char** array, int row, int cols);
+	inline void detectNeighbours(unsigned char** a, unsigned long int x,
+			unsigned long int y, Cluster &result, int rows, int cols);
 
 	int read;
 	int write;
-	int * stack;
+	Pixel * stack;
 
 };
 
