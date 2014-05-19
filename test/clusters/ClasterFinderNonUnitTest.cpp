@@ -5,7 +5,7 @@
  *      Author: mj
  */
 
-#include "ClasterFinder.h"
+#include "clusters/ClasterFinder.h"
 
 /*
  * HaarLikeBinarizatorTest.cpp
@@ -14,8 +14,8 @@
  *      Author: mj
  */
 
-#include "GrayscaleImageReader.h"
-#include "ClasterFinder.h"
+#include "reader/GrayscaleImageReader.h"
+#include "clusters/ClasterFinder.h"
 #include "gtest/gtest.h"
 
 class ClasterFinderNonUnitTest: public ::testing::Test {

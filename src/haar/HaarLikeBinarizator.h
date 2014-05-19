@@ -9,7 +9,7 @@
 #define HaarLikeBinarizator_H_
 #include <stdlib.h>
 #include <string.h>
-#include "Binarizator.h"
+#include "../binarization/Binarizator.h"
 
 class HaarLikeBinarizator: protected Binarizator {
 public:

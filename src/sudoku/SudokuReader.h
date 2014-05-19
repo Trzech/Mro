@@ -7,8 +7,8 @@
 
 #ifndef SUDOKUREADER_H_
 #define SUDOKUREADER_H_
-#include "HaarLikeBinarizator.h"
-#include "Binarizator.h"
+#include "../haar/HaarLikeBinarizator.h"
+#include "../binarization/Binarizator.h"
 
 class SudokuReader {
 public:

@@ -8,8 +8,8 @@
 #ifndef CLASTERFINDER_H_
 #define CLASTERFINDER_H_
 #include "Cluster.h"
-#include "Binarizator.h"
-#include "Pixel.h"
+#include "../binarization/Binarizator.h"
+#include "../utils/Pixel.h"
 #include <string.h>
 #include <vector>
 #include <stack>

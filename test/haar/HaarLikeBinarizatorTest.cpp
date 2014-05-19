@@ -5,8 +5,8 @@
  *      Author: mj
  */
 
-#include "HaarLikeBinarizator.h"
-#include "GrayscaleImageReader.h"
+#include "haar/HaarLikeBinarizator.h"
+#include "reader/GrayscaleImageReader.h"
 
 #include "gtest/gtest.h"
 

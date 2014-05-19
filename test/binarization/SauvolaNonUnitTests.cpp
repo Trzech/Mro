@@ -1,9 +1,9 @@
-#include "IntegralImageBuilder.h"
+#include "binarization/IntegralImageBuilder.h"
 
 #include "gtest/gtest.h"
-#include "SauvolaBinarizator.h"
-#include "GrayscaleImageReader.h"
-#include "Timer.h"
+#include "binarization/SauvolaBinarizator.h"
+#include "reader/GrayscaleImageReader.h"
+#include "utils/Timer.h"
 
 class SauvolaNonUnitTests: public ::testing::Test {
 public:

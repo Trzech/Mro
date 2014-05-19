@@ -8,7 +8,7 @@
 #ifndef ABSTRACTBINARIZATOR_H_
 #define ABSTRACTBINARIZATOR_H_
 #include "IntegralImageBuilder.h"
-#include "Timer.h"
+#include "../utils/Timer.h"
 
 class Binarizator {
 public:

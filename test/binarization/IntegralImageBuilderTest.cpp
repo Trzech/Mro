@@ -5,10 +5,10 @@
  *      Author: mj
  */
 
-#include "IntegralImageBuilder.h"
+#include "binarization/IntegralImageBuilder.h"
 
 #include "gtest/gtest.h"
-#include "Binarizator.h"
+#include "binarization/Binarizator.h"
 
 class IntegralImageBuilderTest: public ::testing::Test {
 

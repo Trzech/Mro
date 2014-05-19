@@ -5,7 +5,7 @@
  *      Author: mj
  */
 
-#include "SudokuReader.h"
+#include "sudoku/SudokuReader.h"
 #include "gtest/gtest.h"
 
 class SudokuReaderNonUnitTests: public ::testing::Test {

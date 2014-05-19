@@ -1,9 +1,9 @@
-#include "IntegralImageBuilder.h"
 
 #include "gtest/gtest.h"
-#include "BrodleyBinarizator.h"
-#include "GrayscaleImageReader.h"
-#include "Timer.h"
+#include "binarization/BrodleyBinarizator.h"
+#include "reader/GrayscaleImageReader.h"
+#include "utils/Timer.h"
+#include "binarization/IntegralImageBuilder.h"
 
 
 
