@@ -5,16 +5,16 @@
  *      Author: mj
  */
 
-#include "ClasterFinder.h"
+#include "ClusterFinder.h"
 
-ClasterFinder::ClasterFinder() {
+ClusterFinder::ClusterFinder() {
 
 }
 
-ClasterFinder::~ClasterFinder() {
+ClusterFinder::~ClusterFinder() {
 }
 
-void ClasterFinder::drawBordersOfClusters(unsigned char* a, int rows, int cols,
+void ClusterFinder::drawBordersOfClusters(unsigned char* a, int rows, int cols,
 		int minClusterSize, int maxClusterSize) {
 	unsigned char color = 255;
 	std::vector<Cluster> clusters = findClusters(a, rows, cols, minClusterSize,
@@ -35,7 +35,7 @@ void ClasterFinder::drawBordersOfClusters(unsigned char* a, int rows, int cols,
 	}
 }
 
-std::vector<Cluster> ClasterFinder::findClusters(unsigned char* originalA,
+std::vector<Cluster> ClusterFinder::findClusters(unsigned char* originalA,
 		int rows, int cols, int minClusterSize, int maxClusterSize) {
 
 	std::vector<Cluster> result;
@@ -94,7 +94,7 @@ std::vector<Cluster> ClasterFinder::findClusters(unsigned char* originalA,
 	}
 }
 
-void ClasterFinder::addBorder(unsigned char** a, int rows, int cols) {
+void ClusterFinder::addBorder(unsigned char** a, int rows, int cols) {
 
 	for (int i = 0; i < cols; ++i) {
 		a[0][i] = 0;
@@ -106,7 +106,7 @@ void ClasterFinder::addBorder(unsigned char** a, int rows, int cols) {
 	}
 }
 
-inline void ClasterFinder::detectNeighbours(unsigned char** a,
+inline void ClusterFinder::detectNeighbours(unsigned char** a,
 		unsigned long int x, unsigned long int y, Cluster& result, int rows,
 		int cols) {
 	if (a[y][x] != 0) {

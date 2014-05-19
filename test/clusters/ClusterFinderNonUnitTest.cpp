@@ -1,11 +1,11 @@
 /*
- * ClasterFinderNonUnitTest.cpp
+ * ClusterFinderNonUnitTest.cpp
  *
  *  Created on: 28 kwi 2014
  *      Author: mj
  */
 
-#include "clusters/ClasterFinder.h"
+
 
 /*
  * HaarLikeBinarizatorTest.cpp
@@ -15,16 +15,16 @@
  */
 
 #include "reader/GrayscaleImageReader.h"
-#include "clusters/ClasterFinder.h"
+#include "clusters/ClusterFinder.h"
 #include "gtest/gtest.h"
 
-class ClasterFinderNonUnitTest: public ::testing::Test {
+class ClusterFinderNonUnitTest: public ::testing::Test {
 
 };
 
-TEST_F(ClasterFinderNonUnitTest, cluster_5x5) {
+TEST_F(ClusterFinderNonUnitTest, cluster_5x5) {
 	GrayscaleImageReader imageReader;
-	ClasterFinder finder;
+	ClusterFinder finder;
 	int rows;
 	int cols;
 	unsigned char* imageBuffer;
@@ -42,9 +42,9 @@ TEST_F(ClasterFinderNonUnitTest, cluster_5x5) {
 
 }
 
-TEST_F(ClasterFinderNonUnitTest, clusters_20x20) {
+TEST_F(ClusterFinderNonUnitTest, clusters_20x20) {
 	GrayscaleImageReader imageReader;
-	ClasterFinder finder;
+	ClusterFinder finder;
 	int rows;
 	int cols;
 	unsigned char* imageBuffer;
@@ -62,9 +62,9 @@ TEST_F(ClasterFinderNonUnitTest, clusters_20x20) {
 
 }
 
-TEST_F(ClasterFinderNonUnitTest, lettersClusters_draw_border) {
+TEST_F(ClusterFinderNonUnitTest, lettersClusters_draw_border) {
 	GrayscaleImageReader imageReader;
-	ClasterFinder finder;
+	ClusterFinder finder;
 	int rows;
 	int cols;
 	unsigned char* imageBuffer;
@@ -78,9 +78,9 @@ TEST_F(ClasterFinderNonUnitTest, lettersClusters_draw_border) {
 
 }
 
-TEST_F(ClasterFinderNonUnitTest, smileWithBigCluster_draw_border) {
+TEST_F(ClusterFinderNonUnitTest, smileWithBigCluster_draw_border) {
 	GrayscaleImageReader imageReader;
-	ClasterFinder finder;
+	ClusterFinder finder;
 	int rows;
 	int cols;
 	unsigned char* imageBuffer;

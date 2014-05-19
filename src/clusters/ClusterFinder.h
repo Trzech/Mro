@@ -1,5 +1,5 @@
 /*
- * ClasterFinder.h
+ * ClusterFinder.h
  *
  *  Created on: 28 kwi 2014
  *      Author: mj
@@ -14,10 +14,10 @@
 #include <vector>
 #include <stack>
 
-class ClasterFinder {
+class ClusterFinder {
 public:
-	ClasterFinder();
-	~ClasterFinder();
+	ClusterFinder();
+	~ClusterFinder();
 	std::vector<Cluster> findClusters(unsigned char* a, int rows, int cols,
 			int minClusterSize, int maxClusterSize);
 	void drawBordersOfClusters(unsigned char* a, int rows, int cols,
