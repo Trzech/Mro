@@ -14,7 +14,7 @@ class HaarLikeBinarizatorTest: public ::testing::Test {
 
 };
 
-TEST_F(HaarLikeBinarizatorTest, DISABLED_prosteSudoku) {
+TEST_F(HaarLikeBinarizatorTest, prosteSudoku) {
 	GrayscaleImageReader imageReader;
 
 	int rows;
@@ -33,7 +33,7 @@ TEST_F(HaarLikeBinarizatorTest, DISABLED_prosteSudoku) {
 	ASSERT_TRUE(1);
 
 }
-TEST_F(HaarLikeBinarizatorTest, DISABLED_sudokuZdjecie) {
+TEST_F(HaarLikeBinarizatorTest, sudokuZdjecie) {
 	GrayscaleImageReader imageReader;
 
 	int rows;
@@ -51,7 +51,7 @@ TEST_F(HaarLikeBinarizatorTest, DISABLED_sudokuZdjecie) {
 	ASSERT_TRUE(1);
 
 }
-TEST_F(HaarLikeBinarizatorTest, DISABLED_sudokuGazeta) {
+TEST_F(HaarLikeBinarizatorTest, sudokuGazeta) {
 	GrayscaleImageReader imageReader;
 
 	int rows;
@@ -70,7 +70,7 @@ TEST_F(HaarLikeBinarizatorTest, DISABLED_sudokuGazeta) {
 
 }
 
-TEST_F(HaarLikeBinarizatorTest, DISABLED_sudokuPole) {
+TEST_F(HaarLikeBinarizatorTest, sudokuPole) {
 	GrayscaleImageReader imageReader;
 
 	int rows;

@@ -12,7 +12,7 @@ public:
 };
 
 
-TEST_F(SauvolaNonUnitTests, DISABLED_lenaSauvolaBinarizatorWithIntegral) {
+TEST_F(SauvolaNonUnitTests, lenaSauvolaBinarizatorWithIntegral) {
 	Timer timer;
 	int rows, cols;
 

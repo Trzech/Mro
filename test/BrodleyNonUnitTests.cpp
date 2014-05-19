@@ -18,7 +18,7 @@ public:
 	double brodleyParameter;
 };
 
-TEST_F(BrodleyNonUnitTests, DISABLED_lenaBrodleyBinarizatorWithIntegral) {
+TEST_F(BrodleyNonUnitTests, lenaBrodleyBinarizatorWithIntegral) {
 	Timer timer;
 	int rows, cols;
 

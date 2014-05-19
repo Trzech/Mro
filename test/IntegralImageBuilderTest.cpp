@@ -14,7 +14,7 @@ class IntegralImageBuilderTest: public ::testing::Test {
 
 };
 
-TEST_F(IntegralImageBuilderTest, DISABLED_exampleFromBook) {
+TEST_F(IntegralImageBuilderTest, exampleFromBook) {
 	//given
 	int rows = 3;
 	int cols = 3;
@@ -49,7 +49,7 @@ TEST_F(IntegralImageBuilderTest, DISABLED_exampleFromBook) {
 
 }
 
-TEST_F(IntegralImageBuilderTest, DISABLED_meanExampleFromBook) {
+TEST_F(IntegralImageBuilderTest, meanExampleFromBook) {
 	//given
 	int rows = 5;
 	int cols = 5;
@@ -69,7 +69,7 @@ TEST_F(IntegralImageBuilderTest, DISABLED_meanExampleFromBook) {
 	delete[] source;
 }
 
-TEST_F(IntegralImageBuilderTest, DISABLED_meanOfOne) {
+TEST_F(IntegralImageBuilderTest, meanOfOne) {
 	//given
 	int rows = 5;
 	int cols = 5;
@@ -97,7 +97,7 @@ TEST_F(IntegralImageBuilderTest, DISABLED_meanOfOne) {
 	delete integralBuffer;
 
 }
-TEST_F(IntegralImageBuilderTest, DISABLED_meanExampleFromBookUsingCoordinates) {
+TEST_F(IntegralImageBuilderTest, meanExampleFromBookUsingCoordinates) {
 	//given
 	int rows = 5;
 	int cols = 5;

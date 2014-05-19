@@ -44,7 +44,7 @@ TEST_F(ClasterFinderNonUnitTest, cluster_5x5) {
 
 }
 
-TEST_F(ClasterFinderNonUnitTest, DISABLED_clusters_20x20) {
+TEST_F(ClasterFinderNonUnitTest, clusters_20x20) {
 	GrayscaleImageReader imageReader;
 	ClasterFinder finder;
 	int rows;
@@ -65,7 +65,7 @@ TEST_F(ClasterFinderNonUnitTest, DISABLED_clusters_20x20) {
 
 }
 
-TEST_F(ClasterFinderNonUnitTest, DISABLED_lettersClusters_draw_border) {
+TEST_F(ClasterFinderNonUnitTest, lettersClusters_draw_border) {
 	GrayscaleImageReader imageReader;
 	ClasterFinder finder;
 	int rows;
@@ -81,7 +81,7 @@ TEST_F(ClasterFinderNonUnitTest, DISABLED_lettersClusters_draw_border) {
 
 }
 
-TEST_F(ClasterFinderNonUnitTest, DISABLED_smileWithBigCluster_draw_border) {
+TEST_F(ClasterFinderNonUnitTest, smileWithBigCluster_draw_border) {
 	GrayscaleImageReader imageReader;
 	ClasterFinder finder;
 	int rows;
@@ -129,5 +129,21 @@ TEST_F(ClasterFinderNonUnitTest, sudokuZdjecieWynik_kawrat_draw_border) {
 
 }
 
+
+TEST_F(ClasterFinderNonUnitTest, sudoku_easy_1_draw_border) {
+	GrayscaleImageReader imageReader;
+	ClasterFinder finder;
+	int rows;
+	int cols;
+	unsigned char* imageBuffer;
+	imageBuffer = imageReader.readDataFromFile(
+			"images/sudoku_easy_1.pgm", &rows, &cols);
+	finder.drawBordersOfClusters(imageBuffer, rows, cols, 1000, 15000);
+	imageReader.writeImage("images/sudoku_easy_1_border_result.pgm",
+			imageBuffer, rows, cols);
+	delete imageBuffer;
+	ASSERT_TRUE(1);
+
+}
 
 
