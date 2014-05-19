@@ -18,8 +18,8 @@ TEST_F(SauvolaNonUnitTests, lenaSauvolaBinarizatorWithIntegral) {
 
 	GrayscaleImageReader reader;
 
-	char inputFileName[] = "images/lena_grayscale.pgm";
-	char outputFileName[] = "images/lena_SauvolaBinarizatorWithIntegral.pgm";
+	char inputFileName[] = "test/binarization/images/source/lena_grayscale.pgm";
+	char outputFileName[] = "test/binarization/images/result/lena_SauvolaBinarizatorWithIntegral.pgm";
 	unsigned char *inBuf;
 	unsigned char *outBuf;
 
@@ -46,8 +46,8 @@ TEST_F(SauvolaNonUnitTests, DISABLED_bookSauvolaBinarizatorWithIntegral) {
 
 	GrayscaleImageReader reader;
 
-	char inputFileName[] = "images/book.pgm";
-	char outputFileName[] = "images/book_SauvolaBinarizatorWithIntegral.pgm";
+	char inputFileName[] = "test/binarization/images/source/book.pgm";
+	char outputFileName[] = "test/binarization/images/result/book_SauvolaBinarizatorWithIntegral.pgm";
 	unsigned char *inBuf;
 	unsigned char *outBuf;
 

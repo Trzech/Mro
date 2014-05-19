@@ -28,12 +28,10 @@ TEST_F(ClasterFinderNonUnitTest, cluster_5x5) {
 	int rows;
 	int cols;
 	unsigned char* imageBuffer;
-	imageBuffer = imageReader.readDataFromFile("images/cluster_5x5.pgm", &rows,
+	imageBuffer = imageReader.readDataFromFile("test/clusters/images/source/cluster_5x5.pgm", &rows,
 			&cols);
 	std::vector<Cluster> clusters = finder.findClusters(imageBuffer, rows, cols,
 			1, 100);
-	imageReader.writeImage("images/cluster_5x5_result.pgm", imageBuffer, rows,
-			cols);
 	delete imageBuffer;
 
 	ASSERT_EQ(2, clusters[0].minX);
@@ -50,12 +48,11 @@ TEST_F(ClasterFinderNonUnitTest, clusters_20x20) {
 	int rows;
 	int cols;
 	unsigned char* imageBuffer;
-	imageBuffer = imageReader.readDataFromFile("images/clusters_20x20.pgm",
+	imageBuffer = imageReader.readDataFromFile("test/clusters/images/source/clusters_20x20.pgm",
 			&rows, &cols);
 	std::vector<Cluster> clusters = finder.findClusters(imageBuffer, rows, cols,
 			1, 100);
-	imageReader.writeImage("images/clusters_20x20_result.pgm", imageBuffer,
-			rows, cols);
+
 	delete imageBuffer;
 	ASSERT_EQ(1, clusters[0].minX);
 	ASSERT_EQ(3, clusters[0].maxX);
@@ -71,10 +68,10 @@ TEST_F(ClasterFinderNonUnitTest, lettersClusters_draw_border) {
 	int rows;
 	int cols;
 	unsigned char* imageBuffer;
-	imageBuffer = imageReader.readDataFromFile("images/lettersClusters.pgm",
+	imageBuffer = imageReader.readDataFromFile("test/clusters/images/source/lettersClusters.pgm",
 			&rows, &cols);
 	finder.drawBordersOfClusters(imageBuffer, rows, cols, 1, 200);
-	imageReader.writeImage("images/lettersClusters_result.pgm", imageBuffer,
+	imageReader.writeImage("test/clusters/images/result/lettersClusters_result.pgm", imageBuffer,
 			rows, cols);
 	delete imageBuffer;
 	ASSERT_TRUE(1);
@@ -87,63 +84,17 @@ TEST_F(ClasterFinderNonUnitTest, smileWithBigCluster_draw_border) {
 	int rows;
 	int cols;
 	unsigned char* imageBuffer;
-	imageBuffer = imageReader.readDataFromFile("images/smileWithBigCluster.pgm",
+	imageBuffer = imageReader.readDataFromFile("test/clusters/images/source/smileWithBigCluster.pgm",
 			&rows, &cols);
 	finder.drawBordersOfClusters(imageBuffer, rows, cols, 0, 200);
-	imageReader.writeImage("images/smileWithBigCluster_result.pgm", imageBuffer,
+	imageReader.writeImage("test/clusters/images/result/smileWithBigCluster_result.pgm", imageBuffer,
 			rows, cols);
 	delete imageBuffer;
 	ASSERT_TRUE(1);
 
 }
 
-TEST_F(ClasterFinderNonUnitTest, book_inversed_draw_border) {
-	GrayscaleImageReader imageReader;
-	ClasterFinder finder;
-	int rows;
-	int cols;
-	unsigned char* imageBuffer;
-	imageBuffer = imageReader.readDataFromFile("images/book_inversed.pgm",
-			&rows, &cols);
-	finder.drawBordersOfClusters(imageBuffer, rows, cols, 200, 1000);
-	imageReader.writeImage("images/book_inversed_result.pgm", imageBuffer,
-			rows, cols);
-	delete imageBuffer;
-	ASSERT_TRUE(1);
-
-}
-
-TEST_F(ClasterFinderNonUnitTest, sudokuZdjecieWynik_kawrat_draw_border) {
-	GrayscaleImageReader imageReader;
-	ClasterFinder finder;
-	int rows;
-	int cols;
-	unsigned char* imageBuffer;
-	imageBuffer = imageReader.readDataFromFile(
-			"images/sudokuZdjecieWynik_kawrat.pgm", &rows, &cols);
-	finder.drawBordersOfClusters(imageBuffer, rows, cols, 1000, 15000);
-	imageReader.writeImage("images/sudokuZdjecieWynik_kawrat_border_result.pgm",
-			imageBuffer, rows, cols);
-	delete imageBuffer;
-	ASSERT_TRUE(1);
-
-}
 
 
-TEST_F(ClasterFinderNonUnitTest, sudoku_easy_1_draw_border) {
-	GrayscaleImageReader imageReader;
-	ClasterFinder finder;
-	int rows;
-	int cols;
-	unsigned char* imageBuffer;
-	imageBuffer = imageReader.readDataFromFile(
-			"images/sudoku_easy_1.pgm", &rows, &cols);
-	finder.drawBordersOfClusters(imageBuffer, rows, cols, 1000, 15000);
-	imageReader.writeImage("images/sudoku_easy_1_border_result.pgm",
-			imageBuffer, rows, cols);
-	delete imageBuffer;
-	ASSERT_TRUE(1);
-
-}
 
 

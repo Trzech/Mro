@@ -25,8 +25,8 @@ TEST_F(BrodleyNonUnitTests, lenaBrodleyBinarizatorWithIntegral) {
 	GrayscaleImageReader reader;
 
 
-	char inputFileName[] = "images/lena_grayscale.pgm";
-	char outputFileName[] = "images/lena_BrodleyBinarizatorWithIntegral.pgm";
+	char inputFileName[] = "test/binarization/images/source/lena_grayscale.pgm";
+	char outputFileName[] = "test/binarization/images/result/lena_BrodleyBinarizatorWithIntegral.pgm";
 	unsigned char *inBuf;
 	unsigned char *outBuf;
 
@@ -54,8 +54,8 @@ TEST_F(BrodleyNonUnitTests,  DISABLED_bookBrodleyBinarizatorWithIntegral) {
 	GrayscaleImageReader reader;
 
 
-	char inputFileName[] = "images/book.pgm";
-	char outputFileName[] = "images/book_BrodleyBinarizatorWithIntegral.pgm";
+	char inputFileName[] = "test/binarization/images/source/book.pgm";
+	char outputFileName[] = "test/binarization/images/result/book_BrodleyBinarizatorWithIntegral.pgm";
 	unsigned char *inBuf;
 	unsigned char *outBuf;
 
