@@ -10,8 +10,6 @@
 *.dll
 
 *.d
-
-
 # Compiled Static libraries
 *.lai
 *.la
