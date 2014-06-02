@@ -10,11 +10,11 @@
 #include "gtest/gtest.h"
 #include "binarization/Binarizator.h"
 
-class IntegralImageBuilderTest: public ::testing::Test {
+class IntegralImageBuilderUnitTest: public ::testing::Test {
 
 };
 
-TEST_F(IntegralImageBuilderTest, exampleFromBook) {
+TEST_F(IntegralImageBuilderUnitTest, exampleFromBook) {
 	//given
 	int rows = 3;
 	int cols = 3;
@@ -49,7 +49,7 @@ TEST_F(IntegralImageBuilderTest, exampleFromBook) {
 
 }
 
-TEST_F(IntegralImageBuilderTest, meanExampleFromBook) {
+TEST_F(IntegralImageBuilderUnitTest, meanExampleFromBook) {
 	//given
 	int rows = 5;
 	int cols = 5;
@@ -69,7 +69,7 @@ TEST_F(IntegralImageBuilderTest, meanExampleFromBook) {
 	delete[] source;
 }
 
-TEST_F(IntegralImageBuilderTest, meanOfOne) {
+TEST_F(IntegralImageBuilderUnitTest, meanOfOne) {
 	//given
 	int rows = 5;
 	int cols = 5;
@@ -97,7 +97,7 @@ TEST_F(IntegralImageBuilderTest, meanOfOne) {
 	delete integralBuffer;
 
 }
-TEST_F(IntegralImageBuilderTest, meanExampleFromBookUsingCoordinates) {
+TEST_F(IntegralImageBuilderUnitTest, meanExampleFromBookUsingCoordinates) {
 	//given
 	int rows = 5;
 	int cols = 5;

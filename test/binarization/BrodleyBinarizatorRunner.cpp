@@ -2,14 +2,13 @@
 #include "gtest/gtest.h"
 #include "binarization/BrodleyBinarizator.h"
 #include "reader/GrayscaleImageReader.h"
-#include "utils/Timer.h"
 #include "binarization/IntegralImageBuilder.h"
 
 
 
-class BrodleyNonUnitTests: public ::testing::Test {
+class BrodleyBinarizatorRunner: public ::testing::Test {
 public:
-	BrodleyNonUnitTests(){
+	BrodleyBinarizatorRunner(){
 		surrounding = 10;
 	brodleyParameter = 0.9;
 
@@ -18,8 +17,7 @@ public:
 	double brodleyParameter;
 };
 
-TEST_F(BrodleyNonUnitTests, lenaBrodleyBinarizatorWithIntegral) {
-	Timer timer;
+TEST_F(BrodleyBinarizatorRunner, lenaBrodleyBinarizatorWithIntegral) {
 	int rows, cols;
 
 	GrayscaleImageReader reader;
@@ -34,21 +32,17 @@ TEST_F(BrodleyNonUnitTests, lenaBrodleyBinarizatorWithIntegral) {
 
 	BrodleyBinarizator binarizator(inBuf, rows, cols);
 
-	timer.begin();
 	outBuf = binarizator.binarizeWithIntegral(surrounding, brodleyParameter);
-	double time = timer.end();
+
 	reader.writeImage(outputFileName, outBuf, rows, cols);
 
 	delete inBuf;
 	delete outBuf;
-
-	ASSERT_LT(time, 500);
 }
 
 
 
-TEST_F(BrodleyNonUnitTests,  DISABLED_bookBrodleyBinarizatorWithIntegral) {
-	Timer timer;
+TEST_F(BrodleyBinarizatorRunner,  DISABLED_bookBrodleyBinarizatorWithIntegral) {
 	int rows, cols;
 
 	GrayscaleImageReader reader;
@@ -63,14 +57,11 @@ TEST_F(BrodleyNonUnitTests,  DISABLED_bookBrodleyBinarizatorWithIntegral) {
 
 	BrodleyBinarizator binarizator(inBuf, rows, cols);
 
-	timer.begin();
 	outBuf = binarizator.binarizeWithIntegral(surrounding, brodleyParameter);
-	double time = timer.end();
 	reader.writeImage(outputFileName, outBuf, rows, cols);
 
 	delete inBuf;
 	delete outBuf;
 
-	ASSERT_LT(time, 500);
 
 }
