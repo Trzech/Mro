@@ -10,11 +10,11 @@
 
 #include "gtest/gtest.h"
 
-class HaarLikeBinarizatorTest: public ::testing::Test {
+class HaarLikeBinarizatorRunner: public ::testing::Test {
 
 };
 
-TEST_F(HaarLikeBinarizatorTest, DISABLED_prosteSudoku) {
+TEST_F(HaarLikeBinarizatorRunner, prosteSudoku) {
 	GrayscaleImageReader imageReader;
 
 	int rows;
@@ -30,10 +30,10 @@ TEST_F(HaarLikeBinarizatorTest, DISABLED_prosteSudoku) {
 	delete imageBuffer;
 	delete resultBuffer;
 
-	ASSERT_TRUE(1);
+
 
 }
-TEST_F(HaarLikeBinarizatorTest, DISABLED_sudokuZdjecie) {
+TEST_F(HaarLikeBinarizatorRunner, sudokuZdjecie) {
 	GrayscaleImageReader imageReader;
 
 	int rows;
@@ -48,10 +48,10 @@ TEST_F(HaarLikeBinarizatorTest, DISABLED_sudokuZdjecie) {
 	imageReader.writeImage("images/sudokuZdjecieWynik.pgm", resultBuffer, rows, cols);
 	delete imageBuffer;
 	delete resultBuffer;
-	ASSERT_TRUE(1);
+
 
 }
-TEST_F(HaarLikeBinarizatorTest, DISABLED_sudokuGazeta) {
+TEST_F(HaarLikeBinarizatorRunner, sudokuGazeta) {
 	GrayscaleImageReader imageReader;
 
 	int rows;
@@ -66,11 +66,11 @@ TEST_F(HaarLikeBinarizatorTest, DISABLED_sudokuGazeta) {
 	imageReader.writeImage("images/sudokuGazetaWynik.pgm", resultBuffer, rows, cols);
 	delete imageBuffer;
 	delete resultBuffer;
-	ASSERT_TRUE(1);
+
 
 }
 
-TEST_F(HaarLikeBinarizatorTest, DISABLED_sudokuPole) {
+TEST_F(HaarLikeBinarizatorRunner, sudokuPole) {
 	GrayscaleImageReader imageReader;
 
 	int rows;
@@ -85,6 +85,6 @@ TEST_F(HaarLikeBinarizatorTest, DISABLED_sudokuPole) {
 	imageReader.writeImage("images/sudokuPoleWynik.pgm", resultBuffer, rows, cols);
 	delete imageBuffer;
 	delete resultBuffer;
-	ASSERT_TRUE(1);
+
 
 }

@@ -8,6 +8,6 @@
 #include "sudoku/SudokuReader.h"
 #include "gtest/gtest.h"
 
-class SudokuReaderNonUnitTests: public ::testing::Test {
+class SudokuReaderTests: public ::testing::Test {
 
 };
