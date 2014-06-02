@@ -16,6 +16,7 @@ RM := rm -rf
 -include src/utils/subdir.mk
 -include src/sudoku/subdir.mk
 -include src/reader/subdir.mk
+-include src/network/subdir.mk
 -include src/haar/subdir.mk
 -include src/clusters/subdir.mk
 -include src/binarization/subdir.mk

@@ -11,3 +11,8 @@
 class SudokuReaderNonUnitTests: public ::testing::Test {
 
 };
+
+
+TEST_F(SudokuReaderNonUnitTests, clusters_20x20) {
+
+}

@@ -31,6 +31,7 @@ test \
 src/utils \
 src/sudoku \
 src/reader \
+src/network \
 src/haar \
 src/clusters \
 src/binarization \
