@@ -1,9 +1,25 @@
-/Debug
-/DebugTests
-/ReleaseTests
-/Release
-/DebugProfiling
-/Rlease c++11
+*.slo
+*.lo
+*.o
+*.obj
+*.gcno
+*.gcda
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+*.d
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.appi
+
 /html
 /.cproject
 /.project
