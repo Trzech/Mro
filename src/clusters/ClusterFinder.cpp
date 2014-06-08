@@ -7,32 +7,11 @@
 
 #include "ClusterFinder.h"
 
-ClusterFinder::ClusterFinder() {
-
+ClusterFinder::ClusterFinder(unsigned char backgroundColor) {
+	this->backgroundColor = backgroundColor;
 }
 
 ClusterFinder::~ClusterFinder() {
-}
-
-void ClusterFinder::drawBordersOfClusters(unsigned char* a, int rows, int cols,
-		int minClusterSize, int maxClusterSize) {
-	unsigned char color = 255;
-	std::vector<Cluster> clusters = findClusters(a, rows, cols, minClusterSize,
-			maxClusterSize);
-	int baseMin, baseMax;
-	for (int i = 0; i < clusters.size(); ++i) {
-		baseMin = clusters[i].minY * cols;
-		baseMax = clusters[i].maxY * cols;
-		for (int j = clusters[i].minX; j <= clusters[i].maxX; ++j) {
-			a[baseMin + j] = color;
-			a[baseMax + j] = color;
-		}
-
-		for (int j = clusters[i].minY; j <= clusters[i].maxY; ++j) {
-			a[j * cols + clusters[i].minX] = color;
-			a[j * cols + clusters[i].maxX] = color;
-		}
-	}
 }
 
 std::vector<Cluster> ClusterFinder::findClusters(unsigned char* originalA,
@@ -49,8 +28,8 @@ std::vector<Cluster> ClusterFinder::findClusters(unsigned char* originalA,
 		Pixel pixel(0, 0);
 		for (unsigned long int i = 0; i < rows; ++i) {
 			for (unsigned long int j = 0; j < cols; ++j) {
-				if (a[i][j] != 0) {
-					a[i][j] = 0;
+				if (a[i][j] != this->backgroundColor) {
+					a[i][j] = this->backgroundColor;
 					pixel.y = i;
 					pixel.x = j;
 					stack.push(pixel);
@@ -97,21 +76,21 @@ std::vector<Cluster> ClusterFinder::findClusters(unsigned char* originalA,
 void ClusterFinder::addBorder(unsigned char** a, int rows, int cols) {
 
 	for (int i = 0; i < cols; ++i) {
-		a[0][i] = 0;
-		a[rows - 1][i] = 0;
+		a[0][i] = this->backgroundColor;
+		a[rows - 1][i] = this->backgroundColor;
 	}
 	for (int i = 0; i < rows; ++i) {
-		a[i][0] = 0;
-		a[i][cols - 1] = 0;
+		a[i][0] = this->backgroundColor;
+		a[i][cols - 1] = this->backgroundColor;
 	}
 }
 
 inline void ClusterFinder::detectNeighbours(unsigned char** a,
 		unsigned long int x, unsigned long int y, Cluster& result, int rows,
 		int cols) {
-	if (a[y][x] != 0) {
+	if (a[y][x] != this->backgroundColor) {
 		stack.push(Pixel(x, y));
-		a[y][x] = 0;
+		a[y][x] = this->backgroundColor;
 		result.addPoint(x, y);
 	}
 

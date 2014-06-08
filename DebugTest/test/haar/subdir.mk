@@ -4,13 +4,13 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../test/haar/HaarLikeBinarizatorTest.cpp 
+../test/haar/HaarLikeBinarizatorRunner.cpp 
 
 OBJS += \
-./test/haar/HaarLikeBinarizatorTest.o 
+./test/haar/HaarLikeBinarizatorRunner.o 
 
 CPP_DEPS += \
-./test/haar/HaarLikeBinarizatorTest.d 
+./test/haar/HaarLikeBinarizatorRunner.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

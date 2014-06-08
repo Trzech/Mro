@@ -4,13 +4,13 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../test/sudoku/SudokuReaderNonUnitTests.cpp 
+../test/sudoku/SudokuReaderRunner.cpp 
 
 OBJS += \
-./test/sudoku/SudokuReaderNonUnitTests.o 
+./test/sudoku/SudokuReaderRunner.o 
 
 CPP_DEPS += \
-./test/sudoku/SudokuReaderNonUnitTests.d 
+./test/sudoku/SudokuReaderRunner.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

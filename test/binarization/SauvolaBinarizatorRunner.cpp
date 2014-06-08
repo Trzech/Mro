@@ -3,47 +3,34 @@
 #include "gtest/gtest.h"
 #include "binarization/SauvolaBinarizator.h"
 #include "reader/GrayscaleImageReader.h"
-#include "utils/Timer.h"
 
-class SauvolaNonUnitTests: public ::testing::Test {
+class SauvolaBinarizatorRunner: public ::testing::Test {
 public:
 	int surrounding = 10;
 	double k_factor = 0.2;
 };
 
 
-TEST_F(SauvolaNonUnitTests, lenaSauvolaBinarizatorWithIntegral) {
-	Timer timer;
+TEST_F(SauvolaBinarizatorRunner, lenaSauvolaBinarizatorWithIntegral) {
 	int rows, cols;
-
 	GrayscaleImageReader reader;
-
 	char inputFileName[] = "test/binarization/images/source/lena_grayscale.pgm";
 	char outputFileName[] = "test/binarization/images/result/lena_SauvolaBinarizatorWithIntegral.pgm";
 	unsigned char *inBuf;
 	unsigned char *outBuf;
-
 	inBuf = reader.readDataFromFile(inputFileName, &rows, &cols);
-
 	SauvolaBinarizator binarizator(inBuf, rows, cols);
-
-	timer.begin();
-	outBuf = binarizator.binarizeWithIntegral(SauvolaNonUnitTests::surrounding,
-			SauvolaNonUnitTests::k_factor);
-	double time = timer.end();
+	outBuf = binarizator.binarizeWithIntegral(SauvolaBinarizatorRunner::surrounding,
+			SauvolaBinarizatorRunner::k_factor);
 	reader.writeImage(outputFileName, outBuf, rows, cols);
-
 	delete inBuf;
 	delete outBuf;
 
-	ASSERT_LT(time, 1000);
 }
 
 
-TEST_F(SauvolaNonUnitTests, DISABLED_bookSauvolaBinarizatorWithIntegral) {
-	Timer timer;
+TEST_F(SauvolaBinarizatorRunner, DISABLED_bookSauvolaBinarizatorWithIntegral) {
 	int rows, cols;
-
 	GrayscaleImageReader reader;
 
 	char inputFileName[] = "test/binarization/images/source/book.pgm";
@@ -52,19 +39,12 @@ TEST_F(SauvolaNonUnitTests, DISABLED_bookSauvolaBinarizatorWithIntegral) {
 	unsigned char *outBuf;
 
 	inBuf = reader.readDataFromFile(inputFileName, &rows, &cols);
-
 	SauvolaBinarizator binarizator(inBuf, rows, cols);
-
-	timer.begin();
-	outBuf = binarizator.binarizeWithIntegral(SauvolaNonUnitTests::surrounding,
-			SauvolaNonUnitTests::k_factor);
-	double time = timer.end();
+	outBuf = binarizator.binarizeWithIntegral(SauvolaBinarizatorRunner::surrounding,
+			SauvolaBinarizatorRunner::k_factor);
 	reader.writeImage(outputFileName, outBuf, rows, cols);
-
 	delete inBuf;
 	delete outBuf;
-
-	ASSERT_LT(time, 1000);
 
 }
 

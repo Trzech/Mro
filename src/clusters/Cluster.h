@@ -19,6 +19,13 @@ public:
 	unsigned int maxX;
 	unsigned int maxY;
 	unsigned int size;
+
+	unsigned int getWidth();
+	unsigned int getHeight();
+	unsigned int getSize();
+	double getRatio();
+
+
 };
 
 #endif /* CLUSTER_H_ */
