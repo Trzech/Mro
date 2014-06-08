@@ -22,7 +22,9 @@ public:
 
 	unsigned int getWidth();
 	unsigned int getHeight();
+	unsigned int getSize();
 	double getRatio();
+
 
 };
 

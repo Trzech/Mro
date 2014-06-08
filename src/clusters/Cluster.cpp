@@ -44,6 +44,10 @@ unsigned int Cluster::getHeight() {
 	return this->maxY - this->minY + 1;
 }
 
+unsigned int Cluster::getSize() {
+	return getWidth()*getHeight();
+}
+
 double Cluster::getRatio() {
 	double width = 1.0 * getWidth();
 	double height = 1.0 * getHeight();

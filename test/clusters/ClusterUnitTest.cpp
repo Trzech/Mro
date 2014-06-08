@@ -53,3 +53,15 @@ TEST_F(ClusterUnitTest, findsRatioCorrectly) {
 
 }
 
+TEST_F(ClusterUnitTest, findsSizeCorrectly) {
+	//given
+	Cluster cluster;
+	cluster.addPoint(0,0);
+	cluster.addPoint(1,1);
+	//when
+	unsigned int result = cluster.getSize();
+
+	//then
+	ASSERT_EQ(4, result);
+
+}

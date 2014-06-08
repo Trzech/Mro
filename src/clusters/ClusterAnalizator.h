@@ -9,11 +9,15 @@
 #define CLUSTERANALIZATOR_H_
 #include "Cluster.h"
 #include <vector>
+#include <math.h>
 
 class ClusterAnalizator {
-	std::vector<Cluster> filterClustersWithSizeRatio(
+public:
+	static std::vector<Cluster> filterClustersWithSizeRatio(
 			std::vector<Cluster> &clusters, double ratio,
 			double accuracy = 0.1);
+
+	static Cluster findBiggestCluster(std::vector<Cluster> &clusters);
 };
 
 #endif /* CLUSTERANALIZATOR_H_ */
