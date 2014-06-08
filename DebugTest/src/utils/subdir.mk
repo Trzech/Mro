@@ -4,14 +4,17 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../src/utils/Drawer.cpp \
 ../src/utils/Pixel.cpp \
 ../src/utils/Timer.cpp 
 
 OBJS += \
+./src/utils/Drawer.o \
 ./src/utils/Pixel.o \
 ./src/utils/Timer.o 
 
 CPP_DEPS += \
+./src/utils/Drawer.d \
 ./src/utils/Pixel.d \
 ./src/utils/Timer.d 
 

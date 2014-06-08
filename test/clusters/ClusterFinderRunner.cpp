@@ -9,6 +9,7 @@
 #include "reader/GrayscaleImageReader.h"
 #include "clusters/ClusterFinder.h"
 #include "gtest/gtest.h"
+#include "utils/Drawer.h"
 
 class ClusterFinderRunner: public ::testing::Test {
 
@@ -23,7 +24,9 @@ TEST_F(ClusterFinderRunner, lettersClusters_draw_border) {
 	unsigned char* imageBuffer;
 	imageBuffer = imageReader.readDataFromFile("test/clusters/images/source/lettersClusters.pgm",
 			&rows, &cols);
-	finder.drawBordersOfClusters(imageBuffer, rows, cols, 1, 200);
+	std::vector<Cluster> clusters =
+			finder.findClusters(imageBuffer, rows, cols, 1, 200);
+	Drawer::drawClusterBorderOnImage(clusters, imageBuffer, rows, cols, 100);
 	imageReader.writeImage("test/clusters/images/result/lettersClusters_result.pgm", imageBuffer,
 			rows, cols);
 	delete imageBuffer;
@@ -38,7 +41,9 @@ TEST_F(ClusterFinderRunner, smileWithBigCluster_draw_border) {
 	unsigned char* imageBuffer;
 	imageBuffer = imageReader.readDataFromFile("test/clusters/images/source/smileWithBigCluster.pgm",
 			&rows, &cols);
-	finder.drawBordersOfClusters(imageBuffer, rows, cols, 0, 200);
+	std::vector<Cluster> clusters =
+			finder.findClusters(imageBuffer, rows, cols, 0, 200);
+	Drawer::drawClusterBorderOnImage(clusters, imageBuffer, rows, cols, 100);
 	imageReader.writeImage("test/clusters/images/result/smileWithBigCluster_result.pgm", imageBuffer,
 			rows, cols);
 	delete imageBuffer;

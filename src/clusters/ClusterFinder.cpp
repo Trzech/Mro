@@ -14,27 +14,6 @@ ClusterFinder::ClusterFinder(unsigned char backgroundColor) {
 ClusterFinder::~ClusterFinder() {
 }
 
-void ClusterFinder::drawBordersOfClusters(unsigned char* a, int rows, int cols,
-		int minClusterSize, int maxClusterSize) {
-	unsigned char color = this->backgroundColor;
-	std::vector<Cluster> clusters = findClusters(a, rows, cols, minClusterSize,
-			maxClusterSize);
-	int baseMin, baseMax;
-	for (int i = 0; i < clusters.size(); ++i) {
-		baseMin = clusters[i].minY * cols;
-		baseMax = clusters[i].maxY * cols;
-		for (int j = clusters[i].minX; j <= clusters[i].maxX; ++j) {
-			a[baseMin + j] = color;
-			a[baseMax + j] = color;
-		}
-
-		for (int j = clusters[i].minY; j <= clusters[i].maxY; ++j) {
-			a[j * cols + clusters[i].minX] = color;
-			a[j * cols + clusters[i].maxX] = color;
-		}
-	}
-}
-
 std::vector<Cluster> ClusterFinder::findClusters(unsigned char* originalA,
 		int rows, int cols, int minClusterSize, int maxClusterSize) {
 
