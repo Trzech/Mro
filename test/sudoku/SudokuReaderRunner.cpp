@@ -15,7 +15,7 @@ TEST_F(SudokuReaderRunner, justTests) {
 	//given
 	int rows, cols;
 	GrayscaleImageReader reader;
-	char inputFileName[] = "test/sudoku/images/source/93987_2.pgm";
+	char inputFileName[] = "test/sudoku/images/source/93987_4.pgm";
 	char outputFileName[] = "test/sudoku/images/result/93987_2.pgm";
 	unsigned char *inBuf;
 	unsigned char *outBuf;
@@ -35,7 +35,7 @@ TEST_F(SudokuReaderRunner, justTests) {
 			clusters);
 
 	// Draw cluster border
-	Drawer::drawClusterBorderOnImage(biggestSquareCluster, outBuf, rows, cols,
+	Drawer::drawSudokuMeshInClusterBorderOnImage(biggestSquareCluster, outBuf, rows, cols,
 			0);
 	//when
 

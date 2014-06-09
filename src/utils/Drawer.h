@@ -9,6 +9,7 @@
 #define DRAWER_H_
 #include "clusters/Cluster.h"
 #include <vector>
+#include <math.h>
 
 class Drawer {
 public:
@@ -18,6 +19,10 @@ public:
 	static void drawClusterBorderOnImage(Cluster & cluster,
 			unsigned char* imageData, int rows, int cols, unsigned char color =
 					0);
+	static void drawSudokuMeshInClusterBorderOnImage(Cluster & cluster,
+			unsigned char* imageData, int rows, int cols, unsigned char color =
+					0);
+
 };
 
 #endif /* DRAWER_H_ */
