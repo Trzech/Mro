@@ -51,3 +51,95 @@ void Drawer::drawSudokuMeshInClusterBorderOnImage(Cluster& cluster,
 	}
 
 }
+inline void Drawer::detectNeighbours(unsigned char* a, unsigned long int x,
+		unsigned long int y, int cols, std::stack<Pixel> & stack,
+		unsigned char backgroundColor) {
+	if (a[y * cols + x] != backgroundColor) {
+		stack.push(Pixel(x, y));
+		a[y * cols + x] = backgroundColor;
+	}
+}
+void Drawer::ereaseFirstClusterOnImageInRanges(unsigned char* a, int rows,
+		int cols, unsigned char backgroundColor, int minX, int maxX, int minY,
+		int maxY) {
+	// TODO: this solution is only temporary! It is one big copy/paste from ClusterFinder
+	std::stack<Pixel> stack;
+	Pixel pixel(0, 0);
+	for (unsigned long int i = minY; i <= maxY; ++i) {
+		for (unsigned long int j = minX; j <= maxX; ++j) {
+			if (a[i * cols + j] != backgroundColor) {
+				a[i * cols + j] = backgroundColor;
+				pixel.y = i;
+				pixel.x = j;
+				stack.push(pixel);
+
+				while (!stack.empty()) {
+					pixel = stack.top();
+					stack.pop();
+
+					unsigned long int x = pixel.x - 1;
+					unsigned long int y = pixel.y - 1;
+					if (a[y * cols + x] != backgroundColor) {
+						stack.push(Pixel(x, y));
+						a[y * cols + x] = backgroundColor;
+					}
+
+					x = pixel.x + 1;
+					y = pixel.y - 1;
+					if (a[y * cols + x] != backgroundColor) {
+						stack.push(Pixel(x, y));
+						a[y * cols + x] = backgroundColor;
+					}
+
+					x = pixel.x;
+					y = pixel.y - 1;
+					if (a[y * cols + x] != backgroundColor) {
+						stack.push(Pixel(x, y));
+						a[y * cols + x] = backgroundColor;
+					}
+
+					x = pixel.x - 1;
+					y = pixel.y;
+					if (a[y * cols + x] != backgroundColor) {
+						stack.push(Pixel(x, y));
+						a[y * cols + x] = backgroundColor;
+					}
+
+					x = pixel.x + 1;
+					y = pixel.y;
+					if (a[y * cols + x] != backgroundColor) {
+						stack.push(Pixel(x, y));
+						a[y * cols + x] = backgroundColor;
+					}
+
+					x = pixel.x - 1;
+					y = pixel.y + 1;
+					if (a[y * cols + x] != backgroundColor) {
+						stack.push(Pixel(x, y));
+						a[y * cols + x] = backgroundColor;
+					}
+
+					x = pixel.x;
+					y = pixel.y + 1;
+					if (a[y * cols + x] != backgroundColor) {
+						stack.push(Pixel(x, y));
+						a[y * cols + x] = backgroundColor;
+					}
+
+					x = pixel.x + 1;
+					y = pixel.y + 1;
+					if (a[y * cols + x] != backgroundColor) {
+						stack.push(Pixel(x, y));
+						a[y * cols + x] = backgroundColor;
+					}
+
+				}
+				return;
+
+			}
+
+		}
+
+	}
+}
+
