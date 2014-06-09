@@ -41,12 +41,18 @@ TEST_F(SudokuReaderRunner, justTests) {
 			biggestSquareCluster.minX, biggestSquareCluster.maxX,
 			biggestSquareCluster.minY, biggestSquareCluster.maxY);
 
+
+
+	//then
+	SudokuReader sudokuReader;
+	sudokuReader.getSudokuStringRepresentation(outBuf, rows, cols, 255,
+			biggestSquareCluster.minX, biggestSquareCluster.maxX,
+			biggestSquareCluster.minY, biggestSquareCluster.maxY, 0.98);
+
 	// Draw cluster border
 	Drawer::drawSudokuMeshInClusterBorderOnImage(biggestSquareCluster, outBuf,
 			rows, cols, 0);
-	//when
 
-	//then
 	reader.writeImage(outputFileName, outBuf, rows, cols);
 	delete inBuf;
 	delete outBuf;
