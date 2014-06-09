@@ -4,19 +4,19 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../test/binarization/BrodleyBinarizatorRunner.cpp \
-../test/binarization/IntegralImageBuilderUnitTest.cpp \
-../test/binarization/SauvolaBinarizatorRunner.cpp 
+../test/binarization/BrodleyNonUnitTests.cpp \
+../test/binarization/IntegralImageBuilderTest.cpp \
+../test/binarization/SauvolaNonUnitTests.cpp 
 
 OBJS += \
-./test/binarization/BrodleyBinarizatorRunner.o \
-./test/binarization/IntegralImageBuilderUnitTest.o \
-./test/binarization/SauvolaBinarizatorRunner.o 
+./test/binarization/BrodleyNonUnitTests.o \
+./test/binarization/IntegralImageBuilderTest.o \
+./test/binarization/SauvolaNonUnitTests.o 
 
 CPP_DEPS += \
-./test/binarization/BrodleyBinarizatorRunner.d \
-./test/binarization/IntegralImageBuilderUnitTest.d \
-./test/binarization/SauvolaBinarizatorRunner.d 
+./test/binarization/BrodleyNonUnitTests.d \
+./test/binarization/IntegralImageBuilderTest.d \
+./test/binarization/SauvolaNonUnitTests.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

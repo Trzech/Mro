@@ -4,25 +4,13 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../test/clusters/ClusterAnalizatorUnitTest.cpp \
-../test/clusters/ClusterFinderRunner.cpp \
-../test/clusters/ClusterFinderTest.cpp \
-../test/clusters/ClusterFinderUnitTest.cpp \
-../test/clusters/ClusterUnitTest.cpp 
+../test/clusters/ClusterFinderNonUnitTest.cpp 
 
 OBJS += \
-./test/clusters/ClusterAnalizatorUnitTest.o \
-./test/clusters/ClusterFinderRunner.o \
-./test/clusters/ClusterFinderTest.o \
-./test/clusters/ClusterFinderUnitTest.o \
-./test/clusters/ClusterUnitTest.o 
+./test/clusters/ClusterFinderNonUnitTest.o 
 
 CPP_DEPS += \
-./test/clusters/ClusterAnalizatorUnitTest.d \
-./test/clusters/ClusterFinderRunner.d \
-./test/clusters/ClusterFinderTest.d \
-./test/clusters/ClusterFinderUnitTest.d \
-./test/clusters/ClusterUnitTest.d 
+./test/clusters/ClusterFinderNonUnitTest.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

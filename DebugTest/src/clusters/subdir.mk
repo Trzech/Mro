@@ -5,17 +5,14 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 ../src/clusters/Cluster.cpp \
-../src/clusters/ClusterAnalizator.cpp \
 ../src/clusters/ClusterFinder.cpp 
 
 OBJS += \
 ./src/clusters/Cluster.o \
-./src/clusters/ClusterAnalizator.o \
 ./src/clusters/ClusterFinder.o 
 
 CPP_DEPS += \
 ./src/clusters/Cluster.d \
-./src/clusters/ClusterAnalizator.d \
 ./src/clusters/ClusterFinder.d 
 
 
