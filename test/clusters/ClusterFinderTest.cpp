@@ -23,7 +23,7 @@ TEST_F(ClusterFinderTest, cluster_5x5) {
 			&cols);
 	std::vector<Cluster> clusters = finder.findClusters(imageBuffer, rows, cols,
 			1, 100);
-	delete imageBuffer;
+	delete[] imageBuffer;
 
 	ASSERT_EQ(2, clusters[0].minX);
 	ASSERT_EQ(2, clusters[0].maxX);
@@ -44,7 +44,7 @@ TEST_F(ClusterFinderTest, clusters_20x20) {
 	std::vector<Cluster> clusters = finder.findClusters(imageBuffer, rows, cols,
 			1, 100);
 
-	delete imageBuffer;
+	delete[] imageBuffer;
 	ASSERT_EQ(1, clusters[0].minX);
 	ASSERT_EQ(3, clusters[0].maxX);
 	ASSERT_EQ(4, clusters[0].minY);

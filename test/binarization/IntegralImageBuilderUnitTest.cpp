@@ -45,7 +45,7 @@ TEST_F(IntegralImageBuilderUnitTest, exampleFromBook) {
 
 	delete[] source;
 	delete[] integral;
-	delete integralBuffer;
+	delete[] integralBuffer;
 
 }
 
@@ -94,7 +94,7 @@ TEST_F(IntegralImageBuilderUnitTest, meanOfOne) {
 
 	delete[] source;
 	delete[] integral;
-	delete integralBuffer;
+	delete[]integralBuffer;
 
 }
 TEST_F(IntegralImageBuilderUnitTest, meanExampleFromBookUsingCoordinates) {

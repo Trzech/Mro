@@ -29,7 +29,7 @@ TEST_F(ClusterFinderRunner, lettersClusters_draw_border) {
 	Drawer::drawClusterBorderOnImage(clusters, imageBuffer, rows, cols, 100);
 	imageReader.writeImage("test/clusters/images/result/lettersClusters_result.pgm", imageBuffer,
 			rows, cols);
-	delete imageBuffer;
+	delete[] imageBuffer;
 
 }
 
@@ -46,7 +46,7 @@ TEST_F(ClusterFinderRunner, smileWithBigCluster_draw_border) {
 	Drawer::drawClusterBorderOnImage(clusters, imageBuffer, rows, cols, 100);
 	imageReader.writeImage("test/clusters/images/result/smileWithBigCluster_result.pgm", imageBuffer,
 			rows, cols);
-	delete imageBuffer;
+	delete[] imageBuffer;
 
 }
 

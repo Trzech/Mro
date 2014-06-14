@@ -23,8 +23,8 @@ TEST_F(SauvolaBinarizatorRunner, lenaSauvolaBinarizatorWithIntegral) {
 	outBuf = binarizator.binarizeWithIntegral(SauvolaBinarizatorRunner::surrounding,
 			SauvolaBinarizatorRunner::k_factor);
 	reader.writeImage(outputFileName, outBuf, rows, cols);
-	delete inBuf;
-	delete outBuf;
+	delete[] inBuf;
+	delete[] outBuf;
 
 }
 
@@ -43,8 +43,8 @@ TEST_F(SauvolaBinarizatorRunner, DISABLED_bookSauvolaBinarizatorWithIntegral) {
 	outBuf = binarizator.binarizeWithIntegral(SauvolaBinarizatorRunner::surrounding,
 			SauvolaBinarizatorRunner::k_factor);
 	reader.writeImage(outputFileName, outBuf, rows, cols);
-	delete inBuf;
-	delete outBuf;
+	delete[] inBuf;
+	delete[] outBuf;
 
 }
 

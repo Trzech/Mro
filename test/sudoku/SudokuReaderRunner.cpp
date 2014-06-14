@@ -82,8 +82,8 @@ TEST_F(SudokuReaderRunner, justTests) {
 			rows, cols, 0);
 
 	reader.writeImage(outputFileName, outBuf, rows, cols);
-	delete inBuf;
-	delete outBuf;
+	delete[] inBuf;
+	delete[] outBuf;
 
 }
 

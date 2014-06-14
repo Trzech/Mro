@@ -36,7 +36,7 @@ TEST_F(ClusterFinderUnitTest, cluster_5x5) {
 	ASSERT_EQ(3, clusters[0].maxY);
 	ASSERT_EQ(3, clusters[0].size);
 
-	delete imageBuffer;
+	delete[] imageBuffer;
 }
 
 TEST_F(ClusterFinderUnitTest, cluster_5x5_defined_background) {
@@ -61,6 +61,6 @@ TEST_F(ClusterFinderUnitTest, cluster_5x5_defined_background) {
 	ASSERT_EQ(1, clusters[0].minY);
 	ASSERT_EQ(3, clusters[0].maxY);
 	ASSERT_EQ(3, clusters[0].size);
-	delete imageBuffer;
+	delete[] imageBuffer;
 }
 

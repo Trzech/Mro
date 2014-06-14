@@ -28,13 +28,13 @@ void Binarizator::freeMemory() {
 		delete[] thresholdArray;
 	}
 	if (thresholdBuffer != NULL) {
-		delete thresholdBuffer;
+		delete[] thresholdBuffer;
 	}
 	if (inputArray != NULL) {
 		delete[] inputArray;
 	}
 	if (integralBuffer != NULL) {
-		delete integralBuffer;
+		delete[] integralBuffer;
 	}
 	if (integralArray != NULL) {
 		delete[] integralArray;

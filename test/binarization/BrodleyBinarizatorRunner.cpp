@@ -36,8 +36,8 @@ TEST_F(BrodleyBinarizatorRunner, lenaBrodleyBinarizatorWithIntegral) {
 
 	reader.writeImage(outputFileName, outBuf, rows, cols);
 
-	delete inBuf;
-	delete outBuf;
+	delete[] inBuf;
+	delete[] outBuf;
 }
 
 

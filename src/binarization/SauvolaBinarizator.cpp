@@ -45,7 +45,7 @@ unsigned char * SauvolaBinarizator::binarizeWithIntegral(int k,
 	convertThresholdIntoTarget(inputArray, resultArray, thresholdArray, rows,
 			cols);
 
-	delete integralSquareBuffer;
+	delete[] integralSquareBuffer;
 	delete[] integralSquareArray;
 	delete[] resultArray;
 	return resultBuffer;
