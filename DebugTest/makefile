@@ -9,6 +9,7 @@ RM := rm -rf
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include test/sudoku/subdir.mk
+-include test/network/subdir.mk
 -include test/haar/subdir.mk
 -include test/clusters/subdir.mk
 -include test/binarization/subdir.mk

@@ -4,26 +4,26 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../test/binarization/BrodleyNonUnitTests.cpp \
-../test/binarization/IntegralImageBuilderTest.cpp \
-../test/binarization/SauvolaNonUnitTests.cpp 
+../test/binarization/BrodleyBinarizatorRunner.cpp \
+../test/binarization/IntegralImageBuilderUnitTest.cpp \
+../test/binarization/SauvolaBinarizatorRunner.cpp 
 
 OBJS += \
-./test/binarization/BrodleyNonUnitTests.o \
-./test/binarization/IntegralImageBuilderTest.o \
-./test/binarization/SauvolaNonUnitTests.o 
+./test/binarization/BrodleyBinarizatorRunner.o \
+./test/binarization/IntegralImageBuilderUnitTest.o \
+./test/binarization/SauvolaBinarizatorRunner.o 
 
 CPP_DEPS += \
-./test/binarization/BrodleyNonUnitTests.d \
-./test/binarization/IntegralImageBuilderTest.d \
-./test/binarization/SauvolaNonUnitTests.d 
+./test/binarization/BrodleyBinarizatorRunner.d \
+./test/binarization/IntegralImageBuilderUnitTest.d \
+./test/binarization/SauvolaBinarizatorRunner.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
 test/binarization/%.o: ../test/binarization/%.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C++ Compiler'
-	g++ -I../src -O0 -g3 -c -fmessage-length=0 -std=c++11 -fprofile-arcs -ftest-coverage -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	g++ -I../src -O0 -g3 -Wall -c -fmessage-length=0 -std=c++11 -fprofile-arcs -ftest-coverage -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

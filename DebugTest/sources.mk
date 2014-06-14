@@ -24,6 +24,8 @@ C_UPPER_DEPS :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 test/sudoku \
+test/network \
+test/haar \
 test/clusters \
 test/binarization \
 test \
@@ -34,5 +36,4 @@ src/network \
 src/haar \
 src/clusters \
 src/binarization \
-test/haar \
 
