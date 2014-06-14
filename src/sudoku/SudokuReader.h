@@ -18,6 +18,10 @@ public:
 	~SudokuReader();
 	bool * getNumberRepresetation(char * imageFilename);
 
+private:
+	void recognizeNumbers(Cluster biggestSquareCluster,
+			std::vector<Cluster> clusterInSizeOfNumbers, bool* result);
+	std::vector<Cluster> getClustersInThisArea(int i , int j, int tileWidth, int tileHeiht, Cluster biggestSquareCluster, std::vector<Cluster> clusterInSizeOfNumbers);
 };
 
 #endif /* SUDOKUREADER_H_ */

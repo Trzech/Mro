@@ -15,6 +15,37 @@ SudokuReader::~SudokuReader() {
 	// TODO Auto-generated destructor stub
 }
 
+void SudokuReader::recognizeNumbers(Cluster biggestSquareCluster,
+		std::vector<Cluster> clusterInSizeOfNumbers, bool* result) {
+	int tileWidth = biggestSquareCluster.getWidth() / 9;
+	int tileHeiht = biggestSquareCluster.getHeight() / 9;
+	for (int j = 0; j < 9; ++j) {
+		for (int i = 0; i < 9; ++i) {
+			std::vector<Cluster> clustersInThisArea =
+					getClustersInThisArea(i, j, tileWidth, tileHeiht,
+							biggestSquareCluster, clusterInSizeOfNumbers);
+			if (clustersInThisArea.size() > 0) {
+				result[j * 9 + i] = true;
+			} else {
+				result[j * 9 + i] = false;
+			}
+		}
+	}
+}
+
+std::vector<Cluster> SudokuReader::getClustersInThisArea(int i , int j, int tileWidth, int tileHeiht, Cluster biggestSquareCluster, std::vector<Cluster> clustersInSizeOfNumbers) {
+	int xMin = i * tileWidth + biggestSquareCluster.minX; // tutuaj to musi być jeszcze przesunięte do poczatku ramki sudoku (a nie od początku obrazka!)
+	int xMax = (i + 1) * tileWidth + biggestSquareCluster.minX;
+	int yMin = j * tileHeiht + biggestSquareCluster.minY;
+	int yMax = (j + 1) * tileHeiht + biggestSquareCluster.minY;
+	std::vector<Cluster> clustersInCorrectPlace =
+			ClusterAnalizator::filterClustersInPlacementRange(
+					clustersInSizeOfNumbers, xMin, xMax, yMin, yMax);
+
+	return clustersInCorrectPlace;
+
+}
+
 bool* SudokuReader::getNumberRepresetation(char* imageFilename) {
 	//given
 	int rows, cols;
@@ -52,25 +83,8 @@ bool* SudokuReader::getNumberRepresetation(char* imageFilename) {
 					biggestSquareCluster.getHeight());
 
 	//Filter clusters by place
-	int tileWidth = biggestSquareCluster.getWidth() / 9;
-	int tileHeiht = biggestSquareCluster.getHeight() / 9;
-	bool * isANumber = new bool[9*9];
-	for (int j = 0; j < 9; ++j) {
-		for (int i = 0; i < 9; ++i) {
-			int xMin = i * tileWidth + biggestSquareCluster.minX; // tutuaj to musi być jeszcze przesunięte do poczatku ramki sudoku (a nie od początku obrazka!)
-			int xMax = (i + 1) * tileWidth + biggestSquareCluster.minX;
-			int yMin = j * tileHeiht + biggestSquareCluster.minY;
-			int yMax = (j + 1) * tileHeiht + biggestSquareCluster.minY;
-			std::vector<Cluster> clusterInCorrectPlace =
-					ClusterAnalizator::filterClustersInPlacementRange(
-							clusterInSizeOfNumbers, xMin, xMax, yMin, yMax);
-			if (clusterInCorrectPlace.size() > 0) {
-				isANumber[j*9+i] = true;
-			} else {
-				isANumber[j*9+i] = false;
-			}
-		}
-	}
+	bool * isANumber = new bool[9 * 9];
+	recognizeNumbers(biggestSquareCluster, clusterInSizeOfNumbers, isANumber);
 	delete inBuf;
 	delete outBuf;
 	return isANumber;
