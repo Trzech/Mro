@@ -15,25 +15,49 @@ SudokuReader::~SudokuReader() {
 	// TODO Auto-generated destructor stub
 }
 
-void SudokuReader::recognizeNumbers(Cluster biggestSquareCluster,
-		std::vector<Cluster> clusterInSizeOfNumbers, bool* result) {
+unsigned char* SudokuReader::geTileData(unsigned char* imageData, int colsInOriginalImage,
+		Cluster& cluster) {
+	unsigned int tileCols = cluster.getWidth();
+	unsigned char* tileData = new unsigned char[cluster.getSize()];
+	unsigned char* basePlaceInOriginalImage = imageData + cluster.minY * colsInOriginalImage
+			+ cluster.minX;
+	for (unsigned int i = 0; i < cluster.getHeight(); ++i) {
+		unsigned char* placeInOriginalImage = basePlaceInOriginalImage + i*colsInOriginalImage;
+		unsigned char* placeInTileData = tileData + i * tileCols;
+		memcpy(placeInTileData, placeInOriginalImage, tileCols);
+	}
+	return tileData;
+}
+
+void SudokuReader::recognizeNumbers(unsigned char* imageData, int rows,
+		int cols, Cluster biggestSquareCluster,
+		std::vector<Cluster> clusterInSizeOfNumbers, double* result) {
 	int tileWidth = biggestSquareCluster.getWidth() / 9;
 	int tileHeiht = biggestSquareCluster.getHeight() / 9;
 	for (int j = 0; j < 9; ++j) {
 		for (int i = 0; i < 9; ++i) {
-			std::vector<Cluster> clustersInThisArea =
-					getClustersInThisArea(i, j, tileWidth, tileHeiht,
-							biggestSquareCluster, clusterInSizeOfNumbers);
+			std::vector<Cluster> clustersInThisArea = getClustersInThisArea(i,
+					j, tileWidth, tileHeiht, biggestSquareCluster,
+					clusterInSizeOfNumbers);
 			if (clustersInThisArea.size() > 0) {
-				result[j * 9 + i] = true;
+				result[j * 9 + i] = 1.0;
+				Cluster cluster = clustersInThisArea[0];
+				// TODO Yuri, ta linijka powyżej powinna zostać zastąpiona twoją funkcją
+				// prawdopodbnie to będzie coś takiego
+
+				// unsigned char* tileData = geTileData(imageData, cols, cluster);
+				// result[j * 9 + i] = getPropertiesVector(tileData, cluster.getHeight(), cluster.getWidth());
+				// delete tileData;
 			} else {
-				result[j * 9 + i] = false;
+				result[j * 9 + i] = 0.0;
 			}
 		}
 	}
 }
 
-std::vector<Cluster> SudokuReader::getClustersInThisArea(int i , int j, int tileWidth, int tileHeiht, Cluster biggestSquareCluster, std::vector<Cluster> clustersInSizeOfNumbers) {
+std::vector<Cluster> SudokuReader::getClustersInThisArea(int i, int j,
+		int tileWidth, int tileHeiht, Cluster biggestSquareCluster,
+		std::vector<Cluster> clustersInSizeOfNumbers) {
 	int xMin = i * tileWidth + biggestSquareCluster.minX; // tutuaj to musi być jeszcze przesunięte do poczatku ramki sudoku (a nie od początku obrazka!)
 	int xMax = (i + 1) * tileWidth + biggestSquareCluster.minX;
 	int yMin = j * tileHeiht + biggestSquareCluster.minY;
@@ -46,7 +70,7 @@ std::vector<Cluster> SudokuReader::getClustersInThisArea(int i , int j, int tile
 
 }
 
-bool* SudokuReader::getNumberRepresetation(char* imageFilename) {
+double* SudokuReader::getNumberRepresetation(char* imageFilename) {
 	//given
 	int rows, cols;
 	GrayscaleImageReader reader;
@@ -83,10 +107,11 @@ bool* SudokuReader::getNumberRepresetation(char* imageFilename) {
 					biggestSquareCluster.getHeight());
 
 	//Filter clusters by place
-	bool * isANumber = new bool[9 * 9];
-	recognizeNumbers(biggestSquareCluster, clusterInSizeOfNumbers, isANumber);
+	double * numbers = new double[9 * 9];
+	recognizeNumbers(outBuf, rows, cols, biggestSquareCluster,
+			clusterInSizeOfNumbers, numbers);
 	delete inBuf;
 	delete outBuf;
-	return isANumber;
+	return numbers;
 
 }
