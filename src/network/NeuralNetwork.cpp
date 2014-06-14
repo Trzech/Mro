@@ -44,7 +44,7 @@ void  NeuralNetwork::normalizeMatrixInRows(MatDoub &R) const
 }
 void NeuralNetwork::normalizeVector(std::vector<double> &data) const{
 
-	int iw, ik;
+	int ik;
 	ik =  data.size();
 
 	double s=0.0;
@@ -125,9 +125,7 @@ void NeuralNetwork::learn(MatDoub &A, VecInt &A_id)
 
 
                 //co n-ta probke wypisujemy blad sieci
-                if ( (iter%1000 == 0) || (iter==(num_iter-1)) ) {
-
-                        double mse = 0;										//mean square error
+/*                if ( (iter%1000 == 0) || (iter==(num_iter-1)) ) {
                         for(i=0; i< yn; i++)
                                 mse += (d[i]-y[i]) * (d[i]-y[i]);
 
@@ -135,7 +133,7 @@ void NeuralNetwork::learn(MatDoub &A, VecInt &A_id)
 
                         //std::cout <<"blad sieci "<< mse << std::endl;
                 }
-
+*/
         }//for iter
 
 }
@@ -262,9 +260,10 @@ int NeuralNetwork::read_int_feature_vectors_from_file(const char* fname, long fe
 
 
 	int required_file_size = feature_vector_size *sizeof(int);
-	if (required_file_size != flen)
+	if (required_file_size != flen) {
+		fclose(fp);
 		throw MroException("Size of file doesnt match required file size!");
-
+	}
 	int readed_freature_vectors = fread((char*)buf, flen, 1, fp);
 
 	fclose(fp);
