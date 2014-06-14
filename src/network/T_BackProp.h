@@ -10,9 +10,6 @@
 
 
 
-void write_NN_to_text(const wchar_t* NN_file, int * buf, int size);
-void write_NN(const wchar_t* NN_file, int * buf, int size);
-void read_NN(const wchar_t* NN_file, int * buf, int max_size);
 
 double T_sigmoid(double in);
 

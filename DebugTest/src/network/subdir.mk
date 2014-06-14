@@ -5,18 +5,15 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 ../src/network/NeuralNetwork.cpp \
-../src/network/T_Backprop.cpp \
-../src/network/qsort.cpp 
+../src/network/T_Backprop.cpp 
 
 OBJS += \
 ./src/network/NeuralNetwork.o \
-./src/network/T_Backprop.o \
-./src/network/qsort.o 
+./src/network/T_Backprop.o 
 
 CPP_DEPS += \
 ./src/network/NeuralNetwork.d \
-./src/network/T_Backprop.d \
-./src/network/qsort.d 
+./src/network/T_Backprop.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
