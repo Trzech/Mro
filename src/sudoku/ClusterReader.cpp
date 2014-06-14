@@ -17,33 +17,35 @@ ClusterReader::~ClusterReader() {
 
 std::vector<double> ClusterReader::getPropertiesVector(unsigned char* imageData, int rows, int cols) {
 
-	int h2,w2;
+	int rows2,cols2;
+	int h = 5;
+	int w =3;
 
-	h2 = 90;
-	w2 = 45;
+	rows2 = 90;
+	cols2 = 45;
 
-	unsigned char  *outBuf = new unsigned char[h2*w2];
+	unsigned char  *outBuf = new unsigned char[rows2*cols2];
 
 	unsigned char ** a =  new unsigned char* [rows];
-	unsigned char ** b =  new unsigned char* [h2];
+	unsigned char ** b =  new unsigned char* [rows2];
 
 	for (int i=0; i< rows ; ++i){
-		a[i] = imageData + i * cols;		//tablica wejsciowa
+		a[i] = imageData + i * cols;		//input data image
 	}
 
-	for (int i=0; i< h2 ; ++i){
-		b[i] = outBuf + i * w2;		//tablica wyjsciowa
+	for (int i=0; i< rows2 ; ++i){
+		b[i] = outBuf + i * cols2;		//out data image
 	}
 
-	rescale_image(a, b, rows, cols, h2, w2);
+	rescale_image(a, b, rows, cols, rows2, cols2);
 
-	int f_v[5*3];
-	set_feature_vector(b, h2, w2, 5, 3, f_v, 255);
+	int f_v[h*w];
+	set_feature_vector(b, rows2, cols2, h, w, f_v, 255);
 
 
 	std::vector<double> result;
 
-	for(int i=0; i < 15; ++i) {
+	for(int i=0; i < h*w; ++i) {
 		result.push_back((double)f_v[i]);
 	}
 
@@ -68,14 +70,14 @@ void ClusterReader::rescale_image(unsigned char **a, unsigned char **b, int h1, 
 
 			b[y2][x2] = a[y1][x1];
 
-		}//for x
-	}//for y
+		}
+	}
 }
 
 void ClusterReader::set_feature_vector(unsigned char **a, int h, int w, int n_y, int n_x, int* f_v, unsigned char tlo) {
 	int i,j, y1,y2,x1,x2,y,x;
-		int n_h = h/n_y;	//wysokosc pojedynczego obszaru
-		int n_w = w/n_x;	//szerokosc pojedynczego obszaru
+		int n_h = h/n_y;	//height single area
+		int n_w = w/n_x;	//width single area
 
 
 		for (i=0; i< (n_y*n_x); i++) f_v[i] = 0;
@@ -92,9 +94,9 @@ void ClusterReader::set_feature_vector(unsigned char **a, int h, int w, int n_y,
 						if ( a[y][x] != tlo )
 							f_v[i*n_x + j] += 1;
 
-					}//for x
-				}//for y
+					}
+				}
 
-			}//for j
-		}//for i
+			}
+		}
 }
