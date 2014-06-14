@@ -18,6 +18,8 @@ public:
 			double accuracy = 0.1);
 
 	static Cluster findBiggestCluster(std::vector<Cluster> &clusters);
+	static std::vector<Cluster> filterClustersInSizeRange(std::vector<Cluster> &clusters, int minWidth, int maxWidth, int minHeight, int maxHeight);
+	static std::vector<Cluster> filterClustersInPlacementRange(std::vector<Cluster> &clusters, int minX, int maxX, int minY, int maxY);
 };
 
 #endif /* CLUSTERANALIZATOR_H_ */

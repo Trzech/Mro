@@ -15,7 +15,7 @@ TEST_F(SudokuReaderRunner, justTests) {
 	//given
 	int rows, cols;
 	GrayscaleImageReader reader;
-	char inputFileName[] = "test/sudoku/images/source/93987_4.pgm";
+	char inputFileName[] = "test/sudoku/images/source/93987_1.pgm";
 	char outputFileName[] = "test/sudoku/images/result/93987_2.pgm";
 	unsigned char *inBuf;
 	unsigned char *outBuf;
@@ -23,7 +23,7 @@ TEST_F(SudokuReaderRunner, justTests) {
 
 	// Binarize
 	SauvolaBinarizator binarizator(inBuf, rows, cols);
-	outBuf = binarizator.binarizeWithIntegral(10, 0.2);
+	outBuf = binarizator.binarizeWithIntegral(15, 0.25);
 
 	// FindClusters
 	ClusterFinder finder(255);
@@ -41,7 +41,35 @@ TEST_F(SudokuReaderRunner, justTests) {
 			biggestSquareCluster.minX, biggestSquareCluster.maxX,
 			biggestSquareCluster.minY, biggestSquareCluster.maxY);
 
+	//Filter clusters by size
+	std::vector<Cluster> clusterInSizeOfNumbers =
+			ClusterAnalizator::filterClustersInSizeRange(clusters,
+					biggestSquareCluster.getWidth() / 90,
+					biggestSquareCluster.getWidth(),
+					biggestSquareCluster.getHeight() / 30,
+					biggestSquareCluster.getHeight());
 
+	//Filter clusters by place
+	int tileWidth = biggestSquareCluster.getWidth() / 9;
+	int tileHeiht = biggestSquareCluster.getHeight() / 9;
+
+	for (int j = 0; j < 9; ++j) {
+		for (int i = 0; i < 9; ++i) {
+			int xMin = i * tileWidth + biggestSquareCluster.minX; // tutuaj to musi być jeszcze przesunięte do poczatku ramki sudoku (a nie od początku obrazka!)
+			int xMax = (i + 1) * tileWidth + biggestSquareCluster.minX;
+			int yMin = j * tileHeiht + biggestSquareCluster.minY;
+			int yMax = (j + 1) * tileHeiht + biggestSquareCluster.minY;
+			std::vector<Cluster> clusterInCorrectPlace =
+					ClusterAnalizator::filterClustersInPlacementRange(
+							clusterInSizeOfNumbers, xMin, xMax, yMin, yMax);
+			if (clusterInCorrectPlace.size() > 0) {
+				printf("cyfra ");
+			} else {
+				printf("empty ");
+			}
+		}
+		printf(".\n");
+	}
 
 	//then
 	SudokuReader sudokuReader;
