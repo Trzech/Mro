@@ -28,16 +28,16 @@ private:
 	int m_number_of_test_samples_per_class;
 	const int m_features_vector_size;
 	double * m_weight;
-	void normalizeVector(std::vector<double> &data);
-	void normalizeMatrixInRows(MatDoub &R);
+	void normalizeVector(std::vector<double> &data) const;
+	void normalizeMatrixInRows(MatDoub &R) const;
+	int read_int_feature_vectors_from_file(const char* fname, long all_feature_vectors_size, int* buf) const;
 public:
 	NeuralNetwork(int feauters_vector_size = FEATURES_VECTOR_SIZE, int nr_of_classes = NR_OF_CLASSES);
 	virtual ~NeuralNetwork();
-	int read_int_feature_vectors_from_file(const char* fname, long all_feature_vectors_size, int* buf);
 	void readAndLearn(std::string filename, long traning_samples_per_class = NR_OF_TRAINING_SAMPLES_PER_CLASS);
 	void learn(MatDoub&, VecInt&);
-	std::vector<int> find(MatDoub&);
-	int find(std::vector<double>&);
+	std::vector<int> find(MatDoub&) const;
+	int find(std::vector<double>&) const;
 };
 
 #endif /* NEURALNETWORK_H_ */

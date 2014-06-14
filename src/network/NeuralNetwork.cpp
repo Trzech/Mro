@@ -19,7 +19,7 @@ NeuralNetwork::NeuralNetwork(int features_vector_size, int nn_of_classes): m_nr_
 
 
 }
-void  NeuralNetwork::normalizeMatrixInRows(MatDoub &R)
+void  NeuralNetwork::normalizeMatrixInRows(MatDoub &R) const
 {
 	int iw, ik;
 	iw=R.nrows();
@@ -42,7 +42,7 @@ void  NeuralNetwork::normalizeMatrixInRows(MatDoub &R)
 
 	}
 }
-void NeuralNetwork::normalizeVector(std::vector<double> &data) {
+void NeuralNetwork::normalizeVector(std::vector<double> &data) const{
 
 	int iw, ik;
 	ik =  data.size();
@@ -142,7 +142,7 @@ void NeuralNetwork::learn(MatDoub &A, VecInt &A_id)
 
 
 
-int NeuralNetwork::find(std::vector<double>& data) {
+int NeuralNetwork::find(std::vector<double>& data) const {
 
 
 	normalizeVector(data);
@@ -178,7 +178,7 @@ int NeuralNetwork::find(std::vector<double>& data) {
 
 
 
-std::vector<int> NeuralNetwork::find(MatDoub& data) {
+std::vector<int> NeuralNetwork::find(MatDoub& data) const{
 	int i, j;
 	std::vector<int> result;
 	normalizeMatrixInRows(data);
@@ -250,7 +250,7 @@ void NeuralNetwork::readAndLearn(std::string filename, long traning_samples_per_
 }
 
 
-int NeuralNetwork::read_int_feature_vectors_from_file(const char* fname, long feature_vector_size, int* buf)
+int NeuralNetwork::read_int_feature_vectors_from_file(const char* fname, long feature_vector_size, int* buf) const
 {
 	FILE *fp;
 	if((fp=fopen(fname, "rb")) == NULL)
