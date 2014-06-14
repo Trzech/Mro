@@ -15,8 +15,9 @@ TEST_F(SudokuReaderRunner, justTests) {
 	//given
 	int rows, cols;
 	GrayscaleImageReader reader;
-	char inputFileName[] = "test/sudoku/images/source/93987_1.pgm";
+	char inputFileName[] = "test/sudoku/images/source/93987_4.pgm";
 	char outputFileName[] = "test/sudoku/images/result/93987_2.pgm";
+	char txtFileName[] = "test/sudoku/images/source/93987_4.txt";
 	unsigned char *inBuf;
 	unsigned char *outBuf;
 	inBuf = reader.readDataFromFile(inputFileName, &rows, &cols);
@@ -52,7 +53,7 @@ TEST_F(SudokuReaderRunner, justTests) {
 	//Filter clusters by place
 	int tileWidth = biggestSquareCluster.getWidth() / 9;
 	int tileHeiht = biggestSquareCluster.getHeight() / 9;
-
+	bool isANumber[9][9];
 	for (int j = 0; j < 9; ++j) {
 		for (int i = 0; i < 9; ++i) {
 			int xMin = i * tileWidth + biggestSquareCluster.minX; // tutuaj to musi być jeszcze przesunięte do poczatku ramki sudoku (a nie od początku obrazka!)
@@ -63,19 +64,36 @@ TEST_F(SudokuReaderRunner, justTests) {
 					ClusterAnalizator::filterClustersInPlacementRange(
 							clusterInSizeOfNumbers, xMin, xMax, yMin, yMax);
 			if (clusterInCorrectPlace.size() > 0) {
-				printf("cyfra ");
+				isANumber[j][i] = true;
 			} else {
-				printf("empty ");
+				isANumber[j][i] = false;
 			}
 		}
-		printf(".\n");
 	}
 
+	FILE * fp = fopen(txtFileName, "rb");
+	char a;
+	bool isANumberCorrect[9][9];
+	for (int i = 0; i < 9; ++i) {
+		for (int j = 0; j < 9; ++j) {
+			fscanf(fp, "%c", &a);
+			if (a == '0') {
+				isANumberCorrect[i][j] = false;
+			} else {
+				isANumberCorrect[i][j] = true;
+			}
+		}
+		fscanf(fp, "%c", &a);
+	}
+	fclose(fp);
+
 	//then
-	SudokuReader sudokuReader;
-	sudokuReader.getSudokuStringRepresentation(outBuf, rows, cols, 255,
-			biggestSquareCluster.minX, biggestSquareCluster.maxX,
-			biggestSquareCluster.minY, biggestSquareCluster.maxY, 0.98);
+
+	for (int i = 0; i < 9; ++i) {
+		for (int j = 0; j < 9; ++j) {
+			ASSERT_EQ( isANumberCorrect[i][j], isANumber[i][j] );
+		}
+	}
 
 	// Draw cluster border
 	Drawer::drawSudokuMeshInClusterBorderOnImage(biggestSquareCluster, outBuf,
