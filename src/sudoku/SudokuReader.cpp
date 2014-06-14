@@ -15,18 +15,64 @@ SudokuReader::~SudokuReader() {
 	// TODO Auto-generated destructor stub
 }
 
-void SudokuReader::process(char* inputFile, char* outputFile, int t) {
+bool* SudokuReader::getNumberRepresetation(char* imageFilename) {
+	//given
+	int rows, cols;
+	GrayscaleImageReader reader;
+	unsigned char *inBuf;
+	unsigned char *outBuf;
+	inBuf = reader.readDataFromFile(imageFilename, &rows, &cols);
+
+	// Binarize
+	SauvolaBinarizator binarizator(inBuf, rows, cols);
+	outBuf = binarizator.binarizeWithIntegral(15, 0.25);
+
+	// FindClusters
+	ClusterFinder finder(255);
+	std::vector<Cluster> clusters = finder.findClusters(outBuf, rows, cols, 50,
+			1000000);
+
+	// FindBiggestSquareCluster
+	std::vector<Cluster> squareClusters =
+			ClusterAnalizator::filterClustersWithSizeRatio(clusters, 1.0, 0.1);
+	Cluster biggestSquareCluster = ClusterAnalizator::findBiggestCluster(
+			clusters);
+
+	//Remove frame
+	Drawer::ereaseFirstClusterOnImageInRanges(outBuf, rows, cols, 255,
+			biggestSquareCluster.minX, biggestSquareCluster.maxX,
+			biggestSquareCluster.minY, biggestSquareCluster.maxY);
+
+	//Filter clusters by size
+	std::vector<Cluster> clusterInSizeOfNumbers =
+			ClusterAnalizator::filterClustersInSizeRange(clusters,
+					biggestSquareCluster.getWidth() / 90,
+					biggestSquareCluster.getWidth(),
+					biggestSquareCluster.getHeight() / 30,
+					biggestSquareCluster.getHeight());
+
+	//Filter clusters by place
+	int tileWidth = biggestSquareCluster.getWidth() / 9;
+	int tileHeiht = biggestSquareCluster.getHeight() / 9;
+	bool * isANumber = new bool[9*9];
+	for (int j = 0; j < 9; ++j) {
+		for (int i = 0; i < 9; ++i) {
+			int xMin = i * tileWidth + biggestSquareCluster.minX; // tutuaj to musi być jeszcze przesunięte do poczatku ramki sudoku (a nie od początku obrazka!)
+			int xMax = (i + 1) * tileWidth + biggestSquareCluster.minX;
+			int yMin = j * tileHeiht + biggestSquareCluster.minY;
+			int yMax = (j + 1) * tileHeiht + biggestSquareCluster.minY;
+			std::vector<Cluster> clusterInCorrectPlace =
+					ClusterAnalizator::filterClustersInPlacementRange(
+							clusterInSizeOfNumbers, xMin, xMax, yMin, yMax);
+			if (clusterInCorrectPlace.size() > 0) {
+				isANumber[j*9+i] = true;
+			} else {
+				isANumber[j*9+i] = false;
+			}
+		}
+	}
+	delete inBuf;
+	delete outBuf;
+	return isANumber;
 
 }
-
-void SudokuReader::getSudokuStringRepresentation(unsigned char* a, int rows,
-		int cols, unsigned char backgroundColor, int minX, int maxX, int minY,
-		int maxY, double treshold = 0.98) {
-
-}
-
-void SudokuReader::extractImportantElements(unsigned char** source,
-		unsigned char** target, int rows, int cols) {
-
-}
-
