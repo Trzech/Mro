@@ -42,7 +42,7 @@ TEST_F(SudokuReaderTest, recognizesWhereAreTheNumbersCorrectly) {
 				strcat(inputFileName, ".pgm");
 				printf("%s\n", inputFileName);
 
-				SudokuReader sudokuReader;
+				SudokuReader sudokuReader(true);
 
 				FILE * fp = fopen(txtFileName, "rb");
 				char a;
@@ -66,7 +66,7 @@ TEST_F(SudokuReaderTest, recognizesWhereAreTheNumbersCorrectly) {
 
 				//then
 
-				ASSERT_TRUE(arraysAreEqual(numbersExpectedResult, numbers));
+				EXPECT_TRUE(arraysAreEqual(numbersExpectedResult, numbers));
 
 				delete[] numbers;
 			}
@@ -82,7 +82,7 @@ TEST_F(SudokuReaderTest, DISABLED_recognizesNumbersCorrectly) {
 
 	char inputFileName[] = "test/sudoku/images/source/93987_4.pgm";
 	char txtFileName[] = "test/sudoku/images/source/93987_4.txt";
-	SudokuReader sudokuReader;
+	SudokuReader sudokuReader(true);
 
 	FILE * fp = fopen(txtFileName, "rb");
 	char a;

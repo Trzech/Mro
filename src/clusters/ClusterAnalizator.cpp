@@ -62,3 +62,18 @@ std::vector<Cluster> ClusterAnalizator::filterClustersInPlacementRange(
 		}
 		return result;
 }
+
+std::vector<Cluster> ClusterAnalizator::filterClustersStartingInRange(
+		std::vector<Cluster>& clusters, int minX, int maxX, int minY,
+		int maxY) {
+	std::vector<Cluster> result;
+		for (unsigned int i = 0; i < clusters.size(); ++i) {
+			Cluster cluster = clusters[i];
+			if (cluster.minX >= minX && cluster.minX <= maxX
+					&& cluster.minY >= minY
+					&& cluster.minY <= maxY) {
+				result.push_back(cluster);
+			}
+		}
+		return result;
+}

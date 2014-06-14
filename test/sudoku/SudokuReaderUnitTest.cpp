@@ -7,7 +7,7 @@ class SudokuReaderUnitTest: public ::testing::Test {
 
 TEST_F(SudokuReaderUnitTest, copiesTileDataCorrectly) {
 	//given
-	SudokuReader reader;
+	SudokuReader reader(true);
 
 	unsigned char imageData[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 }; // 3x4 image
 

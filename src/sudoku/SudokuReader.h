@@ -14,7 +14,10 @@
 #include "utils/Drawer.h"
 class SudokuReader {
 public:
-	SudokuReader();
+	bool debugIsOn;
+	SudokuReader(bool debug = false){
+		debugIsOn = debug;
+	};
 	~SudokuReader();
 	double * getNumberRepresetation(char * imageFilename);
 	unsigned char* geTileData(unsigned char* imageData,int cols, Cluster& cluster);
@@ -22,7 +25,7 @@ public:
 private:
 	void recognizeNumbers(unsigned char* imageData, int rows, int cols, Cluster biggestSquareCluster,
 			std::vector<Cluster> clusterInSizeOfNumbers, double* result);
-	std::vector<Cluster> getClustersInThisArea(int i , int j, int tileWidth, int tileHeiht, Cluster biggestSquareCluster, std::vector<Cluster> clusterInSizeOfNumbers);
+	std::vector<Cluster> getClustersStartingInThisArea(int i , int j, int tileWidth, int tileHeiht, Cluster biggestSquareCluster, std::vector<Cluster> clusterInSizeOfNumbers);
 };
 
 #endif /* SUDOKUREADER_H_ */
