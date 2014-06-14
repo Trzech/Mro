@@ -12,7 +12,6 @@ SudokuReader::SudokuReader() {
 }
 
 SudokuReader::~SudokuReader() {
-	// TODO Auto-generated destructor stub
 }
 
 unsigned char* SudokuReader::geTileData(unsigned char* imageData, int colsInOriginalImage,
@@ -41,10 +40,10 @@ void SudokuReader::recognizeNumbers(unsigned char* imageData, int rows,
 					clusterInSizeOfNumbers);
 			if (clustersInThisArea.size() > 0) {
 				result[j * 9 + i] = 1.0;
-				Cluster cluster = clustersInThisArea[0];
 				// TODO Yuri, ta linijka powyżej powinna zostać zastąpiona twoją funkcją
 				// prawdopodbnie to będzie coś takiego
 
+				// Cluster cluster = clustersInThisArea[0];
 				// unsigned char* tileData = geTileData(imageData, cols, cluster);
 				// result[j * 9 + i] = getPropertiesVector(tileData, cluster.getHeight(), cluster.getWidth());
 				// delete tileData;

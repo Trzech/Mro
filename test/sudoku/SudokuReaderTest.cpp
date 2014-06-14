@@ -1,33 +1,45 @@
 #include "sudoku/SudokuReader.h"
 #include "gtest/gtest.h"
 
-class SudokuReaderUnitTest: public ::testing::Test {
+
+
+class SudokuReaderTest: public ::testing::Test {
 
 };
 
-TEST_F(SudokuReaderUnitTest, copiesTileDataCorrectly) {
-	//given
-	SudokuReader reader;
+TEST_F(SudokuReaderTest, justTests) {
+	char inputFileName[] = "test/sudoku/images/source/93987_4.pgm";
+	char txtFileName[] = "test/sudoku/images/source/93987_4.txt";
+	SudokuReader sudokuReader;
+	double * numbers = sudokuReader.getNumberRepresetation(inputFileName);
 
-	unsigned char imageData[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 }; // 3x4 image
 
-	int cols = 3;
-	Cluster cluster;
-	cluster.addPoint(1, 1);
-	cluster.addPoint(2, 3);
-	//when
-	unsigned char * result = reader.geTileData(imageData, cols, cluster);
+	FILE * fp = fopen(txtFileName, "rb");
+	char a;
+	bool numbersExpectedResult[9][9];
+	for (int i = 0; i < 9; ++i) {
+		for (int j = 0; j < 9; ++j) {
+			fscanf(fp, "%c", &a);
+			if (a == '0') {
+				numbersExpectedResult[i][j] = false;
+			} else {
+				numbersExpectedResult[i][j] = true;
+			}
+		}
+		fscanf(fp, "%c", &a);
+	}
+	fclose(fp);
 
 	//then
-	int tileCols = cluster.getWidth();
-	ASSERT_DOUBLE_EQ(result[0 * tileCols + 0], 5);
-	ASSERT_DOUBLE_EQ(result[0 * tileCols + 1], 6);
-	ASSERT_DOUBLE_EQ(result[1 * tileCols + 0], 8);
-	ASSERT_DOUBLE_EQ(result[1 * tileCols + 1], 9);
-	ASSERT_DOUBLE_EQ(result[2 * tileCols + 0], 11);
-	ASSERT_DOUBLE_EQ(result[2 * tileCols + 1], 12);
 
-	delete result;
+	for (int i = 0; i < 9; ++i) {
+		for (int j = 0; j < 9; ++j) {
+			ASSERT_EQ( numbersExpectedResult[i][j], numbers[i*9+j] );
+		}
+	}
+
+
+	delete [] numbers;
 
 }
 
