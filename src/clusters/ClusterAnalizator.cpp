@@ -12,7 +12,7 @@ std::vector<Cluster> ClusterAnalizator::filterClustersWithSizeRatio(
 	std::vector<Cluster> result;
 	for (unsigned int i = 0; i < clusters.size(); ++i) {
 		Cluster cluster = clusters[i];
-		if (fabs(cluster.getRatio()-ratio)< accuracy) {
+		if (fabs(cluster.getRatio() - ratio) < accuracy) {
 			result.push_back(cluster);
 		}
 	}
@@ -24,11 +24,41 @@ Cluster ClusterAnalizator::findBiggestCluster(std::vector<Cluster>& clusters) {
 	unsigned int max = 0;
 	unsigned int maxIndex = 0;
 	for (unsigned int i = 0; i < clusters.size(); ++i) {
+		Cluster cluster = clusters[i];
+		if (cluster.getSize() > max) {
+			max = cluster.getSize();
+			maxIndex = i;
+		}
+	}
+	return clusters[maxIndex];
+}
+
+std::vector<Cluster> ClusterAnalizator::filterClustersInSizeRange(
+		std::vector<Cluster>& clusters, int minWidth, int maxWidth,
+		int minHeight, int maxHeight) {
+	std::vector<Cluster> result;
+	for (unsigned int i = 0; i < clusters.size(); ++i) {
+		Cluster cluster = clusters[i];
+		if (cluster.getHeight() >= minHeight && cluster.getWidth() >= minWidth
+				&& cluster.getHeight() <= maxHeight
+				&& cluster.getWidth() <= maxWidth) {
+			result.push_back(cluster);
+		}
+	}
+	return result;
+}
+
+std::vector<Cluster> ClusterAnalizator::filterClustersInPlacementRange(
+		std::vector<Cluster>& clusters, int minX, int maxX, int minY,
+		int maxY) {
+	std::vector<Cluster> result;
+		for (unsigned int i = 0; i < clusters.size(); ++i) {
 			Cluster cluster = clusters[i];
-			if (cluster.getSize()>max) {
-				max = cluster.getSize();
-				maxIndex = i;
+			if (cluster.minX >= minX && cluster.maxX <= maxX
+					&& cluster.minY >= minY
+					&& cluster.maxY <= maxY) {
+				result.push_back(cluster);
 			}
 		}
-	return clusters[maxIndex];
+		return result;
 }
