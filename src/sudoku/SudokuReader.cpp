@@ -83,7 +83,7 @@ double* SudokuReader::getNumberRepresetation(char* imageFilename) {
 
 	// Binarize
 	SauvolaBinarizator binarizator(inBuf, rows, cols);
-	outBuf = binarizator.binarizeWithIntegral(15, 0.25);
+	outBuf = binarizator.binarizeWithIntegral(15, 0.15);
 
 	// FindClusters
 	ClusterFinder finder(255);
@@ -104,10 +104,10 @@ double* SudokuReader::getNumberRepresetation(char* imageFilename) {
 	//Filter clusters by size
 	std::vector<Cluster> clusterInSizeOfNumbers =
 			ClusterAnalizator::filterClustersInSizeRange(clusters,
-					biggestSquareCluster.getWidth() / 90,
-					biggestSquareCluster.getWidth(),
+					biggestSquareCluster.getWidth() / (9*6),
+					biggestSquareCluster.getWidth() / (9*2),
 					biggestSquareCluster.getHeight() / 30,
-					biggestSquareCluster.getHeight());
+					biggestSquareCluster.getHeight() / 9);
 
 	//Filter clusters by place
 	double * numbers = new double[9 * 9];
@@ -116,8 +116,8 @@ double* SudokuReader::getNumberRepresetation(char* imageFilename) {
 			clusterInSizeOfNumbers, numbers);
 
 	if (debugIsOn) {
-		Drawer::drawSudokuMeshInClusterBorderOnImage(biggestSquareCluster,
-				outBuf, rows, cols, 0);
+//		Drawer::drawSudokuMeshInClusterBorderOnImage(biggestSquareCluster,
+//				outBuf, rows, cols, 0);
 		char debugImageFilename[50];
 
 		strcpy(debugImageFilename, "test/sudoku/images/result/");
