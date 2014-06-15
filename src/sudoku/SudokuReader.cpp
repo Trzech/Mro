@@ -33,6 +33,8 @@ void SudokuReader::recognizeNumbers(unsigned char* imageData, int rows,
 	int tileWidth = biggestSquareCluster.getWidth() / 9;
 	int tileHeiht = biggestSquareCluster.getHeight() / 9;
 	ClusterReader clusterReader;
+	NeuralNetwork neuralNetwork;
+	neuralNetwork.readAndLearn("data/nauka_cyfry5x3.dat", 110);
 	for (int j = 0; j < 9; ++j) {
 		for (int i = 0; i < 9; ++i) {
 			std::vector<Cluster> clustersInThisArea =
@@ -46,9 +48,7 @@ void SudokuReader::recognizeNumbers(unsigned char* imageData, int rows,
 				}
 				unsigned char* tileData = geTileData(imageData, cols, cluster);
 				std::vector<double> testVector = clusterReader.getPropertiesVector(tileData, cluster.getHeight(), cluster.getWidth());
-				NeuralNetwork first;
-				first.readAndLearn("test/network/data/nauka_cyfry5x3.dat");
-				result[j * 9 + i] = first.find(testVector);
+				result[j * 9 + i] = neuralNetwork.find(testVector);
 				delete tileData;
 			} else {
 				result[j * 9 + i] = 0.0;

@@ -223,7 +223,7 @@ std::vector<int> NeuralNetwork::find(MatDoub& data) const{
 
 void NeuralNetwork::readAndLearn(std::string filename, long traning_samples_per_class) {
 
-	int nr_of_vectors = traning_samples_per_class * m_nr_of_classes;
+	long nr_of_vectors = traning_samples_per_class * m_nr_of_classes;
 
 	int * data_buf = new int[nr_of_vectors * m_features_vector_size];
 	read_int_feature_vectors_from_file(filename.c_str(), nr_of_vectors * m_features_vector_size, data_buf);
@@ -259,12 +259,13 @@ int NeuralNetwork::read_int_feature_vectors_from_file(const char* fname, long fe
 	fseek(fp, 0, SEEK_SET);
 
 
-	int required_file_size = feature_vector_size *sizeof(int);
+	long required_file_size = feature_vector_size *sizeof(int);
 	if (required_file_size != flen) {
 		fclose(fp);
+		printf("requred: %f, actual: %f", required_file_size, flen);
 		throw MroException("Size of file doesnt match required file size!");
 	}
-	int readed_freature_vectors = fread((char*)buf, flen, 1, fp);
+	long readed_freature_vectors = fread((char*)buf, flen, 1, fp);
 
 	fclose(fp);
 

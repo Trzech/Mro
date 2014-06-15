@@ -25,7 +25,7 @@ bool arraysAreEqual(double * numbersExpectedResult, double * numbers) {
 	return result;
 }
 
-TEST_F(SudokuReaderTest, recognizesWhereAreTheNumbersCorrectly) {
+TEST_F(SudokuReaderTest, DISABLED_recognizesWhereAreTheNumbersCorrectly) {
 	DIR *dir;
 	struct dirent *ent;
 	const char* directoryName = "test/sudoku/images/source/";
@@ -82,7 +82,7 @@ TEST_F(SudokuReaderTest, recognizesWhereAreTheNumbersCorrectly) {
 	}
 }
 
-TEST_F(SudokuReaderTest, DISABLED_recognizesNumbersCorrectly) {
+TEST_F(SudokuReaderTest, recognizesNumbersCorrectly) {
 	DIR *dir;
 	struct dirent *ent;
 	const char* directoryName = "test/sudoku/images/source/";
