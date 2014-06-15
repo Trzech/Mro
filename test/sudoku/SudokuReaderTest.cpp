@@ -4,20 +4,25 @@
 #include <string>
 #include <cstring>
 #include <iostream>
+#include <stdlib.h>
 
 class SudokuReaderTest: public ::testing::Test {
 
 };
 
 bool arraysAreEqual(double * numbersExpectedResult, double * numbers) {
+	bool result = true;
 	for (int i = 0; i < 9; ++i) {
 		for (int j = 0; j < 9; ++j) {
-			if (numbersExpectedResult[i * 9 + j] != numbers[i * 9 + j]) {
-				return false;
+			double expected = numbersExpectedResult[i * 9 + j];
+			double actual = numbers[i * 9 + j];
+			if (expected != actual) {
+				result = false;
+				printf("Expected %f but was %f\n", expected, actual);
 			}
 		}
 	}
-	return true;
+	return result;
 }
 
 TEST_F(SudokuReaderTest, recognizesWhereAreTheNumbersCorrectly) {
@@ -31,9 +36,8 @@ TEST_F(SudokuReaderTest, recognizesWhereAreTheNumbersCorrectly) {
 				char* filenameWithoutExtension = ent->d_name;
 				*strrchr(filenameWithoutExtension, '.') = 0; // cuts extension
 
-
-				char inputFileName[50] = {'\0'};
-				char txtFileName[50] = {'\0'};
+				char inputFileName[50] = { '\0' };
+				char txtFileName[50] = { '\0' };
 
 				strcat(inputFileName, "test/sudoku/images/source/");
 				strcat(inputFileName, filenameWithoutExtension);
@@ -79,30 +83,53 @@ TEST_F(SudokuReaderTest, recognizesWhereAreTheNumbersCorrectly) {
 }
 
 TEST_F(SudokuReaderTest, DISABLED_recognizesNumbersCorrectly) {
+	DIR *dir;
+	struct dirent *ent;
+	const char* directoryName = "test/sudoku/images/source/";
+	if ((dir = opendir(directoryName)) != NULL) {
+		/* print all the files and directories within directory */
+		while ((ent = readdir(dir)) != NULL) {
+			if (strstr(ent->d_name, ".pgm")) {
+				char* filenameWithoutExtension = ent->d_name;
+				*strrchr(filenameWithoutExtension, '.') = 0; // cuts extension
 
-	char inputFileName[] = "test/sudoku/images/source/93987_4.pgm";
-	char txtFileName[] = "test/sudoku/images/source/93987_4.txt";
-	SudokuReader sudokuReader(true);
+				char inputFileName[50] = { '\0' };
+				char txtFileName[50] = { '\0' };
 
-	FILE * fp = fopen(txtFileName, "rb");
-	char a;
-	double numbersExpectedResult[9 * 9];
-	for (int i = 0; i < 9; ++i) {
-		for (int j = 0; j < 9; ++j) {
-			fscanf(fp, "%c", &a);
-			numbersExpectedResult[i * 9 + j] = a;
+				strcat(inputFileName, "test/sudoku/images/source/");
+				strcat(inputFileName, filenameWithoutExtension);
+				strcpy(txtFileName, inputFileName);
+				strcat(txtFileName, ".txt");
+				strcat(inputFileName, ".pgm");
+				printf("%s\n", inputFileName);
+				SudokuReader sudokuReader(true);
+
+				FILE * fp = fopen(txtFileName, "rb");
+				char a;
+				double numbersExpectedResult[9 * 9];
+				for (int i = 0; i < 9; ++i) {
+					for (int j = 0; j < 9; ++j) {
+						fscanf(fp, "%c", &a);
+						numbersExpectedResult[i * 9 + j] = atoi(&a);
+					}
+					fscanf(fp, "%c", &a);
+				}
+				fclose(fp);
+
+				//when
+				double * numbers = sudokuReader.getNumberRepresetation(
+						inputFileName);
+
+				//then
+
+				EXPECT_TRUE(arraysAreEqual(numbersExpectedResult, numbers));
+
+				delete[] numbers;
+			}
 		}
-		fscanf(fp, "%c", &a);
+		closedir(dir);
+	} else {
+		/* could not open directory */
+		perror("Error with directory opening");
 	}
-	fclose(fp);
-
-	//when
-	double * numbers = sudokuReader.getNumberRepresetation(inputFileName);
-
-	//then
-
-	ASSERT_TRUE(arraysAreEqual(numbersExpectedResult, numbers));
-
-	delete[] numbers;
-
 }
