@@ -7,7 +7,6 @@
 
 #include "SudokuReader.h"
 #include "ClusterReader.h"
-#include "network/NeuralNetwork.h"
 
 SudokuReader::~SudokuReader() {
 }
@@ -33,8 +32,6 @@ void SudokuReader::recognizeNumbers(unsigned char* imageData, int rows,
 	int tileWidth = biggestSquareCluster.getWidth() / 9;
 	int tileHeiht = biggestSquareCluster.getHeight() / 9;
 	ClusterReader clusterReader;
-	static NeuralNetwork neuralNetwork;
-	neuralNetwork.readAndLearn("data/nauka_cyfry5x3.dat", 110);
 	for (int j = 0; j < 9; ++j) {
 		for (int i = 0; i < 9; ++i) {
 			std::vector<Cluster> clustersInThisArea =
@@ -48,7 +45,7 @@ void SudokuReader::recognizeNumbers(unsigned char* imageData, int rows,
 				}
 				unsigned char* tileData = geTileData(imageData, cols, cluster);
 				std::vector<double> testVector = clusterReader.getPropertiesVector(tileData, cluster.getHeight(), cluster.getWidth());
-				result[j * 9 + i] = neuralNetwork.find(testVector);
+				result[j * 9 + i] = m_neuralNetwork.find(testVector);
 				delete tileData;
 			} else {
 				result[j * 9 + i] = 0.0;

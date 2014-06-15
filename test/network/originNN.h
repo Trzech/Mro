@@ -7,6 +7,7 @@
 
 #ifndef ORIGINNN_H_
 #define ORIGINNN_H_
+#include "network/nr3.h"
 #include "utils/exception.h"
 
 
@@ -34,14 +35,14 @@ int read_int_feature_vectors_from_file(const char* fname, long all_feature_vecto
 
 	return readed_freature_vectors;
 }
-
-void normalizacja_Macierzy_w_wierszach(MatDoub &R)
+template <class T1>
+void normalizacja_Macierzy_w_wierszach(T1 &R)
 {
 	int iw, ik;
 	iw=R.nrows();
 	ik=R.ncols();
 
-	for(Int i=0;i<iw;i++)
+	for(int i=0;i<iw;i++)
 	{
 		double s=0.0;
 

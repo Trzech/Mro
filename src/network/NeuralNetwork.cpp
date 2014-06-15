@@ -5,6 +5,7 @@
  *      Author: aldor
  */
 #include <stdio.h>
+#include "network/nr3.h"
 
 #include "utils/exception.h"
 
@@ -19,13 +20,14 @@ NeuralNetwork::NeuralNetwork(int features_vector_size, int nn_of_classes): m_nr_
 
 
 }
-void  NeuralNetwork::normalizeMatrixInRows(MatDoub &R) const
+template<class T>
+void  NeuralNetwork::normalizeMatrixInRows(T &R) const
 {
 	int iw, ik;
 	iw=R.nrows();
 	ik=R.ncols();
 
-	for(Int i=0;i<iw;i++)
+	for(int i=0;i<iw;i++)
 	{
 		double s=0.0;
 
@@ -67,8 +69,8 @@ NeuralNetwork::~NeuralNetwork() {
 
    delete[] m_weight;
 }
-
-void NeuralNetwork::learn(MatDoub &A, VecInt &A_id)
+template<class T1, class T2>
+void NeuralNetwork::learn(T1 &A,T2 &A_id)
 {
         int i, j;
 
@@ -183,8 +185,8 @@ int NeuralNetwork::find(std::vector<double>& data  ) const {
 }
 
 
-
-std::vector<int> NeuralNetwork::find(MatDoub& data) const{
+template <class T1>
+std::vector<int> NeuralNetwork::find(T1& data) const{
 	int i, j;
 	std::vector<int> result;
 	normalizeMatrixInRows(data);
@@ -226,6 +228,49 @@ std::vector<int> NeuralNetwork::find(MatDoub& data) const{
     return result;
 }
 
+
+template <>
+std::vector<int> NeuralNetwork::find(MatDoub& data) const{
+	int i, j;
+	std::vector<int> result;
+	normalizeMatrixInRows(data);
+	double *W, sum;
+	double x[ m_features_vector_size ];
+	double y[ m_nr_of_classes ];
+	int rank_index[ m_nr_of_classes ];
+
+
+	int xn = m_features_vector_size;
+	int yn = m_nr_of_classes;
+
+	//test na zbiorze testowym B
+	int n;
+	int brows = data.nrows();
+
+	for (n=0; n<brows; n++)			//dla wszystkich probek ze zbioru testowego
+	{
+			for(j=0; j<xn; j++) x[j] = data[n][j];		//tworzymy wektor wejsciowy
+	//	int sample_Id = B_id[n];
+			//wyliczamy wyjscia
+			for(i=0; i< yn; i++) {
+					W = m_weight + i*(xn+1);					//wskaznik na wagi powiazane z danym wyjsciem
+					sum=0.0;
+					for(j=0; j<xn; j++)
+						sum += W[j] * x[j];
+
+					sum += W[xn];
+					y[i] = T_sigmoid(sum);
+
+			}//for i
+			reco_ranking(y, rank_index, m_nr_of_classes);		//sortujemy rozpoznania od najlepszych do najgorszych
+			//rank_index wyniki?
+			result.push_back(rank_index[0]);
+			//if (sample_Id != rank_index[0] ) total_errors++;
+	//	print(sample_Id, y, rank_index, m_nr_of_classes);
+
+	}//n
+    return result;
+}
 
 
 

@@ -20,7 +20,6 @@
 #include <fcntl.h>
 #include <string.h>
 #include <ctype.h>
-
 using namespace std;
 typedef double Doub;
 // macro-like inline functions
@@ -1077,6 +1076,5 @@ struct turn_on_floating_exceptions {
 turn_on_floating_exceptions yes_turn_on_floating_exceptions;
 #endif /* _MSC_VER */
 #endif /* _TURNONFPES */
-
 #endif /* _NR3_H_ */
 

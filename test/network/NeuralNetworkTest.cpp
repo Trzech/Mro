@@ -69,7 +69,6 @@ TEST_F(SudokuReaderRunner, justTests) {
 
 #include "network/NeuralNetwork.h"
 #include "originNN.h"
-
 class NeuralNetworkTest: public ::testing::Test {
 
 };
@@ -79,7 +78,7 @@ TEST_F(NeuralNetworkTest, concept_test_originNN) {
 	NeuralNetwork first;
 	first.readAndLearn("test/network/data/nauka_cyfry5x3.dat");
 	MatDoub testData = read_test_data("test/network/data/testy_cyfry5x3.dat", FEATURES_VECTOR_SIZE, NR_OF_TEST_SAMPLES_PER_CLASS, NR_OF_CLASSES );
-	std::vector<int> result = first.find(testData);
+	std::vector<int> result = first.find<MatDoub>(testData);
 	ASSERT_EQ(result[0], 0);
 	ASSERT_EQ(result[55], 1);
 	ASSERT_EQ(result.size(), NR_OF_TEST_SAMPLES_PER_CLASS * NR_OF_CLASSES);
@@ -92,7 +91,7 @@ TEST_F(NeuralNetworkTest, concept_test_originNN_newData) {
 	NeuralNetwork first;
 	first.readAndLearn("data/nauka_cyfry5x3.dat", 110);
 	MatDoub testData = read_test_data("test/network/data/testy_cyfry5x3.dat", FEATURES_VECTOR_SIZE, NR_OF_TEST_SAMPLES_PER_CLASS, NR_OF_CLASSES );
-	std::vector<int> result = first.find(testData);
+	std::vector<int> result = first.find<MatDoub>(testData);
 	ASSERT_EQ(result[0], 0);
 	ASSERT_EQ(result[55], 1);
 	ASSERT_EQ(result[125], 2);

@@ -7,6 +7,7 @@
 
 #ifndef SUDOKUREADER_H_
 #define SUDOKUREADER_H_
+#include "network/NeuralNetwork.h"
 #include "reader/GrayscaleImageReader.h"
 #include "binarization/SauvolaBinarizator.h"
 #include "clusters/ClusterFinder.h"
@@ -17,6 +18,7 @@ public:
 	bool debugIsOn;
 	SudokuReader(bool debug = false){
 		debugIsOn = debug;
+		m_neuralNetwork.readAndLearn("data/nauka_cyfry5x3.dat", 110);
 	};
 	~SudokuReader();
 	double * getNumberRepresetation(char * imageFilename);
@@ -26,6 +28,7 @@ private:
 	void recognizeNumbers(unsigned char* imageData, int rows, int cols, Cluster biggestSquareCluster,
 			std::vector<Cluster> clusterInSizeOfNumbers, double* result);
 	std::vector<Cluster> getClustersStartingInThisArea(int i , int j, int tileWidth, int tileHeiht, Cluster biggestSquareCluster, std::vector<Cluster> clusterInSizeOfNumbers);
+	NeuralNetwork m_neuralNetwork;
 };
 
 #endif /* SUDOKUREADER_H_ */
