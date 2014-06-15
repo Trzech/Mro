@@ -4,12 +4,15 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../src/sudoku/ClusterReader.cpp \
 ../src/sudoku/SudokuReader.cpp 
 
 OBJS += \
+./src/sudoku/ClusterReader.o \
 ./src/sudoku/SudokuReader.o 
 
 CPP_DEPS += \
+./src/sudoku/ClusterReader.d \
 ./src/sudoku/SudokuReader.d 
 
 
