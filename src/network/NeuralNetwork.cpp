@@ -146,7 +146,7 @@ void NeuralNetwork::learn(MatDoub &A, VecInt &A_id)
 
 
 
-int NeuralNetwork::find(std::vector<double>& data) const {
+int NeuralNetwork::find(std::vector<double>& data  ) const {
 
 
 	normalizeVector(data);
@@ -176,7 +176,7 @@ int NeuralNetwork::find(std::vector<double>& data) const {
 
 	}//for i
 	reco_ranking(y, rank_index, m_nr_of_classes);		//sortujemy rozpoznania od najlepszych do najgorszych
-	print(1, y, rank_index, NR_OF_CLASSES);
+	//print(1, y, rank_index, NR_OF_CLASSES);
 
 //	/delete [] x;
 	return rank_index[0];
