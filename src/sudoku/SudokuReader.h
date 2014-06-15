@@ -18,7 +18,7 @@ public:
 	bool debugIsOn;
 	SudokuReader(bool debug = false){
 		debugIsOn = debug;
-		m_neuralNetwork.readAndLearn("data/nauka_cyfry5x3.dat", 110);
+		m_neuralNetwork.readAndLearn("data/nauka_cyfry5x3_new.dat", 160);
 	};
 	~SudokuReader();
 	double * getNumberRepresetation(char * imageFilename);
