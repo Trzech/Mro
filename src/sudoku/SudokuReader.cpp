@@ -6,8 +6,8 @@
  */
 
 #include "SudokuReader.h"
-
-
+#include "ClusterReader.h"
+#include "network/NeuralNetwork.h"
 
 SudokuReader::~SudokuReader() {
 }
@@ -32,6 +32,7 @@ void SudokuReader::recognizeNumbers(unsigned char* imageData, int rows,
 		std::vector<Cluster> clusterInSizeOfNumbers, double* result) {
 	int tileWidth = biggestSquareCluster.getWidth() / 9;
 	int tileHeiht = biggestSquareCluster.getHeight() / 9;
+	ClusterReader clusterReader;
 	for (int j = 0; j < 9; ++j) {
 		for (int i = 0; i < 9; ++i) {
 			std::vector<Cluster> clustersInThisArea =
@@ -39,18 +40,16 @@ void SudokuReader::recognizeNumbers(unsigned char* imageData, int rows,
 							biggestSquareCluster, clusterInSizeOfNumbers);
 			if (clustersInThisArea.size() > 0) {
 				Cluster cluster = clustersInThisArea[0];
-				result[j * 9 + i] = 1.0;
 				if (debugIsOn) {
 					Drawer::drawClusterBorderOnImage(cluster, imageData, rows,
 							cols, 0);
 				}
-
-				// TODO Yuri, ta linijka powyżej powinna zostać zastąpiona twoją funkcją
-				// prawdopodbnie to będzie coś takiego
-
-				// unsigned char* tileData = geTileData(imageData, cols, cluster);
-				// result[j * 9 + i] = getPropertiesVector(tileData, cluster.getHeight(), cluster.getWidth());
-				// delete tileData;
+				unsigned char* tileData = geTileData(imageData, cols, cluster);
+				std::vector<double> testVector = clusterReader.getPropertiesVector(tileData, cluster.getHeight(), cluster.getWidth());
+				NeuralNetwork first;
+				first.readAndLearn("test/network/data/nauka_cyfry5x3.dat");
+				result[j * 9 + i] = first.find(testVector);
+				delete tileData;
 			} else {
 				result[j * 9 + i] = 0.0;
 			}
@@ -104,8 +103,8 @@ double* SudokuReader::getNumberRepresetation(char* imageFilename) {
 	//Filter clusters by size
 	std::vector<Cluster> clusterInSizeOfNumbers =
 			ClusterAnalizator::filterClustersInSizeRange(clusters,
-					biggestSquareCluster.getWidth() / (9*6),
-					biggestSquareCluster.getWidth() / (9*2),
+					biggestSquareCluster.getWidth() / (9 * 6),
+					biggestSquareCluster.getWidth() / (9 * 2),
 					biggestSquareCluster.getHeight() / 30,
 					biggestSquareCluster.getHeight() / 9);
 
