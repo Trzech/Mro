@@ -51,9 +51,12 @@ void NeuralNetwork::normalizeVector(std::vector<double> &data) const{
 	// obliczenie i-tego wiersza i jego normy
 	for(int j=0;j<ik;j++) {
 		s += data[j] * data[j];
-		s = sqrt(s);
-		data[j]/=s;
 	}
+		s = sqrt(s);
+		for(int j=0;j<ik;j++)
+		{
+			data[j]/=s;
+		}
 
 
 }
@@ -84,7 +87,9 @@ void NeuralNetwork::learn(MatDoub &A, VecInt &A_id)
 
         //na poczatku nadajemy wagom wartosci przypadkowe
         srand((unsigned)(25));
-        for (i=0; i<(xn+1)*yn; i++) { m_weight[i] = (double)(rand())/(RAND_MAX/2);} //-1 < w[i] < 1	//sigmoid
+        for (i=0; i<(xn+1)*yn; i++) {
+        	m_weight[i] = (double)(rand())/(RAND_MAX/2);
+        } //-1 < w[i] < 1	//sigmoid
 
         int arows = A.nrows();
 
@@ -125,13 +130,14 @@ void NeuralNetwork::learn(MatDoub &A, VecInt &A_id)
 
 
                 //co n-ta probke wypisujemy blad sieci
-/*                if ( (iter%1000 == 0) || (iter==(num_iter-1)) ) {
+            /*    if ( (iter%1000 == 0) || (iter==(num_iter-1)) ) {
+                		double mse = 0;
                         for(i=0; i< yn; i++)
                                 mse += (d[i]-y[i]) * (d[i]-y[i]);
 
                         mse /= 2.0;
 
-                        //std::cout <<"blad sieci "<< mse << std::endl;
+                        std::cout <<"blad sieci "<< mse << std::endl;
                 }
 */
         }//for iter
@@ -147,12 +153,12 @@ int NeuralNetwork::find(std::vector<double>& data) const {
 	int i, j;
 
     double *W, sum;
-    double  * x  = new double[ data.size() ];
+    double  x [ m_features_vector_size ];
     double y[ m_nr_of_classes ];
     int rank_index[ m_nr_of_classes ];
 
 
-    int xn = data.size();// m_features_vector_size;
+    int xn =  m_features_vector_size;
     int yn = m_nr_of_classes;
 
 	//test na zbiorze testowym B
@@ -170,7 +176,9 @@ int NeuralNetwork::find(std::vector<double>& data) const {
 
 	}//for i
 	reco_ranking(y, rank_index, m_nr_of_classes);		//sortujemy rozpoznania od najlepszych do najgorszych
-	delete [] x;
+	print(1, y, rank_index, NR_OF_CLASSES);
+
+//	/delete [] x;
 	return rank_index[0];
 }
 
