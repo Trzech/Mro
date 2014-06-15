@@ -262,7 +262,7 @@ int NeuralNetwork::read_int_feature_vectors_from_file(const char* fname, long fe
 	long required_file_size = feature_vector_size *sizeof(int);
 	if (required_file_size != flen) {
 		fclose(fp);
-		printf("requred: %f, actual: %f", required_file_size, flen);
+		printf("requred: %ld, actual: %ld", required_file_size, flen);
 		throw MroException("Size of file doesnt match required file size!");
 	}
 	long readed_freature_vectors = fread((char*)buf, flen, 1, fp);

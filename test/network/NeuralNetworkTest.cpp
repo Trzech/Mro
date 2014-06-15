@@ -100,3 +100,15 @@ TEST_F(NeuralNetworkTest, test_vector_find_cluster) {
 	ASSERT_EQ(result, 0);
 
 }
+TEST_F(NeuralNetworkTest, test_vector_find_cluster_set2) {
+
+	NeuralNetwork first;
+	first.readAndLearn("test/network/data/nauka_cyfry5x3.dat", 100);
+	MatDoub testData = read_test_data("test/network/data/testy_cyfry5x3.dat", FEATURES_VECTOR_SIZE, NR_OF_TEST_SAMPLES_PER_CLASS, NR_OF_CLASSES );
+	std::vector<double> testVector;
+	for (int j = 0, len = testData.ncols(); j < len; j++)
+		testVector.push_back(testData[0][j]);
+	int result = first.find(testVector);
+	ASSERT_EQ(result, 0);
+
+}
