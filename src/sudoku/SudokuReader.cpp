@@ -8,6 +8,7 @@
 #include "SudokuReader.h"
 #include "ClusterReader.h"
 #include "network/NeuralNetwork.h"
+#include <cstdlib>
 
 SudokuReader::~SudokuReader() {
 }
@@ -29,12 +30,16 @@ unsigned char* SudokuReader::geTileData(unsigned char* imageData,
 
 void SudokuReader::recognizeNumbers(unsigned char* imageData, int rows,
 		int cols, Cluster biggestSquareCluster,
-		std::vector<Cluster> clusterInSizeOfNumbers, double* result) {
+		std::vector<Cluster> clusterInSizeOfNumbers, double* result,
+		char * originalFilename) {
 	int tileWidth = biggestSquareCluster.getWidth() / 9;
 	int tileHeiht = biggestSquareCluster.getHeight() / 9;
 	ClusterReader clusterReader;
 	static NeuralNetwork neuralNetwork;
 	neuralNetwork.readAndLearn("data/nauka_cyfry5x3.dat", 110);
+	GrayscaleImageReader reader;
+	char debugImageFilename[50];
+
 	for (int j = 0; j < 9; ++j) {
 		for (int i = 0; i < 9; ++i) {
 			std::vector<Cluster> clustersInThisArea =
@@ -45,10 +50,19 @@ void SudokuReader::recognizeNumbers(unsigned char* imageData, int rows,
 				if (debugIsOn) {
 					Drawer::drawClusterBorderOnImage(cluster, imageData, rows,
 							cols, 0);
+
 				}
 				unsigned char* tileData = geTileData(imageData, cols, cluster);
-				std::vector<double> testVector = clusterReader.getPropertiesVector(tileData, cluster.getHeight(), cluster.getWidth());
+				std::vector<double> testVector =
+						clusterReader.getPropertiesVector(tileData,
+								cluster.getHeight(), cluster.getWidth());
 				result[j * 9 + i] = neuralNetwork.find(testVector);
+				int probablyTheCorrectDir = result[j * 9 + i];
+				sprintf(debugImageFilename,
+						"test/sudoku/images/trainingSet/%d/%s_%d_%d.pgm",
+						probablyTheCorrectDir, originalFilename, i, j);
+				reader.writeImage(debugImageFilename, tileData,
+						cluster.getHeight(), cluster.getWidth(), 255);
 				delete tileData;
 			} else {
 				result[j * 9 + i] = 0.0;
@@ -72,7 +86,7 @@ std::vector<Cluster> SudokuReader::getClustersStartingInThisArea(int i, int j,
 
 }
 
-double* SudokuReader::getNumberRepresetation(char* imageFilename) {
+double* SudokuReader::getNumberRepresetation(char* imageFilename, char * originalFilename) {
 	//given
 	int rows, cols;
 	GrayscaleImageReader reader;
@@ -112,7 +126,7 @@ double* SudokuReader::getNumberRepresetation(char* imageFilename) {
 	double * numbers = new double[9 * 9];
 
 	recognizeNumbers(outBuf, rows, cols, biggestSquareCluster,
-			clusterInSizeOfNumbers, numbers);
+			clusterInSizeOfNumbers, numbers, originalFilename);
 
 	if (debugIsOn) {
 //		Drawer::drawSudokuMeshInClusterBorderOnImage(biggestSquareCluster,

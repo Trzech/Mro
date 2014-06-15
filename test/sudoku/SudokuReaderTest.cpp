@@ -66,7 +66,7 @@ TEST_F(SudokuReaderTest, DISABLED_recognizesWhereAreTheNumbersCorrectly) {
 
 				//when
 				double * numbers = sudokuReader.getNumberRepresetation(
-						inputFileName);
+						inputFileName, filenameWithoutExtension);
 
 				//then
 
@@ -118,7 +118,7 @@ TEST_F(SudokuReaderTest, recognizesNumbersCorrectly) {
 
 				//when
 				double * numbers = sudokuReader.getNumberRepresetation(
-						inputFileName);
+						inputFileName, filenameWithoutExtension);
 
 				//then
 
