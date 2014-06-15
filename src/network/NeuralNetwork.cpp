@@ -96,7 +96,7 @@ void NeuralNetwork::learn(T1 &A,T2 &A_id)
         int arows = A.nrows();
 
         //learning
-        long num_iter = 300000;	//ilosc losowo wybieranych probek ze zbioru uczacego, prezentowanych sieci
+        long num_iter = 600000;	//ilosc losowo wybieranych probek ze zbioru uczacego, prezentowanych sieci
 
         srand((unsigned)(27));
 

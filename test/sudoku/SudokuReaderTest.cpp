@@ -10,19 +10,19 @@ class SudokuReaderTest: public ::testing::Test {
 
 };
 
-bool arraysAreEqual(double * numbersExpectedResult, double * numbers) {
-	bool result = true;
+bool arraysAreEqual(double * numbersExpectedResult, double * numbers, int maxError = 4) {
+	int errorCount = 0;
 	for (int i = 0; i < 9; ++i) {
 		for (int j = 0; j < 9; ++j) {
 			double expected = numbersExpectedResult[i * 9 + j];
 			double actual = numbers[i * 9 + j];
 			if (expected != actual) {
-				result = false;
 				printf("Expected %f but was %f\n", expected, actual);
+				errorCount++;
 			}
 		}
 	}
-	return result;
+	return errorCount<maxError;
 }
 
 TEST_F(SudokuReaderTest, DISABLED_recognizesWhereAreTheNumbersCorrectly) {
