@@ -46,7 +46,7 @@ void SudokuReader::recognizeNumbers(unsigned char* imageData, int rows,
 				unsigned char* tileData = geTileData(imageData, cols, cluster);
 				std::vector<double> testVector = clusterReader.getPropertiesVector(tileData, cluster.getHeight(), cluster.getWidth());
 				result[j * 9 + i] = m_neuralNetwork.find(testVector);
-				delete tileData;
+				delete[] tileData;
 			} else {
 				result[j * 9 + i] = 0.0;
 			}
@@ -122,8 +122,8 @@ double* SudokuReader::getNumberRepresetation(char* imageFilename) {
 		reader.writeImage(debugImageFilename, outBuf, rows, cols, 255);
 
 	}
-	delete inBuf;
-	delete outBuf;
+	delete[] inBuf;
+	delete[] outBuf;
 	return numbers;
 
 }
