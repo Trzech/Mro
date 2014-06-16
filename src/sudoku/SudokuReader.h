@@ -28,6 +28,7 @@ private:
 	void recognizeNumbers(unsigned char* imageData, int rows, int cols, Cluster biggestSquareCluster,
 			std::vector<Cluster> clusterInSizeOfNumbers, double* result);
 	std::vector<Cluster> getClustersStartingInThisArea(int i , int j, int tileWidth, int tileHeiht, Cluster biggestSquareCluster, std::vector<Cluster> clusterInSizeOfNumbers);
+	std::vector<Cluster> getClustersWithCenterInThisArea(int i , int j, int tileWidth, int tileHeiht, Cluster biggestSquareCluster, std::vector<Cluster> clusterInSizeOfNumbers);
 	NeuralNetwork m_neuralNetwork;
 };
 

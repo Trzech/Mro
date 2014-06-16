@@ -21,6 +21,7 @@ public:
 	static std::vector<Cluster> filterClustersInSizeRange(std::vector<Cluster> &clusters, int minWidth, int maxWidth, int minHeight, int maxHeight);
 	static std::vector<Cluster> filterClustersInPlacementRange(std::vector<Cluster> &clusters, int minX, int maxX, int minY, int maxY);
 	static std::vector<Cluster> filterClustersStartingInRange(std::vector<Cluster> &clusters, int minX, int maxX, int minY, int maxY);
+	static std::vector<Cluster> filterClustersWithCenterInRange(std::vector<Cluster> &clusters, int minX, int maxX, int minY, int maxY);
 };
 
 #endif /* CLUSTERANALIZATOR_H_ */

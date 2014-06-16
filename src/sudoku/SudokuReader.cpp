@@ -35,7 +35,7 @@ void SudokuReader::recognizeNumbers(unsigned char* imageData, int rows,
 	for (int j = 0; j < 9; ++j) {
 		for (int i = 0; i < 9; ++i) {
 			std::vector<Cluster> clustersInThisArea =
-					getClustersStartingInThisArea(i, j, tileWidth, tileHeiht,
+					getClustersWithCenterInThisArea(i, j, tileWidth, tileHeiht,
 							biggestSquareCluster, clusterInSizeOfNumbers);
 			if (clustersInThisArea.size() > 0) {
 				Cluster cluster = clustersInThisArea[0];
@@ -63,6 +63,21 @@ std::vector<Cluster> SudokuReader::getClustersStartingInThisArea(int i, int j,
 	int yMax = (j + 1) * tileHeiht + biggestSquareCluster.minY;
 	std::vector<Cluster> clustersInCorrectPlace =
 			ClusterAnalizator::filterClustersStartingInRange(
+					clustersInSizeOfNumbers, xMin, xMax, yMin, yMax);
+
+	return clustersInCorrectPlace;
+
+}
+
+std::vector<Cluster> SudokuReader::getClustersWithCenterInThisArea(int i, int j,
+		int tileWidth, int tileHeiht, Cluster biggestSquareCluster,
+		std::vector<Cluster> clustersInSizeOfNumbers) {
+	int xMin = i * tileWidth + biggestSquareCluster.minX; // tutuaj to musi być jeszcze przesunięte do poczatku ramki sudoku (a nie od początku obrazka!)
+	int xMax = (i + 1) * tileWidth + biggestSquareCluster.minX;
+	int yMin = j * tileHeiht + biggestSquareCluster.minY;
+	int yMax = (j + 1) * tileHeiht + biggestSquareCluster.minY;
+	std::vector<Cluster> clustersInCorrectPlace =
+			ClusterAnalizator::filterClustersWithCenterInRange(
 					clustersInSizeOfNumbers, xMin, xMax, yMin, yMax);
 
 	return clustersInCorrectPlace;
@@ -112,8 +127,8 @@ double* SudokuReader::getNumberRepresetation(char* imageFilename) {
 			clusterInSizeOfNumbers, numbers);
 
 	if (debugIsOn) {
-//		Drawer::drawSudokuMeshInClusterBorderOnImage(biggestSquareCluster,
-//				outBuf, rows, cols, 0);
+		Drawer::drawSudokuMeshInClusterBorderOnImage(biggestSquareCluster,
+				outBuf, rows, cols, 0);
 		char debugImageFilename[50];
 
 		strcpy(debugImageFilename, "test/sudoku/images/result/");

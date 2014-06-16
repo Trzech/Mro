@@ -17,7 +17,7 @@ bool arraysAreEqual(double * numbersExpectedResult, double * numbers, int maxErr
 			double expected = numbersExpectedResult[i * 9 + j];
 			double actual = numbers[i * 9 + j];
 			if (expected != actual) {
-				printf("Expected %f but was %f\n", expected, actual);
+				printf("Expected %f but was %f [%d, %d]\n", expected, actual, i,j);
 				errorCount++;
 			}
 		}
