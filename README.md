@@ -1,4 +1,4 @@
-Mro
+Mro ![Staus](https://img.shields.io/badge/status-discontinued-red.svg)
 ===
 
 Application for finding numbers in sudoku
